@@ -14,6 +14,9 @@ class Landing extends Component {
    handleClick = (e) => {
       e.preventDefault();
       alert(this.state.email);
+      // Verify email address is formatted
+
+      // Store email in 
    }
 
    handleChange = (e, newValue) => {
