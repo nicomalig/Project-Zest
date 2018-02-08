@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import * as firebase from "firebase";
 
+var config = {
+   apiKey: "AIzaSyABka5H54O_iaPXXm16sW2b_7PmkybOfP8",
+   authDomain: "zest-de7b0.firebaseapp.com",
+   databaseURL: "https://zest-de7b0.firebaseio.com",
+   storageBucket: "",
+};
+firebase.initializeApp(config);
+var database = firebase.database();
 
 class Landing extends Component {
    constructor(props) {
@@ -11,12 +20,20 @@ class Landing extends Component {
       }
    }
 
+   writeUserData(email) {
+      database.ref('/').push().set({
+         email: email
+      });
+   }
+
    handleClick = (e) => {
       e.preventDefault();
-      alert(this.state.email);
       // Verify email address is formatted
 
-      // Store email in 
+      // Store email in firebase database
+      this.writeUserData(this.state.email);
+      this.setState({email: ''});
+      alert(this.state.email + ' saved to Firebase Database');
    }
 
    handleChange = (e, newValue) => {
@@ -32,7 +49,7 @@ class Landing extends Component {
             <br />
             <TextField
                floatingLabelText="email"
-               value={this.state.value}
+               value={this.state.email}
                onChange={this.handleChange}
             />
             <br />

@@ -3,7 +3,6 @@ import logo from './logo.svg';
 import './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
 import Landing from './Landing';
 
 const muiTheme = getMuiTheme({
@@ -16,7 +15,7 @@ class App extends Component {
    handleClick = (e) => {
       e.preventDefault();
    }
-   
+
    render() {
       return (
          <MuiThemeProvider muiTheme={muiTheme}>
