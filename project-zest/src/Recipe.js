@@ -16,11 +16,7 @@ class Recipe extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           email: '',
-           errorText: '',
-           displayForm: true, 
-           user: null, 
-           checked: false
+           user: null
         }
      }
    handleClick = (e) => {
