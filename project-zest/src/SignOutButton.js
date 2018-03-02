@@ -3,7 +3,6 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as firebase from "firebase";
 import Recipe from './Recipe';
-import Landing from './Landing';
 
 class SignOutButton extends Component {
    constructor(props) {
@@ -11,16 +10,13 @@ class SignOutButton extends Component {
       this.state = {
          user: null
       }
-      
+      this.signOut = this.signOut.bind(this)   
    }
 
-
-   signOut() {
+   signOut(e) {
+    e.preventDefault();
         firebase.auth().signOut().then(() => {
-            this.setState({
-              user: null, 
-              checked: false
-            });
+            this.props.handler(e, {user:null})
         });
     }
 
@@ -29,7 +25,7 @@ class SignOutButton extends Component {
       return (
          <div>
             {this.props.user &&
-                <RaisedButton className="signout-button" label="Signout" onClick={this.props.signOut}/>
+                <RaisedButton className="signout-button" label="Signout" onClick={this.signOut}/>
             }
             {!this.props.user &&
               <p>Signed out!</p>

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import * as firebase from "firebase";
+// import * as firebase from "firebase";
+import {provider, database, firebase} from './FirebaseConfig'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import Landing from './Landing';
+import LogInWithFacebookButton from './LogInWithFacebookButton';
 import Recipe from './Recipe';
 import SignOutButton from './SignOutButton';
 import SearchBar from './SearchBar';
@@ -15,93 +16,15 @@ const muiTheme = getMuiTheme({
    }
 });
 
-var config = {
-    apiKey: "AIzaSyABka5H54O_iaPXXm16sW2b_7PmkybOfP8",
-    authDomain: "zest-de7b0.firebaseapp.com",
-    databaseURL: "https://zest-de7b0.firebaseio.com",
-    storageBucket: "",
- };
- var provider = new firebase.auth.FacebookAuthProvider();
- provider.addScope('email');
- provider.setCustomParameters({
-     'display': 'popup'
-   });
- firebase.initializeApp(config);
- var database = firebase.database();
-
 class App extends Component {
-//    handleClick = (e) => {
-//       e.preventDefault();
-//    }
 constructor(props) {
     super(props)
     this.state = {
         user: null, 
         url: ""
      }
-    this.signOut = this.signOut.bind(this)
-    // this.mergeStateOut = this.mergeStateOut.bind(this)
-    this.login = this.login.bind(this)
-    // this.handleChange=this.handleChange.bind(this)
+    this.handler = this.handler.bind(this)
 }
-    writeUserData(email) {
-        database.ref('/').push().set({
-        email: email
-        });
-    }
-
-    onSearchClick = (e) => {
-        e.preventDefault();
-
-        // Verify email address is formatted properly
-        if (this.state.url != "") {
-        // Store email in Firebase database
-        this.writeUserData(this.state.email);
-        this.setState({
-            email: '',
-            displayForm: false
-        });
-        console.log(this.state.email + ' saved!');
-        }
-    }
-
-    // handleChange = (e, newValue) => {
-    //     e.preventDefault();
-    //     this.setState({email: newValue})
-    // }
-
-    login() {
-        console.log("LOGIN")
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        var token = result.credential.accessToken;
-        // The signed-in user info.
-        var currentUser = result.user;
-        console.log("login")
-        console.log(currentUser)
-        console.log("useruser")
-        this.setState({user: currentUser})
-        // ...
-        }).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
-        });       
-    }
-
-     // Sign out of an account
-    signOut() {
-        firebase.auth().signOut().then(() => {
-            this.setState({
-                user: null
-            });
-        });
-    }
 
      // When component mounts, check the user
      componentDidMount() {
@@ -118,24 +41,21 @@ constructor(props) {
 
     // Capture state from child component
     // PROTIP:
-    // Pass in as <MyComponent mergeStateOut={this.mergeStateOut} />
-    // mergeStateOut(incomingState) {
-    //     this.setState(incomingState)
-    //   }
-
-    //   merge() {
-    //     console.log("merge")
-    //   }
+    // Pass in as <MyComponent handler={this.handler} />
+    handler(e, newState) {
+        e.preventDefault()
+        this.setState(newState)
+    }
 
    render() {
        console.log(this.state.user)
+       console.log(this.state.url)
       return (
          <MuiThemeProvider muiTheme={muiTheme}>
-            <div className="App flex-container">
-                <div className="search"> 
-                    <div className="flex-row">
+            <div className="flex-container">
+                <div className="flex-row"> 
                         <div className="flex-item">
-                            <SearchBar onSearchClick={this.onSearchClick}/>
+                            <SearchBar handler={this.handler}/>
                         </div>
                     </div>
             </div>
@@ -144,23 +64,21 @@ constructor(props) {
                      <img src={require('./img/zest.png')} width='118' height='130.25' />
                   </div>
                   <div className="flex-item">
-                    <h2>Don't let cooking be a test, use zest!</h2>
-                    <p>We've got cool stuff coming. Stay in the loop!</p>
-                    <p><i> -Team Happy Cappy</i></p>
+                  <div>
+                    <h2>Cook with Zest</h2>
+                    <p>We make it easy for you to make conversions, cook for any number of people, and adjust any recipe to your needs!</p>
+                    <p><i>Don't let cooking be a test, use Zest!</i></p>
+                    </div>
+                    <div>
                     {!this.state.user &&
-                        <div>
-                            <Landing user={this.props.user} login={this.login} />
-                        </div>
+                        <LogInWithFacebookButton user={this.state.user} handler={this.handler} />
                     }
                     {this.state.user &&
-                    <div>
-                        <Recipe user={this.state.user}/>
-                        <SignOutButton user={this.state.user} signOut ={this.signOut}/>
-                    </div>
+                        <SignOutButton user={this.state.user} handler={this.handler}/>
                     }
+                    </div>
                 </div>
                </div>
-            </div>
          </MuiThemeProvider>
       );
    }

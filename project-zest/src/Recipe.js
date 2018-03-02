@@ -3,8 +3,6 @@ import logo from './logo.svg';
 import './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import Landing from './Landing';
-import SignOutButton from './SignOutButton';
 
 const muiTheme = getMuiTheme({
    palette: {
@@ -26,11 +24,8 @@ class Recipe extends Component {
    render() {
       return (
          <MuiThemeProvider muiTheme={muiTheme}>
-            <div className="App flex-container">
-               <div className="flex-row">
-                 <p> RECIPE PAGE
-                 </p>
-               </div>
+               <div className="flex-container">
+                 <p> RECIPE PAGE</p>
             </div>
          </MuiThemeProvider>
       );
