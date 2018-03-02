@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as firebase from "firebase";
+import Recipe from './Recipe';
+import SignOutButton from './SignOutButton';
 
 var config = {
    apiKey: "AIzaSyABka5H54O_iaPXXm16sW2b_7PmkybOfP8",
@@ -23,8 +25,11 @@ class Landing extends Component {
       this.state = {
          email: '',
          errorText: '',
-         displayForm: true
+         displayForm: true, 
+         user: null, 
+         checked: false
       }
+      this.signOut = this.signOut.bind(this)
    }
 
    writeUserData(email) {
@@ -61,7 +66,12 @@ class Landing extends Component {
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
         var token = result.credential.accessToken;
         // The signed-in user info.
-        var user = result.user;
+        var currentUser = result.user;
+        console.log("login")
+        console.log(currentUser)
+        console.log("useruser")
+        this.setState({user: currentUser})
+        console.log(this.state.user)
         // ...
       }).catch(function(error) {
         // Handle Errors here.
@@ -75,6 +85,44 @@ class Landing extends Component {
       });       
    }
 
+       // Sign out of an account
+   signOut() {
+        firebase.auth().signOut().then(() => {
+            this.setState({
+              user: null, 
+              checked: false
+            });
+        });
+    }
+
+    // Toggle between 'sign-up' and 'sign-in'
+    toggleLogin() {
+        let option = this.state.authOption === 'sign-in' ? 'sign-up' : 'sign-in';
+        this.setState({authOption:option});
+    }
+
+    goToRecipe() {
+        window.location = 'Recipe.js';
+    }
+
+       // When component mounts, check the user
+       componentDidMount() {
+        // Check for authentication state change (test if there is a user)
+        firebase.auth().onAuthStateChanged((user) => {
+            if (this.state.checked !== true) {
+                if (user) {
+                    this.setState({
+                      user: user,
+                      displayForm: false
+                    })
+                    console.log("user: " + user.displayName)
+                }
+            }
+
+            // Indicate that state has been checked
+            this.setState({checked:true})
+        });
+    }
 
    render() {
       return (
@@ -83,7 +131,7 @@ class Landing extends Component {
             <p>We've got cool stuff coming. Stay in the loop!</p>
             <p><i> -Team Happy Cappy</i></p>
 
-            {this.state.displayForm &&
+            {!this.state.user &&
                <div className="form">
                   <TextField
                      floatingLabelText="email"
@@ -93,15 +141,18 @@ class Landing extends Component {
                   />
                   <br />
                   <RaisedButton label="let's get zesty" onClick={this.handleClick}/>
+                  <br />
+                  <br />
                   <div className="login">
-                    <RaisedButton className="facebook" label="Login with Facebook" onClick={this.login}/>
+                    <RaisedButton className="facebook" label="Log in with Facebook" onClick={this.login}/>
                   </div> 
                   <br />
                </div>
             }
-            {!this.state.displayForm &&
+            {this.state.user &&
                <div>
-                  <h4 className="in">You're in! We'll talk to you soon.</h4>
+                  <Recipe user={this.state.user}/>
+                  <SignOutButton user={this.state.user} signOut ={this.signOut}/>
                </div>
             }
          </div>
