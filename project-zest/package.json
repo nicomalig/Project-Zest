@@ -2,7 +2,7 @@
   "name": "project-zest",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://nicomalig.github.io/Project-Zest",
+  "homepage": "https://projectze.st",
   "dependencies": {
     "firebase": "^4.9.1",
     "gh-pages": "^1.1.0",
