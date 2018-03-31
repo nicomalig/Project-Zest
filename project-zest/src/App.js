@@ -9,6 +9,8 @@ import LogInWithFacebookButton from './LogInWithFacebookButton';
 import Recipe from './Recipe';
 import SignOutButton from './SignOutButton';
 import SearchBar from './SearchBar';
+import TextField from 'material-ui/TextField';
+
 
 const muiTheme = getMuiTheme({
    palette: {
@@ -20,10 +22,9 @@ class App extends Component {
 constructor(props) {
     super(props)
     this.state = {
-        user: null, 
+        user: null,
         url: ""
      }
-    this.handler = this.handler.bind(this)
 }
 
      // When component mounts, check the user
@@ -32,7 +33,8 @@ constructor(props) {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
             this.setState({
-                user: user
+                user: user,
+                url: ""
             })
             console.log("user: " + user.displayName)
         }
@@ -43,9 +45,18 @@ constructor(props) {
     // PROTIP:
     // Pass in as <MyComponent handler={this.handler} />
     handler(e, newState) {
-        e.preventDefault()
-        this.setState(newState)
+        e.preventDefault();
+        this.setState(newState);
     }
+
+    handleChange = (e) => {
+      e.preventDefault();
+      if (e.target.name === "searcher") {
+         this.setState({
+            url: e.target.value
+         })
+      }
+   }
 
    render() {
        console.log(this.state.user)
@@ -53,9 +64,11 @@ constructor(props) {
       return (
          <MuiThemeProvider muiTheme={muiTheme}>
             <div className="flex-container">
-                <div className="flex-row"> 
+                <div className="flex-row">
                         <div className="flex-item">
-                            <SearchBar handler={this.handler}/>
+                            <SearchBar name="searcher" handler={this.handler} onChange={this.handleChange}/>
+                            <TextField name="searcher" onChange={this.handleChange} />
+                            URL: {this.state.url}
                         </div>
                     </div>
             </div>

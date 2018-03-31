@@ -6,7 +6,7 @@ class SearchBar extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         url: "", 
+         url: "",
          errorText: ""
       }
       this.handleChange = this.handleChange.bind(this)
@@ -18,7 +18,7 @@ class SearchBar extends Component {
     this.setState({url:newValue})
    }
 
-   isValidURL(str){ 
+   isValidURL(str){
     var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
     '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
