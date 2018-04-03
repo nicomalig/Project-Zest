@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 // import * as firebase from "firebase";
 import {provider, database, firebase} from './FirebaseConfig'
@@ -52,6 +51,8 @@ constructor(props) {
        console.log(this.state.url)
       return (
          <MuiThemeProvider muiTheme={muiTheme}>
+          {!this.state.user &&
+          <div>
             <div className="flex-container">
                 <div className="flex-row"> 
                         <div className="flex-item">
@@ -70,15 +71,21 @@ constructor(props) {
                     <p><i>Don't let cooking be a test, use Zest!</i></p>
                     </div>
                     <div>
-                    {!this.state.user &&
-                        <LogInWithFacebookButton user={this.state.user} handler={this.handler} />
-                    }
-                    {this.state.user &&
+                    <LogInWithFacebookButton user={this.state.user} handler={this.handler} />
+                    {/* {this.state.user &&
+                    <div>
+                        <p>Welcome {this.state.user.displayName}</p>
                         <SignOutButton user={this.state.user} handler={this.handler}/>
-                    }
+                    </div>
+                    } */}
                     </div>
                 </div>
                </div>
+               </div>
+          }
+          {this.state.user &&
+            <Recipe user={this.state.user} handler={this.handler}/>
+          }
          </MuiThemeProvider>
       );
    }

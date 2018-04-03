@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import SignOutButton from './SignOutButton';
 
 const muiTheme = getMuiTheme({
    palette: {
@@ -23,11 +23,21 @@ class Recipe extends Component {
 
    render() {
       return (
+          <div>
+            {this.props.user && 
          <MuiThemeProvider muiTheme={muiTheme}>
+
                <div className="flex-container">
                  <p> RECIPE PAGE</p>
             </div>
+            <div>
+              <p>Welcome {this.props.user.displayName}</p>
+              <SignOutButton user={this.props.user} handler={this.props.handler}/>
+             </div>
+         
          </MuiThemeProvider>
+        }
+        </div>
       );
    }
 }
