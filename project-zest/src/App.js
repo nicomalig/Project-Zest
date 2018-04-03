@@ -58,6 +58,10 @@ constructor(props) {
       }
    }
 
+   handleClick = (e) => {
+       e.preventDefault();
+   }
+
    render() {
        console.log(this.state.user)
        console.log(this.state.url)
@@ -66,9 +70,11 @@ constructor(props) {
             <div className="flex-container">
                 <div className="flex-row">
                         <div className="flex-item">
-                            <SearchBar name="searcher" handler={this.handler} onChange={this.handleChange}/>
+                            <SearchBar name="searcher" onClick={this.handleClick} onChange={this.handleChange}/>
+                            <br />
                             <TextField name="searcher" onChange={this.handleChange} />
-                            URL: {this.state.url}
+                            <br />
+                            Text Field: {this.state.url}
                         </div>
                     </div>
             </div>
