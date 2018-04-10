@@ -18,15 +18,16 @@ var config = {
     projectId: "zest-de7b0",
     storageBucket: "zest-de7b0.appspot.com",
     messagingSenderId: "173225663428"
-  };
+};
   
- firebase.initializeApp(config);
- var database = firebase.database();
+firebase.initializeApp(config);
+var database = firebase.database();
 
 const muiTheme = getMuiTheme({
 	palette: {
 		primary1Color: '#ffaa2d'
-	}
+	},
+	fontFamily: 'Roboto',
 });
 
 // const ShowLandingPageButton = () => (
@@ -49,14 +50,31 @@ class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
-			"buttonLabel": "Show Landing"
+			"buttonLabel": "Show Landing",
+			date: new Date(),
+
 		}
-    }
+	}
+	
+	componentDidMount() {
+		this.timerID = setInterval(() => this.tick(), 1000);
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.timerID);
+	}
+	
+	tick() {
+		this.setState({
+			date: new Date(),
+		});
+	}
 
 	handleClick = (e) => {
 		e.preventDefault();
 
-		console.log(e.target.id);
+		// DEBUG
+		console.log("e.currentTarget.id: " + e.currentTarget.id);
 		
 		if (e.currentTarget.id === "ld") {
 			if (this.state.buttonLabel === "Show Landing") {
@@ -81,16 +99,29 @@ class App extends Component {
 								<img src={require('./img/zest.png')} 
 									width='118' height='130.25' alt="zest logo" />
 							</div>
+
+							{/* DEBUG */}
+							{// !this.state.buttonLabel === "Show Landing" &&
+								<div className="flex-item">
+									<h2>Happy Cappy Meeting</h2>
+									<h3>April 10th, 2018</h3>
+									{this.state.date.toLocaleTimeString()}
+								</div>
+							}
+
+
 							{/* Show Landing Page Button */}
 							<div className="flex-item">
-								<div>
-									<RaisedButton
-										data-id="ld"
-										label={this.state.buttonLabel}
-										containerElement={<Link to={"/landing"} />}
-										onClick={this.handleClick}
-									/>
-								</div>
+								{!this.state.buttonLabel === "Show Landing" &&
+									<div>
+										<RaisedButton
+											data-id="ld"
+											label={this.state.buttonLabel}
+											containerElement={<Link to={"/landing"} />}
+											// onClick={this.handleClick}
+										/>
+									</div>
+								}
 								<div>
 									<Route 
 										path="/landing" 
