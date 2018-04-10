@@ -106,6 +106,12 @@ class App extends Component {
 									<h2>Happy Cappy Meeting</h2>
 									<h3>April 10th, 2018</h3>
 									{this.state.date.toLocaleTimeString()}
+									<br />
+									<br />
+									<br />
+									<p><u>Meeting Minutes</u></p>
+									<p><i>- It's 'Kerstin'</i></p>
+									<p><i>- 🗝rtana</i></p>
 								</div>
 							}
 
