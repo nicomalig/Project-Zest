@@ -30,47 +30,37 @@ class Recipe extends Component {
 
   render() {
     return (
-      <div>
-        {this.props.user && (
-          <MuiThemeProvider muiTheme={muiTheme}>
-            <div className="flex-container">
-              <p> RECIPE PAGE</p>
-              <MainScreenSearchBar handler={this.props.handler} />
+      <MuiThemeProvider muiTheme={muiTheme}>
+        <div className="flex-container">
+          <p> RECIPE PAGE</p>
+          <MainScreenSearchBar handler={this.props.handler} />
 
-              <RecipeSummaryCard />
+          <RecipeSummaryCard />
 
-              <RecipeDirections />
+          <RecipeDirections />
 
-              {/* component: RecipeIngredients */}
-              <div id="ingredients-div">
-                <h2>Recipe</h2>
+          {/* component: RecipeIngredients */}
+          <div id="ingredients-div">
+            <h2>Recipe</h2>
 
-                {/* component: AlterRecipeBar */}
-                <AlterRecipeBar />
+            {/* component: AlterRecipeBar */}
+            <AlterRecipeBar />
 
-                {/* component: IngredientsList */}
-                <IngredientsList />
-              </div>
-            </div>
-            <div>
-              <p>Welcome {this.props.user.displayName}</p>
-              <SignOutButton
-                user={this.props.user}
-                handler={this.props.handler}
-              />
-              <RaisedButton
-                className="saved-recipes-button"
-                label="See Your Saved Recipes" /*onClick={ GO TO SAVED RECIPES PAGE }*/
-              />
-              <SavedRecipes
-                user={this.props.user}
-                handler={this.props.handler}
-              />{" "}
-              {/* delete after */}
-            </div>
-          </MuiThemeProvider>
-        )}
-      </div>
+            {/* component: IngredientsList */}
+            <IngredientsList />
+          </div>
+        </div>
+        <div>
+          <p>Welcome {this.props.user.displayName}</p>
+          <SignOutButton user={this.props.user} handler={this.props.handler} />
+          <RaisedButton
+            className="saved-recipes-button"
+            label="See Your Saved Recipes" /*onClick={ GO TO SAVED RECIPES PAGE }*/
+          />
+          <SavedRecipes user={this.props.user} handler={this.props.handler} />{" "}
+          {/* delete after */}
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

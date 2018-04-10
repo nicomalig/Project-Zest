@@ -7,6 +7,7 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 import LogInWithFacebookButton from "./LogInWithFacebookButton";
 import Recipe from "./Recipe";
 import HomeScreenSearchBar from "./HomeScreenSearchBar";
+import HomePage from "./HomePage";
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -49,51 +50,11 @@ class App extends Component {
     console.log(this.state.user);
     console.log(this.state.url);
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
-	  	{/* No user is signed in */ }
-        {!this.state.user && (
-          <div className="flex-container" id="main-screen">
-            <div className="flex-item">
-              <img
-                src={require("./img/zest.png")}
-                width="118"
-                height="130.25"
-                alt="zest logo"
-              />
-            </div>
-            <div className="flex-row">
-              <div className="flex-item">
-                <div>
-                  <h2>Cook with Zest</h2>
-                  <p>
-                    We make it easy for you to make conversions, cook for any
-                    number of people, and adjust any recipe to your needs!
-                  </p>
-                  <p>
-                    <i>Don't let cooking be a test, use Zest!</i>
-                  </p>
-                </div>
-                <div className="flex-container">
-                  <div className="flex-row">
-                    <div className="flex-item">
-                      <HomeScreenSearchBar handler={this.handler} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div id="login-div" className="flex-item">
-                  <LogInWithFacebookButton
-                    user={this.state.user}
-                    handler={this.handler}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-		)}
-		
-		{/* User is signed in */ }
+      <div>
+        {/* No user is signed in */}
+        {!this.state.user && <HomePage handler={this.handler} />}
+
+        {/* User is signed in */}
         {this.state.user && (
           <Recipe
             user={this.state.user}
@@ -101,7 +62,7 @@ class App extends Component {
             url={this.state.url}
           />
         )}
-      </MuiThemeProvider>
+      </div>
     );
   }
 }
