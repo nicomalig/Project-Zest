@@ -50,6 +50,7 @@ class App extends Component {
     console.log(this.state.url);
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
+	  	{/* No user is signed in */ }
         {!this.state.user && (
           <div className="flex-container" id="main-screen">
             <div className="flex-item">
@@ -90,7 +91,9 @@ class App extends Component {
               </div>
             </div>
           </div>
-        )}
+		)}
+		
+		{/* User is signed in */ }
         {this.state.user && (
           <Recipe
             user={this.state.user}
