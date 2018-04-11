@@ -1,16 +1,8 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import * as firebase from "firebase";
 
-var config = {
-   apiKey: "AIzaSyABka5H54O_iaPXXm16sW2b_7PmkybOfP8",
-   authDomain: "zest-de7b0.firebaseapp.com",
-   databaseURL: "https://zest-de7b0.firebaseio.com",
-   storageBucket: "",
-};
-firebase.initializeApp(config);
-var database = firebase.database();
+var database
 
 class Landing extends Component {
    constructor(props) {
@@ -20,6 +12,7 @@ class Landing extends Component {
          errorText: '',
          displayForm: true
       }
+      database = this.props.db
    }
 
    writeUserData(email) {
@@ -32,7 +25,7 @@ class Landing extends Component {
       e.preventDefault();
 
       // Verify email address is formatted properly
-      if (this.state.email != "") {
+      if (this.state.email !== "") {
          // Store email in Firebase database
          this.writeUserData(this.state.email);
          this.setState({
