@@ -4,15 +4,24 @@ import "./App.css";
 import { firebase } from "./FirebaseConfig";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
+
 import LogInWithFacebookButton from "./LogInWithFacebookButton";
 import Recipe from "./Recipe";
 import HomeScreenSearchBar from "./HomeScreenSearchBar";
 import HomePage from "./HomePage";
+import AppBar from 'material-ui/AppBar';
+import SignOutButton from "./SignOutButton";
+import FlatButton from 'material-ui/FlatButton';
+
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import RaisedButton from "material-ui/RaisedButton/RaisedButton";
+
 
 const muiTheme = getMuiTheme({
   palette: {
     primary1Color: "#ffaa2d"
-  }
+  },
+  fontFamily: 'Roboto',
 });
 
 class App extends Component {
@@ -49,20 +58,45 @@ class App extends Component {
   render() {
     console.log(this.state.user);
     console.log(this.state.url);
-    return (
-      <div>
-        {/* No user is signed in */}
-        {!this.state.user && <HomePage handler={this.handler} />}
 
-        {/* User is signed in */}
-        {this.state.user && (
-          <Recipe
-            user={this.state.user}
-            handler={this.handler}
-            url={this.state.url}
-          />
-        )}
-      </div>
+    return (
+      <Router>
+        <MuiThemeProvider muiTheme={muiTheme}>
+          <div>
+            <Route path="/main" component={Recipe} />
+          </div>
+          <div>
+            {/* No user is signed in */}
+            {!this.state.user && <HomePage handler={this.handler} />}
+
+            {/* User is signed in */}
+            {this.state.user &&
+              <div>
+                <AppBar
+                  title="Project Zest"
+                  showMenuIconButton={false}
+                  iconElementRight={
+                    <div>
+                      <SignOutButton
+                        user={this.state.user}
+                        handler={this.handler}
+                      />
+                    </div>
+                  }
+                />
+                <Recipe
+                  user={this.state.user}
+                  handler={this.handler}
+                  url={this.state.url}
+                />
+              </div>
+            }
+
+
+
+          </div>
+        </MuiThemeProvider>
+      </Router>
     );
   }
 }

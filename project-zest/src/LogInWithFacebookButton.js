@@ -35,8 +35,17 @@ class LogInWithFacebookButton extends Component {
    render() {
       return (
         <div className="form">
-            <div className="login">
-                <RaisedButton className="facebook-login" label="Log in with Facebook" onClick={this.login}/>
+            <div className="login flex-item">
+                <RaisedButton 
+                    className="facebook-login" 
+                    label="Log in with Facebook" 
+                    onClick={this.login}
+                    backgroundColor= '#3B5998'
+                    labelColor= 'white'
+                    rippleStyle={{
+                        color: 'white'
+                    }}
+                />
             </div> 
         </div>
       );

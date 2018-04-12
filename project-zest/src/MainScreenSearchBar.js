@@ -55,9 +55,10 @@ class MainScreenSearchBar extends Component {
                 aria-label="get page summary"
                 onClick={this.onSearchClick}
               >
-                <span class="icon is-small">
+                Pull Recipe
+                {/* <span class="icon is-small">
                   <i class="fa fa-search" aria-hidden="true" />
-                </span>
+                </span> */}
               </button>
             </p>
           </div>
