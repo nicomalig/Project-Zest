@@ -12,6 +12,13 @@ import HomePage from "./HomePage";
 import AppBar from 'material-ui/AppBar';
 import SignOutButton from "./SignOutButton";
 import FlatButton from 'material-ui/FlatButton';
+import MainScreenSearchBar from "./MainScreenSearchBar";
+import RecipeSummaryCard from "./RecipeSummaryCard";
+import RecipeDirections from "./RecipeDirections";
+import AlterRecipeBar from "./AlterRecipeBar";
+import IngredientsList from "./IngredientsList";
+import Landing from "./Landing";
+
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import RaisedButton from "material-ui/RaisedButton/RaisedButton";
@@ -65,30 +72,24 @@ class App extends Component {
           <div>
             <Route path="/main" component={Recipe} />
           </div>
+
           <div>
             {/* No user is signed in */}
-            {!this.state.user && <HomePage handler={this.handler} />}
+            {!this.state.user &&
+              <div>
+                <HomePage handler={this.handler} />
+              </div>
+            }
 
             {/* User is signed in */}
             {this.state.user &&
               <div>
-                <AppBar
-                  title="Project Zest"
-                  showMenuIconButton={false}
-                  iconElementRight={
-                    <div>
-                      <SignOutButton
-                        user={this.state.user}
-                        handler={this.handler}
-                      />
-                    </div>
-                  }
-                />
                 <Recipe
                   user={this.state.user}
                   handler={this.handler}
                   url={this.state.url}
                 />
+
               </div>
             }
 
