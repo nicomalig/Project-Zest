@@ -123,7 +123,7 @@ class Recipe extends Component {
                         <MenuItem
                             primaryText="--Scraper"
                             onClick={this.handleClose}
-                            containerElement={<Link to="/scrape" />}
+                            containerElement={<Link to="/scraper" />}
 
                         />
                     </Drawer>

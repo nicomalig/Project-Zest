@@ -37,7 +37,8 @@ class Scraper extends Component {
 render() {
     return (
         <div className="flex-item">
-            <p>Scrape scrape!</p>
+            <p>Scrape!</p>
+            {this.scrape("https://www.foodnetwork.com/recipes/alton-brown/the-chewy-recipe-1909046")}
         </div>
     );
 }
