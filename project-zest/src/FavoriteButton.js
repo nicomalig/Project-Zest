@@ -9,6 +9,7 @@ class FavoriteButton extends Component {
     //   url: this.props.url
     // };
     this.toggleFavorite = this.toggleFavorite.bind(this);
+    this.canAddLink = this.canAddLink.bind(this);
     console.log("HELLO HELLO HELLO");
   }
 
@@ -24,21 +25,32 @@ class FavoriteButton extends Component {
     e.preventDefault();
     let currentUser = firebase.auth().currentUser;
     console.log(this.props.url);
-    database.ref("users/" + currentUser.uid).push({
-      link: "",
-      data: {
-        name: "name",
-        img: "image url",
-        ingredients: [
-          {
-            amount: "number",
-            unit: "string",
-            item: "name/description of item"
-          }
-        ],
-        directions: ["each", "paragraph", "or maybe the entire string"]
-      }
-    });
+    if (this.canAddLink(this.props.url)) {
+      database.ref("users/" + currentUser.uid).push({
+        link: this.props.url,
+        data: {
+          name: "name",
+          img: "image url",
+          ingredients: [
+            {
+              amount: "number",
+              unit: "string",
+              item: "name/description of item"
+            }
+          ],
+          directions: ["each", "paragraph", "or maybe the entire string"]
+        }
+      });
+    }
+  }
+
+  canAddLink(url) {
+    if (url != "") {
+      let currentUser = firebase.auth().currentUser;
+      console.log(database.ref("users/" + currentUser.uid).link);
+      return true;
+    }
+    return false;
   }
 
   render() {
