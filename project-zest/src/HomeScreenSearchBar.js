@@ -11,6 +11,7 @@ class HomeScreenSearchBar extends Component {
       errorText: ""
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handler = this.props.handler.bind(this);
   }
 
   handleChange(e, newValue) {
@@ -24,7 +25,8 @@ class HomeScreenSearchBar extends Component {
     // Verify email address is formatted properly
     if (IsUrl(this.state.url)) {
       this.setState({ errorText: "" });
-      this.props.handler(e, { url: this.state.url });
+      this.handler(e, { url: this.state.url });
+      this.handler(e, { goToRecipePage: true });
     } else {
       this.setState({ errorText: "Enter a valid URL" });
     }

@@ -1,15 +1,20 @@
 [
   {
-    "link": "url",
-    "name": "name",
-    "img": "image url",
-    "ingredients": [
-      {
-        "amount": "number",
-        "unit": "string",
-        "item": "name/description of item"
+    "users": {
+      "unique id for user": {
+        "recipe url link": {
+          "name": "name",
+          "img": "image url",
+          "ingredients": [
+            {
+              "amount": "number",
+              "unit": "string",
+              "item": "name/description of item"
+            }
+          ],
+          "directions": ["each", "paragraph", "or maybe the entire string"]
+        }
       }
-    ],
-    "directions": ["each", "paragraph", "or maybe the entire string"]
+    }
   }
 ]

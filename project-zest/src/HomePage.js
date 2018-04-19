@@ -50,7 +50,7 @@ class HomePage extends Component {
               <div className="flex-container">
                 <div className="flex-row">
                   <div className="flex-item">
-                    <HomeScreenSearchBar handler={this.handler} />
+                    <HomeScreenSearchBar handler={this.props.handler} />
                   </div>
                 </div>
               </div>

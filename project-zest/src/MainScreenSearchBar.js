@@ -1,17 +1,23 @@
 import React, { Component } from "react";
-// import TextField from "material-ui/TextField";
-// import RaisedButton from "material-ui/RaisedButton";
+import TextField from "material-ui/TextField";
+import RaisedButton from "material-ui/RaisedButton";
 import IsUrl from "is-url";
 
 class MainScreenSearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: "",
-      errorText: ""
+      errorText: "",
+      url: props.url
     };
     this.handleChange = this.handleChange.bind(this);
   }
+
+  // componentDidMount(newValue) {
+  //   this.setState({
+  //     url: this.props.url
+  //   });
+  // }
 
   handleChange(e, newValue) {
     e.preventDefault();
@@ -19,12 +25,19 @@ class MainScreenSearchBar extends Component {
     this.setState({ url: newValue });
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      url: nextProps.url,
+      user: nextProps.user
+    });
+  }
+
   onSearchClick = e => {
     e.preventDefault();
     // Verify email address is formatted properly
     if (IsUrl(this.state.url)) {
-      this.setState({ errorText: "" });
-      this.props.handler(e, { url: this.state.url });
+      this.setState({ errorText: "", url: this.state.url });
+      this.props.handler(e, { url: this.props.url });
     } else {
       this.setState({ errorText: "Enter a valid URL" });
     }
@@ -32,36 +45,15 @@ class MainScreenSearchBar extends Component {
 
   render() {
     return (
-      <div class="section">
-        <form action="#" id="search-form">
-          <div class="field has-addons">
-            <p class="control is-expanded">
-              <input
-                type="text"
-                id="url-input"
-                class="input is-fullwidth"
-                placeholder="Paste Link to Recipe here"
-                value={this.state.url}
-                onChange={this.handleChange}
-                errorText={this.state.errorText}
-              />
-            </p>
-            <p class="control">
-              <button
-                type="submit"
-                id="search-button"
-                class="button is-primary"
-                title="get page summary"
-                aria-label="get page summary"
-                onClick={this.onSearchClick}
-              >
-                <span class="icon is-small">
-                  <i class="fa fa-search" aria-hidden="true" />
-                </span>
-              </button>
-            </p>
-          </div>
-        </form>
+      <div className="form">
+        <TextField
+          floatingLabelText="Paste recipe URL here"
+          value={this.state.url}
+          onChange={this.handleChange}
+          errorText={this.state.errorText}
+        />
+        <br />
+        <RaisedButton label="Search" onClick={this.onSearchClick} />
       </div>
     );
   }
