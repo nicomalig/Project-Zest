@@ -44,17 +44,14 @@ class Scraper extends Component {
         }
     }
 
-    render() {
-        return (
-            <div className="flex-item">
-                <ul id="derp">
-                </ul>
-                <p>Scrape!</p>
-                {this.scrape("https://www.foodnetwork.com/recipes/alton-brown/the-chewy-recipe-1909046")}
-                {console.log("Entering scrape()")}
-            </div>
-        );
-    }
+render() {
+    return (
+        <div className="flex-item">
+            <p>Scrape!</p>
+            {this.scrape("https://www.foodnetwork.com/recipes/alton-brown/the-chewy-recipe-1909046")}
+        </div>
+    );
+}
 }
 
 export default Scraper;
