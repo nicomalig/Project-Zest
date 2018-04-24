@@ -1,0 +1,45 @@
+.flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* height: 80vh; */
+  padding: 0;
+  margin: 0;
+}
+
+.flex-row {
+  /* width: auto; */
+}
+
+.flex-item {
+  height: auto;
+  margin: 10px;
+  text-align: center;
+  top: 0px;
+  right: 0px;
+}
+
+.in {
+  color: #ffaa2d;
+}
+
+#favorite-button {
+  background-color: black;
+}
+
+#recipe-summary-div {
+  margin: 50px;
+}
+
+#main-screen {
+  background-image: url("./img/homeScreenBackground.jpg");
+  height: 120vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* .logo {
+  top: 0px;
+  right: 0px;
+} */
