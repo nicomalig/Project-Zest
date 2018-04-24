@@ -104,14 +104,14 @@ class App extends Component {
 							{// !this.state.buttonLabel === "Show Landing" &&
 								<div className="flex-item">
 									<h2>Happy Cappy Meeting</h2>
-									<h3>April 17th, 2018</h3>
+									<h3>April 24th, 2018</h3>
 									{this.state.date.toLocaleTimeString()}
 									<br />
 									<br />
 									<br />
 									<p><u>Meeting Minutes</u></p>
-									<p><i>- <a href="https://www.tesla.com/teslaaccount">https://www.tesla.com/teslaaccount</a></i></p>
-                  <p><i>- </i></p>
+									<p><i>- </i></p>
+                  					<p><i>- </i></p>
 								</div>
 							}
 
