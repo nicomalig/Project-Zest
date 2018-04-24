@@ -70,31 +70,32 @@ class App extends Component {
       <Router>
         <MuiThemeProvider muiTheme={muiTheme}>
           <div>
-            <Route path="/main" component={Recipe} />
-          </div>
+            <div>
+              <Route path="/main" component={Recipe} />
+            </div>
 
-          <div>
-            {/* No user is signed in */}
-            {!this.state.user &&
-              <div>
-                <HomePage handler={this.handler} />
-              </div>
-            }
+            <div>
+              {/* No user is signed in */}
+              {!this.state.user &&
+                <div>
+                  <HomePage handler={this.handler} />
+                </div>
+              }
 
-            {/* User is signed in */}
-            {this.state.user &&
-              <div>
-                <Recipe
-                  user={this.state.user}
-                  handler={this.handler}
-                  url={this.state.url}
-                />
+              {/* User is signed in */}
+              {this.state.user &&
+                <div>
+                  <Recipe
+                    user={this.state.user}
+                    handler={this.handler}
+                    url={this.state.url}
+                  />
 
-              </div>
-            }
+                </div>
+              }
 
 
-
+            </div>
           </div>
         </MuiThemeProvider>
       </Router>

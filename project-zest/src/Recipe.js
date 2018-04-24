@@ -24,17 +24,31 @@ const muiTheme = getMuiTheme({
     }
 });
 
+const cScraper = () => {
+    console.log("Entering cScraper");
+    
+    return (
+        <div>
+            <Scraper />
+        </div>
+    )
+}
+
 const cMainScreenSearchBar = () => {
-    <div>
-        <MainScreenSearchBar handler={this.props.handler} />
-    </div>
+    return (
+        <div>
+            <MainScreenSearchBar handler={this.props.handler} />
+        </div>
+    )
 }
 
 const cIngredients = () => {
-    <div>
-        <AlterRecipeBar />
-        <IngredientsList />
-    </div>
+    return (
+        <div>
+            <AlterRecipeBar />
+            <IngredientsList />
+        </div>
+    )
 };
 
 class Recipe extends Component {
@@ -123,7 +137,7 @@ class Recipe extends Component {
                         <MenuItem
                             primaryText="--Scraper"
                             onClick={this.handleClose}
-                            containerElement={<Link to="/scrape" />}
+                            containerElement={<Link to="/scraper" />}
 
                         />
                     </Drawer>
@@ -131,12 +145,12 @@ class Recipe extends Component {
                     {/* Holding Container */}
                     <div className="flex-container">
                         {/* ROUTES */}
-                        <Route exact path="/search" component={this.Search} />
+                        <Route exact path="/search" component={MainScreenSearchBar} />
                         <Route exact path="/summary" component={RecipeSummaryCard} />
                         <Route exact path="/directions" component={RecipeDirections} />
                         <Route exact path="/ingredients" component={cIngredients}/>
                         <Route path="/landing" component={Landing} />
-                        <Route path="/scraper" component={<Scraper />} />
+                        <Route path="/scraper" component={cScraper} />
 
                         {/* END ROUTES */}
 
