@@ -1,12 +1,19 @@
 import React, { Component } from "react";
-import ConversionComponent from "./ConversionComponent";
 
 class IngredientsList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: null
-    };
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     url: props.url,
+  //     user: props.user
+  //   };
+  // }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      url: nextProps.url,
+      user: nextProps.user
+    });
   }
 
   render() {

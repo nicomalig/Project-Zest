@@ -4,14 +4,15 @@ import RaisedButton from "material-ui/RaisedButton";
 import IsUrl from "is-url";
 
 class HomeScreenSearchBar extends Component {
-   constructor(props) {
-      super(props);
-      this.state = {
-         url: "",
-         errorText: ""
-      };
-      this.handleChange = this.handleChange.bind(this);
-   }
+  constructor(props) {
+    super(props);
+    this.state = {
+      url: "",
+      errorText: ""
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handler = this.props.handler.bind(this);
+  }
 
    handleChange(e, newValue) {
       e.preventDefault();
@@ -19,16 +20,17 @@ class HomeScreenSearchBar extends Component {
       this.setState({ url: newValue });
    }
 
-   onSearchClick = e => {
-      e.preventDefault();
-      // Verify email address is formatted properly
-      if (IsUrl(this.state.url)) {
-         this.setState({ errorText: "" });
-         this.props.handler(e, { url: this.state.url });
-      } else {
-         this.setState({ errorText: "Enter a valid URL" });
-      }
-   };
+  onSearchClick = e => {
+    e.preventDefault();
+    // Verify email address is formatted properly
+    if (IsUrl(this.state.url)) {
+      this.setState({ errorText: "" });
+      this.handler(e, { url: this.state.url });
+      this.handler(e, { goToRecipePage: true });
+    } else {
+      this.setState({ errorText: "Enter a valid URL" });
+    }
+  };
 
    render() {
       return (

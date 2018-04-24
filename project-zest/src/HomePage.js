@@ -29,12 +29,7 @@ class HomePage extends Component {
             <div className="flex-container" id="main-screen">
                <div className="flex-row">
                   <div className="flex-item">
-                     <img
-                        src={require("./img/zest.png")}
-                        width="118"
-                        height="130.25"
-                        alt="zest logo"
-                     />
+                    <HomeScreenSearchBar handler={this.props.handler} />
                   </div>
                </div>
                <div className="flex-row">

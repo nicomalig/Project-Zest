@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
+import ValidURLRecipe from "./ValidURLRecipe";
+import InvalidURLRecipe from "./InvalidURLRecipe";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import SignOutButton from "./SignOutButton";
@@ -53,12 +55,21 @@ const cIngredients = () => {
 
 class Recipe extends Component {
     constructor(props) {
-        super(props);
-        this.state = {
+    super(props);
+              this.state = {
             user: null,
             open: false,
         };
-    };
+    this.urlHasRecipe = this.urlHasRecipe.bind(this);
+    console.log(this.props.url);
+  }
+  handleClick = e => {
+    e.preventDefault();
+  };
+
+  urlHasRecipe(url) {
+    return true;
+  }
 
     handleClick = e => {
         e.preventDefault();
@@ -156,21 +167,22 @@ class Recipe extends Component {
 
                     </div>
 
-                    {/* <div className="flex-container">
-                        <div>
-                            <p> RECIPE PAGE</p>
-                            <MainScreenSearchBar handler={this.props.handler} />
-                        </div>
-
-                        <RecipeSummaryCard />
-                        <RecipeDirections />
-
-                        <div id="ingredients-div">
-                            <h2>Recipe</h2>
-                            <AlterRecipeBar />
-                            <IngredientsList />
-                        </div>
-                    </div> */}
+      <div>
+        {this.urlHasRecipe(this.props.url) && (
+          <ValidURLRecipe
+            user={this.props.user}
+            url={this.props.url}
+            handler={this.props.handler}
+          />
+        )}
+        {!this.urlHasRecipe(this.props.url) && (
+          <InvalidURLRecipe
+            user={this.props.user}
+            url={this.props.url}
+            handler={this.props.handler}
+          />
+        )}
+      </div>
                     {/* END Holding Container */}
 
                 </div>
