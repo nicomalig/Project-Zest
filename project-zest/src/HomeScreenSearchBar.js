@@ -14,11 +14,11 @@ class HomeScreenSearchBar extends Component {
     this.handler = this.props.handler.bind(this);
   }
 
-  handleChange(e, newValue) {
-    e.preventDefault();
-    console.log(newValue);
-    this.setState({ url: newValue });
-  }
+   handleChange(e, newValue) {
+      e.preventDefault();
+      console.log(newValue);
+      this.setState({ url: newValue });
+   }
 
   onSearchClick = e => {
     e.preventDefault();
@@ -32,20 +32,20 @@ class HomeScreenSearchBar extends Component {
     }
   };
 
-  render() {
-    return (
-      <div className="form">
-        <TextField
-          floatingLabelText="Paste recipe URL here"
-          value={this.state.url}
-          onChange={this.handleChange}
-          errorText={this.state.errorText}
-        />
-        <br />
-        <RaisedButton label="Start Cooking!" onClick={this.onSearchClick} />
-      </div>
-    );
-  }
+   render() {
+      return (
+         <div className="form flex-item">
+            <TextField
+               floatingLabelText="Paste recipe URL here"
+               value={this.state.url}
+               onChange={this.handleChange}
+               errorText={this.state.errorText}
+            />
+            <br />
+            <RaisedButton label="Start Cooking!" onClick={this.onSearchClick} />
+         </div>
+      );
+   }
 }
 
 export default HomeScreenSearchBar;

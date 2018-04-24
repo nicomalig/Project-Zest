@@ -3,6 +3,20 @@ import "./App.css";
 import { firebase } from "./FirebaseConfig";
 import Recipe from "./Recipe";
 import HomePage from "./HomePage";
+import AppBar from 'material-ui/AppBar';
+import SignOutButton from "./SignOutButton";
+import FlatButton from 'material-ui/FlatButton';
+import MainScreenSearchBar from "./MainScreenSearchBar";
+import RecipeSummaryCard from "./RecipeSummaryCard";
+import RecipeDirections from "./RecipeDirections";
+import AlterRecipeBar from "./AlterRecipeBar";
+import IngredientsList from "./IngredientsList";
+import Landing from "./Landing";
+
+
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import RaisedButton from "material-ui/RaisedButton/RaisedButton";
+
 
 class App extends Component {
   constructor(props) {
@@ -39,10 +53,8 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.user);
-    console.log(this.state.url);
-    console.log(this.state.goToRecipePage);
     return (
+      <Router>
       <div>
         {/* No user is signed in and no url inputted*/}
         {!this.state.user &&
@@ -67,6 +79,7 @@ class App extends Component {
           />
         )}
       </div>
+</Router>
     );
   }
 }
