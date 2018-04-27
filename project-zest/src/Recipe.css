@@ -16,8 +16,6 @@
   height: auto;
   margin: 10px;
   text-align: center;
-  top: 0px;
-  right: 0px;
 }
 
 .in {
@@ -30,6 +28,19 @@
 
 #recipe-summary-div {
   margin: 50px;
+  left: 0;
+}
+
+#conversion-bar {
+  float: left;
+}
+
+#direction-div {
+  float: right;
+}
+
+#ingredients-div {
+  left: 0;
 }
 
 #main-screen {
@@ -38,8 +49,3 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
-
-/* .logo {
-  top: 0px;
-  right: 0px;
-} */

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./RecipeSummaryCard.css";
 // import * as firebase from "firebase";
 
 class FavoriteButton extends Component {
@@ -12,7 +13,7 @@ class FavoriteButton extends Component {
   render() {
     console.log(this.props.user);
     return (
-      <div>
+      <span>
         <button
           id="favorite-button"
           label="favorite recipe"
@@ -26,7 +27,7 @@ class FavoriteButton extends Component {
             alt="favorite button"
           />
         </button>
-      </div>
+      </span>
     );
   }
 }

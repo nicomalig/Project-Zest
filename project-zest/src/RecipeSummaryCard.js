@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import FavoriteButton from "./FavoriteButton";
+import "./RecipeSummaryCard.css"
 
 class RecipeSummaryCard extends Component {
   constructor(props) {
@@ -15,13 +16,11 @@ class RecipeSummaryCard extends Component {
       <div id="recipe-summary-div">
         <div id="recipe-name-bar" className="flex-row">
           <span id="recipe-name">Simple Chocolate Chip Cookie</span>
-          <FavoriteButton />
+          <FavoriteButton className="favorite-button" />
         </div>
         <div id="recipe-img">
           <img
             src={require("./img/chocolateChipCookies.jpg")}
-            width="400"
-            height="240"
             alt="recipe"
           />
         </div>

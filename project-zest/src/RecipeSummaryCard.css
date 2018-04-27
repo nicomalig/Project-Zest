@@ -1,0 +1,31 @@
+#recipe-name-bar {
+background-color: orange;
+left: inherit;
+height: auto;
+padding: 5px;
+width: auto;
+}
+
+#favorite-button {
+  position: relative;
+  float: right;
+  padding: 5;
+  padding-top: 3px;
+  border: none;
+  background: none;
+}
+
+#recipe-name {
+  font-size: 25px;
+  color: white;
+  padding-left: 5;
+}
+
+#recipe-img {
+  width: 50%;
+  float: left;
+}
+
+#recipe-information {
+  float: right;
+}

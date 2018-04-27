@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
+import "./Recipe.css";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import SignOutButton from "./SignOutButton";
@@ -37,8 +37,6 @@ class Recipe extends Component {
 
           <RecipeSummaryCard />
 
-          <RecipeDirections />
-
           {/* component: RecipeIngredients */}
           <div id="ingredients-div">
             <h2>Recipe</h2>
@@ -49,6 +47,7 @@ class Recipe extends Component {
             {/* component: IngredientsList */}
             <IngredientsList />
           </div>
+          <RecipeDirections />
         </div>
         <div>
           <p>Welcome {this.props.user.displayName}</p>
