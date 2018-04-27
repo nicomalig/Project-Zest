@@ -162,9 +162,7 @@ class Recipe extends Component {
                         <Route exact path="/ingredients" component={cIngredients}/>
                         <Route path="/landing" component={Landing} />
                         <Route path="/scraper" component={cScraper} />
-
                         {/* END ROUTES */}
-
                     </div>
 
       <div>

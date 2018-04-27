@@ -60,7 +60,7 @@ class App extends Component {
         {!this.state.user &&
           !this.state.goToRecipePage && <HomePage handler={this.handler} />}
 
-        {/* No user is signed in but url inputed*/}
+        {/* No user is signed in but url inputted*/}
         {!this.state.user &&
           this.state.goToRecipePage && (
             <Recipe

@@ -45,7 +45,7 @@ class HomePage extends Component {
                   </div>
                   <div className="flex-row">
                      <div className="flex-item">
-                        <HomeScreenSearchBar handler={this.handler} />
+                        <HomeScreenSearchBar handler={this.props.handler} />
                      </div>
                      <br />
                      <div id="login-div" className="flex-item">

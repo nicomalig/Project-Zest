@@ -3,35 +3,56 @@
 // Capstone 2018
 
 import React, { Component } from 'react';
-
-// var database
+import TextField from "material-ui/TextField";
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Scraper extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
-        // database = this.props.db
+        this.state = {
+            tf: 'https://www.foodnetwork.com/recipes/alton-brown/the-chewy-recipe-1909046',
+        }
+        // this.handleType = this.handleType.bind(this)
+        // this.scrape = this.scrape.bind(this)
+    }
+
+    handleType = (e) => {
+        var url = e.target.value
+        console.log(url);
+        
+        this.setState({
+            tf: url
+        })
     }
 
     // Scrape a page and save the JSON'ified recipe into this component's state
-    scrape(url) {        
-        var urlF = encodeURI(url)
-        var hostName = this.getHostName(urlF)
-
-        var wholePage = fetch(url)
-            .then((response) => {
-                // THIS IS FUCKED WTF
-                console.log(response);
-                response.json().then(data => ({
-                    data: data,
-                    status: response.status,
+    scrape = (e) => {
+        e.preventDefault()
+        var url = this.state.tf // TODO: validate
+        console.log("url: " + url)
+    
+        fetch(url, {
+            method: 'GET'
+            }).then((response) => {
+                console.log(response.status);
+                response.text().then((text) => {
+                    // now we need to parse the text, but we
+                    // have it!
+                    console.log(text);
+                    
+                    
+                    
                 })
-            ).then(res => {
-                console.log(res.status, res.data.title)
-                console.log("What");
-                
+                // .then(data => ({
+                //     data: data,
+                //     status: response.status,
+                // })
+                // ).then(res => {
+                //     console.log(res.status, res.data.title)
+                //     console.log("What");
+
+                // })
             })
-        })
     }
 
     getHostName(url) {
@@ -44,14 +65,23 @@ class Scraper extends Component {
         }
     }
 
-render() {
-    return (
-        <div className="flex-item">
-            <p>Scrape!</p>
-            {this.scrape("https://www.foodnetwork.com/recipes/alton-brown/the-chewy-recipe-1909046")}
-        </div>
-    );
-}
+    render() {
+        return (
+            <div className="flex-item">
+                <p>Scrape!</p>
+                <TextField 
+                    id="scrape-field" 
+                    value={this.state.tf} 
+                    onChange={this.handleType} 
+                /><br />
+
+                <RaisedButton 
+                    label="Scrape!" 
+                    onClick={this.scrape} 
+                />
+            </div>
+        );
+    }
 }
 
 export default Scraper;
