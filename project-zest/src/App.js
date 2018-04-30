@@ -3,20 +3,17 @@ import "./App.css";
 import { firebase } from "./FirebaseConfig";
 import Recipe from "./Recipe";
 import HomePage from "./HomePage";
-import AppBar from 'material-ui/AppBar';
+import AppBar from "material-ui/AppBar";
 import SignOutButton from "./SignOutButton";
-import FlatButton from 'material-ui/FlatButton';
+import FlatButton from "material-ui/FlatButton";
 import MainScreenSearchBar from "./MainScreenSearchBar";
 import RecipeSummaryCard from "./RecipeSummaryCard";
 import RecipeDirections from "./RecipeDirections";
 import AlterRecipeBar from "./AlterRecipeBar";
 import IngredientsList from "./IngredientsList";
 import Landing from "./Landing";
-
-
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import RaisedButton from "material-ui/RaisedButton/RaisedButton";
-
 
 class App extends Component {
   constructor(props) {
@@ -55,31 +52,31 @@ class App extends Component {
   render() {
     return (
       <Router>
-      <div>
-        {/* No user is signed in and no url inputted*/}
-        {!this.state.user &&
-          !this.state.goToRecipePage && <HomePage handler={this.handler} />}
+        <div>
+          {/* No user is signed in and no url inputted*/}
+          {!this.state.user &&
+            !this.state.goToRecipePage && <HomePage handler={this.handler} />}
 
-        {/* No user is signed in but url inputed*/}
-        {!this.state.user &&
-          this.state.goToRecipePage && (
+          {/* No user is signed in but url inputed*/}
+          {!this.state.user &&
+            this.state.goToRecipePage && (
+              <Recipe
+                user={this.state.user}
+                handler={this.handler}
+                url={this.state.url}
+              />
+            )}
+
+          {/* User is signed in */}
+          {this.state.user && (
             <Recipe
               user={this.state.user}
               handler={this.handler}
               url={this.state.url}
             />
           )}
-
-        {/* User is signed in */}
-        {this.state.user && (
-          <Recipe
-            user={this.state.user}
-            handler={this.handler}
-            url={this.state.url}
-          />
-        )}
-      </div>
-</Router>
+        </div>
+      </Router>
     );
   }
 }
