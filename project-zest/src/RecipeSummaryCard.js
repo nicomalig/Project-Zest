@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import FavoriteButton from "./FavoriteButton";
-import "./RecipeSummaryCard.css"
+import "./RecipeSummaryCard.css";
 
 class RecipeSummaryCard extends Component {
   constructor(props) {
@@ -18,10 +18,11 @@ class RecipeSummaryCard extends Component {
           <span id="recipe-name">Simple Chocolate Chip Cookie</span>
           <FavoriteButton className="favorite-button" />
         </div>
-        <div id="recipe-img">
+        <div id="recipe-img-div">
           <img
             src={require("./img/chocolateChipCookies.jpg")}
             alt="recipe"
+            id="recipe-img"
           />
         </div>
         <div id="recipe-information">
