@@ -5,41 +5,97 @@ import { firebase, database } from "./FirebaseConfig";
 class FavoriteButton extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   url: this.props.url
-    // };
+    this.state = {
+      liked: false,
+      linkID: ""
+    };
     this.toggleFavorite = this.toggleFavorite.bind(this);
     this.canAddLink = this.canAddLink.bind(this);
-    console.log("HELLO HELLO HELLO");
+    this.isInDatabase = this.isInDatabase.bind(this);
+    this.userExistsCallback = this.userExistsCallback.bind(this);
+    this.checkIfUserExists = this.checkIfUserExists.bind(this);
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({
-  //     url: nextProps.url,
-  //     user: nextProps.user
-  //   });
-  //   console.log(this.props.url);
-  // }
+  componentDidMount() {
+    if (this.isInDatabase()) {
+      this.setState({
+        liked: true
+      });
+      console.log("liked");
+    } else {
+      this.setState({
+        liked: false
+      });
+      console.log("NOPE");
+    }
+  }
 
   toggleFavorite(e) {
     e.preventDefault();
     let currentUser = firebase.auth().currentUser;
     console.log(this.props.url);
-    if (this.canAddLink(this.props.url)) {
-      database.ref("users/" + currentUser.uid).push({
-        link: this.props.url,
-        data: {
-          name: "name",
-          img: "image url",
-          ingredients: [
-            {
-              amount: "number",
-              unit: "string",
-              item: "name/description of item"
-            }
-          ],
-          directions: ["each", "paragraph", "or maybe the entire string"]
+
+    if (this.state.liked) {
+      this.setState({
+        liked: false
+      });
+      console.log("liked is now false");
+    } else {
+      if (this.canAddLink(this.props.url)) {
+        this.setState({
+          liked: true
+        });
+        console.log("liked is TRU");
+        database.ref("users/" + currentUser.uid).push({
+          link: this.props.url,
+          data: {
+            name: "name",
+            img: "image url",
+            ingredients: [
+              {
+                amount: "number",
+                unit: "string",
+                item: "name/description of item"
+              }
+            ],
+            directions: ["each", "paragraph", "or maybe the entire string"]
+          }
+        });
+      }
+    }
+  }
+
+  isInDatabase() {
+    let currentUser = firebase.auth().currentUser;
+    var ref = firebase.database().ref("users/" + currentUser.uid);
+    var url = this.props.url;
+    ref.on("value", function(snapshot) {
+      snapshot.forEach(function(linkSnapshot) {
+        console.log(linkSnapshot.link);
+        if (linkSnapshot.link == url) {
+          return true;
         }
+      });
+    });
+    return false;
+  }
+
+  userExistsCallback(userId, exists) {
+    if (exists) {
+      alert("user " + userId + " exists!");
+    } else {
+      alert("user " + userId + " does not exist!");
+    }
+  }
+
+  // Tests to see if /users/<userId> has any data.
+  checkIfUserExists(userId) {
+    var ref = firebase.database().ref(`users/${userId}/${this.props.url}`);
+    if (ref != null) {
+      ref.once("value").then(function(snapshot) {
+        console.log(snapshot);
+        var childKey = snapshot.child("link").key; // "last"
+        console.log(childKey);
       });
     }
   }
@@ -63,12 +119,22 @@ class FavoriteButton extends Component {
           onClick={this.toggleFavorite}
         >
           {/* component: FavoriteButton */}
-          <img
-            src={require("./img/whiteHeart1.png")}
-            width="20"
-            height="20"
-            alt="favorite button"
-          />
+          {!this.state.liked && (
+            <img
+              src={require("./img/whiteHeart1.png")}
+              width="20"
+              height="20"
+              alt="favorite button"
+            />
+          )}
+          {this.state.liked && (
+            <img
+              src={require("./img/filledWhiteHeart1.png")}
+              width="20"
+              height="20"
+              alt="favorite button"
+            />
+          )}
         </button>
         <div id="label"> </div>
       </div>

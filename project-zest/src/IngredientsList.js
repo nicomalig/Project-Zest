@@ -22,7 +22,8 @@ class IngredientsList extends Component {
       <div id="ingredients-list" className="flex-item">
         <ul>
           <li>
-            <span>2 1/4</span> <span>cups</span> all-purpose flour
+            <span>2 1/4</span> <span className="cup">cups</span> all-purpose
+            flour
           </li>
           <li>
             <span>1</span> <span>teaspoon</span> baking soda

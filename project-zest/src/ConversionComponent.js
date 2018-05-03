@@ -12,7 +12,7 @@ class ConversionComponent extends Component {
     console.log(this.props.user);
     return (
       <div id="conversion-div" className="flex-item">
-        <select>
+        <select id="from-convert">
           <option value="cup">cup</option>
           <option value="gallon">gallon</option>
           <option value="quart">quart</option>
@@ -24,7 +24,7 @@ class ConversionComponent extends Component {
           <option value="milliliter">milliliter</option>
         </select>
         to
-        <select>
+        <select id="to-convert">
           <option value="cup">cup</option>
           <option value="gallon">gallon</option>
           <option value="quart">quart</option>
