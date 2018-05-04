@@ -1,6 +1,6 @@
 ## A Comprehensive Recipe Manager
 
-<img src="https://projectze.st/static/media/zest.c2cebea3.png" align="center" height="427" width="387">
+<a href="https://projectze.st"> <img src="https://projectze.st/static/media/zest.c2cebea3.png" align="center" height="427" width="387"> </a>
 
 
 Thanks for visiting our GitHub Page. Team Happy Cappy is excited to deliver Project Zest, a web-based recipe management tool. To be notified of our progress on the development of this time-saving tool, [visit our website](https://projectze.st)!
