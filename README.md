@@ -1,49 +1,24 @@
-## Project Zest
+## A Comprehensive Recipe Manager
+
+<img src="https://projectze.st/static/media/zest.c2cebea3.png" align="center" height="427" width="387">
+
 
 Thanks for visiting our GitHub Page. Team Happy Cappy is excited to deliver Project Zest, a web-based recipe management tool. To be notified of our progress on the development of this time-saving tool, [visit our website](https://projectze.st)!
 
 ### Problem Space
-It's dinnertime and you or the family is hungry. You can't wait to test out this amazing recipe for Chicken Pot Pie
+When people are cooking, they often have to go to Google in order to convert units or do calculations to alter recipe proportions. This takes up a lot of time, so we built Zest to create a seamless cooking experience. People are able to convert units, alter recipes, and save modified recipes from a single platform; increasing convenience and cook time.
+
+### Solution
+Project Zest is a fully-featured web application that allows people to cook without the hassle of doing any complicated conversions. Zest allows users to quickly
+1. alter proportion sizes
+2. change units
+3. save modified recipes
+Rather than juggling multiple sites, cook books, and calculators, you can do everything within Zest at a click of a button. 
+
+### Use Case
+Imagine a user is trying to cook a recipe for chicken noodle soup, but is encountering many common cooking issues. A recipe they found has ingredients and directions for 2 servings, but our aspiring chef needs to serve a family of 7. Performing such computations is time consuming and it's almost dinnertime, but yet another problem comes up. Our user's recipe calls for carrots, but is there is a picky eater tonight!
 
 
-Project Zest aims to solve the frustrating problem of remembering, converting, or managing recipes.
+_Zest is designed to intuitively collect recipe information and deliver instant calculations. It's designed around the user and easily adapts the recipe to the user's preferences. Ingredients can be removed, added, or adjusted. As is often needed, units can be converted on the fly. For example, tablespoons to teaspoons or cups to ounces! Don't make cooking a test, use Zest!_
 
 
-
-
-
-You can use the [editor on GitHub](https://github.com/nicomalig/Project-Zest/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/nicomalig/Project-Zest/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
