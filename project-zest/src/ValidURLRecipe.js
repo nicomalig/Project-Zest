@@ -11,6 +11,7 @@ import RecipeSummaryCard from "./RecipeSummaryCard";
 import RecipeDirections from "./RecipeDirections";
 import AlterRecipeBar from "./AlterRecipeBar";
 import IngredientsList from "./IngredientsList";
+import ConvertUnits from "convert-units";
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -30,7 +31,36 @@ class ValidURLRecipe extends Component {
   //   });
   // }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      convertTo: "",
+      convertFrom: "",
+      conversion: 0
+    };
+    this.recipeHandler = this.recipeHandler.bind(this);
+    this.getConversionRate = this.getConversionRate.bind(this);
+  }
+
+  recipeHandler(e, newState) {
+    console.log("recipehandler");
+    e.preventDefault();
+    this.setState(newState).then(() => {
+      this.getConversionRate();
+    });
+  }
+
+  getConversionRate() {
+    console.log(this.state);
+    // var con = ConvertUnits(1)
+    //   .from(this.state.convertFrom)
+    //   .to(this.state.convertTo);
+    // console.log(con);
+  }
+
   render() {
+    console.log(this.state);
+    this.getConversionRate();
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className="flex-container">
@@ -52,10 +82,16 @@ class ValidURLRecipe extends Component {
             <h2>Recipe</h2>
 
             {/* component: AlterRecipeBar */}
-            <AlterRecipeBar />
+            <AlterRecipeBar
+              conversion={this.state.conversion}
+              handler={this.recipeHandler}
+            />
 
             {/* component: IngredientsList */}
-            <IngredientsList />
+            <IngredientsList
+              conversion={this.state.conversion}
+              handler={this.recipeHandler}
+            />
           </div>
         </div>
         {this.props.user && (

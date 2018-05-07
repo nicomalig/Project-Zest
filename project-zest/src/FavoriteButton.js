@@ -6,104 +6,118 @@ class FavoriteButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      liked: false,
-      linkID: ""
+      liked: false
     };
     this.toggleFavorite = this.toggleFavorite.bind(this);
     this.canAddLink = this.canAddLink.bind(this);
     this.isInDatabase = this.isInDatabase.bind(this);
-    this.userExistsCallback = this.userExistsCallback.bind(this);
-    this.checkIfUserExists = this.checkIfUserExists.bind(this);
-  }
-
-  componentDidMount() {
-    if (this.isInDatabase()) {
-      this.setState({
-        liked: true
-      });
-      console.log("liked");
-    } else {
-      this.setState({
-        liked: false
-      });
-      console.log("NOPE");
-    }
+    this.deleteDataFromDatabase = this.deleteDataFromDatabase.bind(this);
+    this.getIdOfLink = this.getIdOfLink.bind(this);
   }
 
   toggleFavorite(e) {
+    console.log("toggleFav");
     e.preventDefault();
     let currentUser = firebase.auth().currentUser;
     console.log(this.props.url);
-
     if (this.state.liked) {
-      this.setState({
-        liked: false
-      });
-      console.log("liked is now false");
+      this.deleteDataFromDatabase();
     } else {
-      if (this.canAddLink(this.props.url)) {
-        this.setState({
-          liked: true
-        });
-        console.log("liked is TRU");
-        database.ref("users/" + currentUser.uid).push({
-          link: this.props.url,
-          data: {
-            name: "name",
-            img: "image url",
-            ingredients: [
-              {
-                amount: "number",
-                unit: "string",
-                item: "name/description of item"
-              }
-            ],
-            directions: ["each", "paragraph", "or maybe the entire string"]
-          }
-        });
-      }
+      this.addToDatabase(currentUser);
+    }
+  }
+
+  addToDatabase(currentUser) {
+    if (this.canAddLink()) {
+      this.setState({
+        liked: true
+      });
+      console.log("liked is TRU");
+      database.ref("users/" + currentUser.uid).push({
+        link: this.props.url,
+        data: {
+          name: "name",
+          img: "image url",
+          ingredients: [
+            {
+              amount: "number",
+              unit: "string",
+              item: "name/description of item"
+            }
+          ],
+          directions: ["each", "paragraph", "or maybe the entire string"]
+        }
+      });
+    }
+  }
+
+  getIdOfLink() {
+    console.log("getIdOfLink");
+    let currentUser = firebase.auth().currentUser;
+    var ref = firebase.database().ref("users/" + currentUser.uid);
+    var url = this.props.url;
+    var id = "";
+    ref.on("value", function(snapshot) {
+      snapshot.forEach(function(linkSnapshot) {
+        var data = linkSnapshot.key;
+        console.log(data);
+        if (linkSnapshot.val().link == url) {
+          id = data;
+        }
+      });
+    });
+    return id;
+  }
+
+  deleteDataFromDatabase() {
+    this.setState({
+      liked: false
+    });
+    var uid = firebase.auth().currentUser.uid;
+    var id = this.getIdOfLink();
+    if (id != "") {
+      firebase
+        .database()
+        .ref("users/" + uid)
+        .child(id)
+        .remove();
     }
   }
 
   isInDatabase() {
+    console.log("isINdatabase");
     let currentUser = firebase.auth().currentUser;
     var ref = firebase.database().ref("users/" + currentUser.uid);
     var url = this.props.url;
+    var check = false;
     ref.on("value", function(snapshot) {
       snapshot.forEach(function(linkSnapshot) {
-        console.log(linkSnapshot.link);
-        if (linkSnapshot.link == url) {
-          return true;
+        var data = linkSnapshot.val();
+        if (data.link == url) {
+          console.log("data link = url");
+          check = true;
+          return check;
         }
       });
     });
-    return false;
+    return check;
   }
 
-  userExistsCallback(userId, exists) {
-    if (exists) {
-      alert("user " + userId + " exists!");
-    } else {
-      alert("user " + userId + " does not exist!");
-    }
-  }
+  // // Tests to see if /users/<userId> has any data.
+  // checkIfUserExists(userId) {
+  //   console.log("checkifuserexists");
+  //   var ref = firebase.database().ref(`users/${userId}/${this.props.url}`);
+  //   if (ref != null) {
+  //     ref.once("value").then(function(snapshot) {
+  //       console.log(snapshot);
+  //       var childKey = snapshot.child("link").key; // "last"
+  //       console.log(childKey);
+  //     });
+  //   }
+  // }
 
-  // Tests to see if /users/<userId> has any data.
-  checkIfUserExists(userId) {
-    var ref = firebase.database().ref(`users/${userId}/${this.props.url}`);
-    if (ref != null) {
-      ref.once("value").then(function(snapshot) {
-        console.log(snapshot);
-        var childKey = snapshot.child("link").key; // "last"
-        console.log(childKey);
-      });
-    }
-  }
-
-  canAddLink(url) {
-    if (url != "") {
-      let currentUser = firebase.auth().currentUser;
-      console.log(database.ref("users/" + currentUser.uid).link);
+  canAddLink() {
+    if (this.props.url != "" && !this.isInDatabase()) {
       return true;
     }
     return false;
@@ -111,6 +125,12 @@ class FavoriteButton extends Component {
 
   render() {
     console.log(this.props.user);
+    if (!this.state.liked && this.isInDatabase()) {
+      console.log("is in database - render");
+      this.setState({
+        liked: true
+      });
+    }
     return (
       <div>
         <button
@@ -118,7 +138,6 @@ class FavoriteButton extends Component {
           label="favorite recipe"
           onClick={this.toggleFavorite}
         >
-          {/* component: FavoriteButton */}
           {!this.state.liked && (
             <img
               src={require("./img/whiteHeart1.png")}

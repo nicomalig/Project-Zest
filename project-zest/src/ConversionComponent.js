@@ -4,38 +4,69 @@ class ConversionComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null
+      convertTo: "cup",
+      convertFrom: "cup"
     };
+    this.onConvertClick = this.onConvertClick.bind(this);
+    this.changeTo = this.changeTo.bind(this);
+    this.changeFrom = this.changeFrom.bind(this);
+  }
+
+  onConvertClick(e) {
+    e.preventDefault();
+    if (this.state.convertFrom != this.state.convertTo) {
+      this.props.handler(e, {
+        convertTo: this.state.convertTo,
+        convertFrom: this.state.convertFrom
+      });
+    }
+  }
+
+  changeTo(e) {
+    e.preventDefault();
+    var newValue = document.getElementById("to-convert").value;
+    this.setState({
+      convertTo: newValue
+    });
+    console.log(newValue);
+  }
+
+  changeFrom(e) {
+    e.preventDefault();
+    var newValue = document.getElementById("from-convert").value;
+    this.setState({
+      convertFrom: newValue
+    });
+    console.log(newValue);
   }
 
   render() {
-    console.log(this.props.user);
     return (
       <div id="conversion-div" className="flex-item">
-        <select id="from-convert">
+        <select id="from-convert" onChange={this.changeFrom}>
           <option value="cup">cup</option>
-          <option value="gallon">gallon</option>
-          <option value="quart">quart</option>
-          <option value="pint">pint</option>
-          <option value="ounce">ounce</option>
-          <option value="tablespoon">tablespoon</option>
-          <option value="teaspoon">teaspoon</option>
-          <option value="liter">liter</option>
-          <option value="milliliter">milliliter</option>
+          <option value="gal">gallon</option>
+          <option value="qt">quart</option>
+          <option value="pnt">pint</option>
+          <option value="fl-oz">ounce</option>
+          <option value="Tbs">tablespoon</option>
+          <option value="tps">teaspoon</option>
+          <option value="l">liter</option>
+          <option value="ml">milliliter</option>
         </select>
         to
-        <select id="to-convert">
+        <select id="to-convert" onChange={this.changeTo}>
           <option value="cup">cup</option>
-          <option value="gallon">gallon</option>
-          <option value="quart">quart</option>
-          <option value="pint">pint</option>
-          <option value="ounce">ounce</option>
-          <option value="tablespoon">tablespoon</option>
-          <option value="teaspoon">teaspoon</option>
-          <option value="liter">liter</option>
-          <option value="milliliter">milliliter</option>
+          <option value="gal">gallon</option>
+          <option value="qt">quart</option>
+          <option value="pnt">pint</option>
+          <option value="fl-oz">ounce</option>
+          <option value="Tbs">tablespoon</option>
+          <option value="tps">teaspoon</option>
+          <option value="l">liter</option>
+          <option value="ml">milliliter</option>
         </select>
-        <button> Convert </button>
+        <button onClick={this.onConvertClick}> Convert </button>
       </div>
     );
   }
