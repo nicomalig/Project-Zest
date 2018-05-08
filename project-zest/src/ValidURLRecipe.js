@@ -45,22 +45,26 @@ class ValidURLRecipe extends Component {
   recipeHandler(e, newState) {
     console.log("recipehandler");
     e.preventDefault();
-    this.setState(newState).then(() => {
-      this.getConversionRate();
-    });
+    this.setState(newState);
   }
 
   getConversionRate() {
     console.log(this.state);
-    // var con = ConvertUnits(1)
-    //   .from(this.state.convertFrom)
-    //   .to(this.state.convertTo);
-    // console.log(con);
+    var convert = ConvertUnits(1);
+    var con = 1;
+    if (this.state.convertFrom != "" && this.state.convertTo != "") {
+      con = convert.from(this.state.convertFrom).to(this.state.convertTo);
+    }
+    console.log(con);
+    return con;
   }
 
   render() {
     console.log(this.state);
-    this.getConversionRate();
+    var con = this.getConversionRate();
+    if (con !== this.state.conversion) {
+      this.setState({ conversion: con });
+    }
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className="flex-container">
@@ -90,6 +94,8 @@ class ValidURLRecipe extends Component {
             {/* component: IngredientsList */}
             <IngredientsList
               conversion={this.state.conversion}
+              convertFrom={this.state.convertFrom}
+              convertTo={this.state.convertTo}
               handler={this.recipeHandler}
             />
           </div>

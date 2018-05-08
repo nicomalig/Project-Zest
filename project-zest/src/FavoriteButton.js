@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { firebase, database } from "./FirebaseConfig";
-// import * as firebase from "firebase";
 
 class FavoriteButton extends Component {
   constructor(props) {
@@ -102,19 +101,6 @@ class FavoriteButton extends Component {
     });
     return check;
   }
-
-  // // Tests to see if /users/<userId> has any data.
-  // checkIfUserExists(userId) {
-  //   console.log("checkifuserexists");
-  //   var ref = firebase.database().ref(`users/${userId}/${this.props.url}`);
-  //   if (ref != null) {
-  //     ref.once("value").then(function(snapshot) {
-  //       console.log(snapshot);
-  //       var childKey = snapshot.child("link").key; // "last"
-  //       console.log(childKey);
-  //     });
-  //   }
-  // }
 
   canAddLink() {
     if (this.props.url != "" && !this.isInDatabase()) {

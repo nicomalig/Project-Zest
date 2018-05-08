@@ -14,7 +14,7 @@ class ConversionComponent extends Component {
 
   onConvertClick(e) {
     e.preventDefault();
-    if (this.state.convertFrom != this.state.convertTo) {
+    if (this.state.convertFrom != "" && this.state.convertTo != "") {
       this.props.handler(e, {
         convertTo: this.state.convertTo,
         convertFrom: this.state.convertFrom
@@ -50,7 +50,7 @@ class ConversionComponent extends Component {
           <option value="pnt">pint</option>
           <option value="fl-oz">ounce</option>
           <option value="Tbs">tablespoon</option>
-          <option value="tps">teaspoon</option>
+          <option value="tsp">teaspoon</option>
           <option value="l">liter</option>
           <option value="ml">milliliter</option>
         </select>
@@ -62,7 +62,7 @@ class ConversionComponent extends Component {
           <option value="pnt">pint</option>
           <option value="fl-oz">ounce</option>
           <option value="Tbs">tablespoon</option>
-          <option value="tps">teaspoon</option>
+          <option value="tsp">teaspoon</option>
           <option value="l">liter</option>
           <option value="ml">milliliter</option>
         </select>
