@@ -174,8 +174,7 @@ class Recipe extends Component {
                 handler={this.props.handler}
               />
             )}
-          </div>
-          {/* END Holding Container */}
+          </div
         </div>
 
         {/* 

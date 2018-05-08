@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
+import "./HomePage.css";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import LogInWithFacebookButton from "./LogInWithFacebookButton";

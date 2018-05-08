@@ -123,7 +123,7 @@ class FavoriteButton extends Component {
       });
     }
     return (
-      <div>
+      <span>
         <button
           id="favorite-button"
           label="favorite recipe"
@@ -146,8 +146,7 @@ class FavoriteButton extends Component {
             />
           )}
         </button>
-        <div id="label"> </div>
-      </div>
+      </span>
     );
   }
 }
