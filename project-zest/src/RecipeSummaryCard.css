@@ -38,5 +38,7 @@
   line-height: 4px;
 }
 
-/* #recipe-summary-div {
-} */
+#recipe-summary-div {
+  border: 2px;
+  border-color: black;
+}
