@@ -39,6 +39,7 @@
 }
 
 #recipe-summary-div {
-  border: 2px;
-  border-color: black;
+  border: 1px solid black;
+  box-shadow: 3px 3px hsl(0, 0%, 19%);
+  display: block;
 }
