@@ -16,3 +16,4 @@ echo "**********************************"
 echo "******* Updating Droplet *********"
 echo "**********************************"
 ssh root@api.project-zest.nicomalig.com 'bash -s' < upgrade-server.sh
+
