@@ -93,71 +93,79 @@ class Recipe extends Component {
 
   render() {
     return (
-      <div>
-        <AppBar
-          title="Project Zest"
-          showMenuIconButton={true}
-          onLeftIconButtonClick={() => this.setState({ open: true })}
-          iconElementRight={
-            <div>
-              <SignOutButton
+      <MuiThemeProvider muiTheme={muiTheme}>
+        <div>
+          <AppBar
+            title="Project Zest"
+            showMenuIconButton={true}
+            onLeftIconButtonClick={() => this.setState({ open: true })}
+            iconElementRight={
+              <div>
+                <SignOutButton
+                  user={this.props.user}
+                  handler={this.props.handler}
+                />
+              </div>
+            }
+          />
+
+          <Drawer
+            open={this.state.open}
+            docked={false}
+            onRequestChange={open => this.setState({ open })}
+          >
+            <MenuItem
+              primaryText="Search"
+              onClick={this.handleClose}
+              containerElement={<Link to="/search" />}
+            />
+            <MenuItem
+              primaryText="Summary"
+              onClick={this.handleClose}
+              containerElement={<Link to="/summary" />}
+            />
+            <MenuItem
+              primaryText="Directions"
+              onClick={this.handleClose}
+              containerElement={<Link to="/directions" />}
+            />
+            <MenuItem
+              primaryText="Ingredients"
+              onClick={this.handleClose}
+              containerElement={<Link to="/ingredients" />}
+            />
+            <MenuItem
+              primaryText="--Landing"
+              onClick={this.handleClose}
+              containerElement={<Link to="/landing" />}
+            />
+            <MenuItem
+              primaryText="--Scraper"
+              onClick={this.handleClose}
+              containerElement={<Link to="/scraper" />}
+            />
+          </Drawer>
+
+          {/* Holding Container */}
+          <div className="flex-container">
+            {/* ROUTES */}
+            <Route exact path="/search" component={MainScreenSearchBar} />
+            <Route exact path="/summary" component={RecipeSummaryCard} />
+            <Route exact path="/directions" component={RecipeDirections} />
+            <Route exact path="/ingredients" component={cIngredients} />
+            <Route path="/landing" component={Landing} />
+            <Route path="/scraper" component={cScraper} />
+
+            {/* END ROUTES */}
+          </div>
+
+          <div>
+            {this.urlHasRecipe(this.props.url) && (
+              <ValidURLRecipe
                 user={this.props.user}
+                url={this.props.url}
                 handler={this.props.handler}
               />
-<<<<<<< HEAD
-            </div>
-          }
-        />
-
-        <Drawer
-          open={this.state.open}
-          docked={false}
-          onRequestChange={open => this.setState({ open })}
-        >
-          <MenuItem
-            primaryText="Search"
-            onClick={this.handleClose}
-            containerElement={<Link to="/search" />}
-          />
-          <MenuItem
-            primaryText="Summary"
-            onClick={this.handleClose}
-            containerElement={<Link to="/summary" />}
-          />
-          <MenuItem
-            primaryText="Directions"
-            onClick={this.handleClose}
-            containerElement={<Link to="/directions" />}
-          />
-          <MenuItem
-            primaryText="Ingredients"
-            onClick={this.handleClose}
-            containerElement={<Link to="/ingredients" />}
-          />
-          <MenuItem
-            primaryText="--Landing"
-            onClick={this.handleClose}
-            containerElement={<Link to="/landing" />}
-          />
-          <MenuItem
-            primaryText="--Scraper"
-            onClick={this.handleClose}
-            containerElement={<Link to="/scraper" />}
-          />
-        </Drawer>
-
-        {/* Holding Container */}
-        <div className="flex-container">
-          {/* ROUTES */}
-          <Route exact path="/search" component={MainScreenSearchBar} />
-          <Route exact path="/summary" component={RecipeSummaryCard} />
-          <Route exact path="/directions" component={RecipeDirections} />
-          <Route exact path="/ingredients" component={cIngredients} />
-          <Route path="/landing" component={Landing} />
-          <Route path="/scraper" component={cScraper} />
-
-          {/* END ROUTES */}
-=======
             )}
             {!this.urlHasRecipe(this.props.url) && (
               <InvalidURLRecipe
@@ -167,26 +175,8 @@ class Recipe extends Component {
               />
             )}
           </div>
-          {/* END Holding Container */}
->>>>>>> parent of 1fd7c8c... Merge branch 'CSS' into kchandar
         </div>
-
-        <div>
-          {this.urlHasRecipe(this.props.url) && (
-            <ValidURLRecipe
-              user={this.props.user}
-              url={this.props.url}
-              handler={this.props.handler}
-            />
-          )}
-          {!this.urlHasRecipe(this.props.url) && (
-            <InvalidURLRecipe
-              user={this.props.user}
-              url={this.props.url}
-              handler={this.props.handler}
-            />
-          )}
-        </div>
+        {/* </MuiThemeProvider> */}
         {/* 
             <div className="flex-container">
                 <p>Welcome {this.props.user.displayName}</p>
@@ -198,7 +188,7 @@ class Recipe extends Component {
                 <SavedRecipes user={this.props.user} handler={this.props.handler} />{" "}
             </div> 
             */}
-      </div>
+      </MuiThemeProvider>
     );
   }
 }
