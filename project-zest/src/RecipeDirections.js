@@ -11,7 +11,7 @@ class RecipeDirections extends Component {
   render() {
     console.log(this.props.user);
     return (
-      <div id="direction-div">
+      <div id="direction-div" className="flex-item">
         <h3>Directions</h3>
         <p>
           Position 2 racks in the center of the oven, and preheat to 375 degrees

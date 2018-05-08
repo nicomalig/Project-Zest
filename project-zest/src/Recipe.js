@@ -104,6 +104,7 @@ class Recipe extends Component {
                 user={this.props.user}
                 handler={this.props.handler}
               />
+<<<<<<< HEAD
             </div>
           }
         />
@@ -156,6 +157,18 @@ class Recipe extends Component {
           <Route path="/scraper" component={cScraper} />
 
           {/* END ROUTES */}
+=======
+            )}
+            {!this.urlHasRecipe(this.props.url) && (
+              <InvalidURLRecipe
+                user={this.props.user}
+                url={this.props.url}
+                handler={this.props.handler}
+              />
+            )}
+          </div>
+          {/* END Holding Container */}
+>>>>>>> parent of 1fd7c8c... Merge branch 'CSS' into kchandar
         </div>
 
         <div>
