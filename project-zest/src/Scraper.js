@@ -34,24 +34,15 @@ class Scraper extends Component {
         fetch(url, {
             method: 'GET'
             }).then((response) => {
-                console.log(response.status);
+                var respStatus = response.status
+                
                 response.text().then((text) => {
                     // now we need to parse the text, but we
                     // have it!
                     console.log(text);
-                    
-                    
+                    console.log(respStatus);
                     
                 })
-                // .then(data => ({
-                //     data: data,
-                //     status: response.status,
-                // })
-                // ).then(res => {
-                //     console.log(res.status, res.data.title)
-                //     console.log("What");
-
-                // })
             })
     }
 
