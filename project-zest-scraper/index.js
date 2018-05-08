@@ -90,6 +90,6 @@ app.use((err, req, res, next) => {
     res.status(500).send("Looks like we encountered an irreparable error. Sorry!!")
 })
 
-app.listen(port, "127.0.0.1", () => {
+app.listen(port, "", () => {
     console.log(`server is listening at http://${host}:${port}`)
 })
