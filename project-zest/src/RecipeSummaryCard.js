@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import FavoriteButton from "./FavoriteButton";
+import "./RecipeSummaryCard.css";
 
 class RecipeSummaryCard extends Component {
   // componentWillReceiveProps(nextProps) {

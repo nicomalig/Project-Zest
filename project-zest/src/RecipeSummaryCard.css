@@ -1,0 +1,44 @@
+#recipe-name-bar {
+  background-color: orange;
+  left: inherit;
+  height: auto;
+  padding: 5px;
+  width: 650px;
+}
+#favorite-button {
+  position: relative;
+  float: right;
+  padding: 5;
+  padding-top: 3px;
+  border: none;
+  background: none;
+}
+
+#recipe-name {
+  font-size: 25px;
+  color: white;
+  padding-left: 5px;
+}
+
+#recipe-img-div {
+  width: 55%;
+  float: left;
+  height: 50px;
+}
+
+#recipe-img-div img {
+  width: 100%;
+}
+
+#recipe-information {
+  float: left;
+  width: 45%;
+  height: 50px;
+  line-height: 4px;
+}
+
+#recipe-summary-div {
+  border: 1px solid black;
+  box-shadow: 3px 3px hsl(0, 0%, 19%);
+  display: block;
+}
