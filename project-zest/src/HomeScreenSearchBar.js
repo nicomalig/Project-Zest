@@ -25,6 +25,7 @@ class HomeScreenSearchBar extends Component {
     if (IsUrl(this.state.url)) {
       this.setState({ errorText: "" });
       this.props.handler(e, { url: this.state.url });
+      this.props.handler(e, { goToRecipePage: true });
     } else {
       this.setState({ errorText: "Enter a valid URL" });
     }
@@ -32,7 +33,7 @@ class HomeScreenSearchBar extends Component {
 
   render() {
     return (
-      <div className="form">
+      <div className="form flex-item">
         <TextField
           floatingLabelText="Paste recipe URL here"
           value={this.state.url}

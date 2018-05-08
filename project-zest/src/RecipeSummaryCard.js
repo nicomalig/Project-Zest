@@ -3,12 +3,12 @@ import FavoriteButton from "./FavoriteButton";
 import "./RecipeSummaryCard.css";
 
 class RecipeSummaryCard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: null
-    };
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   this.setState({
+  //     url: nextProps.url,
+  //     user: nextProps.user
+  //   });
+  // }
 
   render() {
     console.log(this.props.user);
@@ -16,7 +16,11 @@ class RecipeSummaryCard extends Component {
       <div id="recipe-summary-div">
         <div id="recipe-name-bar" className="flex-row">
           <span id="recipe-name">Simple Chocolate Chip Cookie</span>
-          <FavoriteButton className="favorite-button" />
+          <FavoriteButton
+            url={this.props.url}
+            user={this.props.user}
+            handler={this.props.handler}
+          />
         </div>
         <div id="recipe-img-div">
           <img
