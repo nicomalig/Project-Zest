@@ -116,6 +116,11 @@ class FavoriteButton extends Component {
       this.setState({
         liked: true
       });
+    } else if (this.state.liked && !this.isInDatabase()) {
+      console.log("is in database - render");
+      this.setState({
+        liked: false
+      });
     }
     return (
       <div>
