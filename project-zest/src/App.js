@@ -36,7 +36,6 @@ class App extends Component {
           url: "",
           user: user
         });
-        console.log("user: " + user.displayName);
       }
     });
   }
@@ -47,11 +46,9 @@ class App extends Component {
   handler(e, newState) {
     e.preventDefault();
     this.setState(newState);
-    console.log(this.state);
   }
 
   render() {
-    console.log(this.state.url);
     return (
       <Router>
         <div>

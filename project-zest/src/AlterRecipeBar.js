@@ -15,12 +15,10 @@ class AlterRecipeBar extends Component {
 
   removeIngredient(e) {
     e.preventDefault();
-    console.log();
   }
 
   modifyIngredient(e) {
     e.preventDefault();
-    console.log();
   }
 
   handleChange(e, newState) {
@@ -30,7 +28,6 @@ class AlterRecipeBar extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div id="conversion-bar" className="flex-item">
         <button id="remove-button" onClick={this.removeIngredient}>
@@ -41,10 +38,7 @@ class AlterRecipeBar extends Component {
         </button>
 
         {/* component: ConversionComponent */}
-        <ConversionComponent
-          conversion={this.props.conversion}
-          handler={this.handleChange}
-        />
+        <ConversionComponent handler={this.handleChange} />
       </div>
     );
   }

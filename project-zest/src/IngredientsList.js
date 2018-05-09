@@ -13,27 +13,48 @@ class IngredientsList extends Component {
   //   });
   // }
 
-  componentDidUpdate(prevProps) {
+  getUnit(unit) {
+    switch (unit) {
+      case "cup":
+        return "cup";
+      case "gal":
+        return "gallon";
+      case "pnt":
+        return "pint";
+      case "qt":
+        return "quart";
+      case "fl-oz":
+        return "ounce";
+      case "Tbs":
+        return "Tablespoon";
+      case "tsp":
+        return "teaspoon";
+      case "l":
+        return "liter";
+      case "ml":
+        return "milliliter";
+      default:
+        return unit;
+    }
+  }
+
+  componentDidUpdate() {
     var checkboxes = document.getElementsByName("ingredient");
     var checkboxesChecked = [];
     // loop over them all
     for (var i = 0; i < checkboxes.length; i++) {
       // And stick the checked ones onto an array...
-      if (
-        checkboxes[i].checked &&
-        checkboxes[i].value == this.props.convertFrom
-      ) {
-        checkboxesChecked.push(checkboxes[i]);
-        console.log(checkboxes[i]);
+      var val = checkboxes[i].parentElement.getAttribute("value");
+      if (checkboxes[i].checked && val === this.props.convertFrom) {
+        checkboxesChecked.push(checkboxes[i].parentElement);
       }
     }
-    console.log(checkboxesChecked);
     this.convertIngredients(checkboxesChecked);
   }
 
   convertIngredients(checked) {
     for (var i = 0; i < checked.length; i++) {
-      var p = checked[i].parentElement;
+      var p = checked[i];
       var unit;
       var amt;
       var input;
@@ -49,77 +70,70 @@ class IngredientsList extends Component {
           unit = elem;
         }
       }
-      console.log(unit);
-      console.log(input);
-      console.log(amt);
-      console.log(input.value);
-      input.value = this.props.convertTo;
-      console.log(input.value);
-      unit.innerHTML = this.props.convertTo + " ";
+      checked[i].setAttribute("value", this.props.convertTo);
+      unit.innerHTML = this.getUnit(this.props.convertTo) + " ";
       var amount = amt.innerHTML.trim();
       var a = amount.split(" ");
       var tot = 0;
       for (var k = 0; k < a.length; k++) {
-        tot += eval(a[k], 10);
+        tot += eval(a[k]);
       }
       if (amount != "NaN") {
         amt.innerHTML = tot * this.props.conversion + " ";
       }
-      console.log("hello help me");
     }
   }
 
   render() {
-    console.log(this.props.user);
     return (
       <div id="ingredients-list" className="flex-item">
         <form id="checkboxes">
-          <div>
-            <input type="checkbox" name="ingredient" value="cup" />
+          <div value="cup">
+            <input type="checkbox" name="ingredient" value="i1" />
             <span className="amt">2 1/4 </span>
             <span className="unit">cups</span> all-purpose flour
           </div>
           <hr />
-          <div>
-            <input type="checkbox" name="ingredient" value="tsp" />
+          <div value="tsp">
+            <input type="checkbox" name="ingredient" value="i2" />
             <span className="amt">1 </span>
             <span className="unit">teaspoon</span> baking soda
           </div>
           <hr />
-          <div>
-            <input type="checkbox" name="ingredient" value="Tbs" />
+          <div value="Tbs">
+            <input type="checkbox" name="ingredient" value="i3" />
             <span className="amt">12 </span>
             <span className="unit">tablespoons</span> unsalted butter, at room
             temperature
           </div>
           <hr />
-          <div>
-            <input type="checkbox" name="ingredient" value="cup" />
+          <div value="cup">
+            <input type="checkbox" name="ingredient" value="i4" />
             <span className="amt">
               3/4
             </span> <span className="unit">cup</span> packed light brown sugar
           </div>
           <hr />
-          <div>
-            <input type="checkbox" name="ingredient" value="cup" />
+          <div value="cup">
+            <input type="checkbox" name="ingredient" value="i5" />
             <span className="amt">
               2/3
             </span> <span className="unit">cup</span> granulated sugar
           </div>
           <hr />
-          <div>
-            <input type="checkbox" name="ingredient" value="none" />
+          <div value="none">
+            <input type="checkbox" name="ingredient" value="i6" />
             <span className="amt">2 </span> large eggs
           </div>
           <hr />
-          <div>
-            <input type="checkbox" name="ingredient" value="tsp" />
+          <div value="tsp">
+            <input type="checkbox" name="ingredient" value="i7" />
             <span className="amt">1 </span>
             <span className="unit">teaspoon</span> pure vanilla extract
           </div>
           <hr />
-          <div>
-            <input type="checkbox" name="ingredient" value="none" />
+          <div value="none">
+            <input type="checkbox" name="ingredient" value="i8" />
             One 12-ounce bag semisweet chocolate chips
           </div>
           <hr />

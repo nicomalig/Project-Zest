@@ -28,7 +28,6 @@ class ConversionComponent extends Component {
     this.setState({
       convertTo: newValue
     });
-    console.log(newValue);
   }
 
   changeFrom(e) {
@@ -37,7 +36,6 @@ class ConversionComponent extends Component {
     this.setState({
       convertFrom: newValue
     });
-    console.log(newValue);
   }
 
   render() {
