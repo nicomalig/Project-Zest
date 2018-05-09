@@ -17,7 +17,8 @@ class ConversionComponent extends Component {
     if (this.state.convertFrom != "" && this.state.convertTo != "") {
       this.props.handler(e, {
         convertTo: this.state.convertTo,
-        convertFrom: this.state.convertFrom
+        convertFrom: this.state.convertFrom,
+        alterType: "convert"
       });
     }
   }

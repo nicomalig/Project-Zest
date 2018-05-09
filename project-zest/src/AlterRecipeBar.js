@@ -4,10 +4,6 @@ import ConversionComponent from "./ConversionComponent";
 class AlterRecipeBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      convertFrom: "",
-      convertTo: ""
-    };
     this.removeIngredient = this.removeIngredient.bind(this);
     this.modifyIngredient = this.modifyIngredient.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -15,15 +11,20 @@ class AlterRecipeBar extends Component {
 
   removeIngredient(e) {
     e.preventDefault();
+    this.props.handler(e, {
+      alterType: "remove"
+    });
   }
 
   modifyIngredient(e) {
     e.preventDefault();
+    this.props.handler(e, {
+      alterType: "modify"
+    });
   }
 
   handleChange(e, newState) {
     e.preventDefault();
-    this.setState(newState);
     this.props.handler(e, newState);
   }
 

@@ -6,13 +6,6 @@ class IngredientsList extends Component {
     this.convertIngredients = this.convertIngredients.bind(this);
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({
-  //     url: nextProps.url,
-  //     user: nextProps.user
-  //   });
-  // }
-
   getUnit(unit) {
     switch (unit) {
       case "cup":
@@ -39,17 +32,31 @@ class IngredientsList extends Component {
   }
 
   componentDidUpdate() {
-    var checkboxes = document.getElementsByName("ingredient");
-    var checkboxesChecked = [];
-    // loop over them all
-    for (var i = 0; i < checkboxes.length; i++) {
-      // And stick the checked ones onto an array...
-      var val = checkboxes[i].parentElement.getAttribute("value");
-      if (checkboxes[i].checked && val === this.props.convertFrom) {
-        checkboxesChecked.push(checkboxes[i].parentElement);
+    if (this.props.alterType === "convert") {
+      var checkboxes = document.getElementsByName("ingredient");
+      var checkboxesChecked = [];
+      // loop over them all
+      for (var i = 0; i < checkboxes.length; i++) {
+        // And stick the checked ones onto an array...
+        var val = checkboxes[i].parentElement.getAttribute("value");
+        if (checkboxes[i].checked && val === this.props.convertFrom) {
+          checkboxesChecked.push(checkboxes[i].parentElement);
+        }
+      }
+      this.convertIngredients(checkboxesChecked);
+    } else if (this.props.alterType === "remove") {
+      var checkboxes = document.getElementsByName("ingredient");
+      var checkboxesChecked = [];
+      for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+          checkboxesChecked.push(checkboxes[i].parentElement);
+        }
+      }
+      for (var i = 0; i < checkboxesChecked.length; i++) {
+        var div = checkboxes[i];
+        div.parentElement.remove(div);
       }
     }
-    this.convertIngredients(checkboxesChecked);
   }
 
   convertIngredients(checked) {
@@ -91,52 +98,56 @@ class IngredientsList extends Component {
           <div value="cup">
             <input type="checkbox" name="ingredient" value="i1" />
             <span className="amt">2 1/4 </span>
-            <span className="unit">cups</span> all-purpose flour
+            <span className="unit">cups </span>
+            <text>all-purpose flour</text>
+            <hr />
           </div>
-          <hr />
           <div value="tsp">
             <input type="checkbox" name="ingredient" value="i2" />
             <span className="amt">1 </span>
-            <span className="unit">teaspoon</span> baking soda
+            <span className="unit">teaspoon </span>
+            <text>baking soda</text>
+            <hr />
           </div>
-          <hr />
           <div value="Tbs">
             <input type="checkbox" name="ingredient" value="i3" />
             <span className="amt">12 </span>
-            <span className="unit">tablespoons</span> unsalted butter, at room
-            temperature
+            <span className="unit">tablespoons </span>
+            <text>unsalted butter, at room temperature</text>
+            <hr />
           </div>
-          <hr />
           <div value="cup">
             <input type="checkbox" name="ingredient" value="i4" />
-            <span className="amt">
-              3/4
-            </span> <span className="unit">cup</span> packed light brown sugar
+            <span className="amt">3/4 </span>
+            <span className="unit">cup </span>
+            <text>packed light brown sugar</text>
+            <hr />
           </div>
-          <hr />
           <div value="cup">
             <input type="checkbox" name="ingredient" value="i5" />
-            <span className="amt">
-              2/3
-            </span> <span className="unit">cup</span> granulated sugar
+            <span className="amt">2/3 </span>
+            <span className="unit">cup </span>
+            <text>granulated sugar</text>
+            <hr />
           </div>
-          <hr />
           <div value="none">
             <input type="checkbox" name="ingredient" value="i6" />
-            <span className="amt">2 </span> large eggs
+            <span className="amt">2 </span>
+            <text>large eggs</text>
+            <hr />
           </div>
-          <hr />
           <div value="tsp">
             <input type="checkbox" name="ingredient" value="i7" />
             <span className="amt">1 </span>
-            <span className="unit">teaspoon</span> pure vanilla extract
+            <span className="unit">teaspoon </span>
+            <text>pure vanilla extract</text>
+            <hr />
           </div>
-          <hr />
           <div value="none">
             <input type="checkbox" name="ingredient" value="i8" />
-            One 12-ounce bag semisweet chocolate chips
+            <text>One 12-ounce bag semisweet chocolate chips</text>
+            <hr />
           </div>
-          <hr />
         </form>
       </div>
     );

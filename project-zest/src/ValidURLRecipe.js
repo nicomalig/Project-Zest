@@ -36,7 +36,8 @@ class ValidURLRecipe extends Component {
     this.state = {
       convertTo: "",
       convertFrom: "",
-      conversion: 0
+      conversion: 0,
+      alterType: ""
     };
     this.recipeHandler = this.recipeHandler.bind(this);
     this.getConversionRate = this.getConversionRate.bind(this);
@@ -87,6 +88,7 @@ class ValidURLRecipe extends Component {
               convertFrom={this.state.convertFrom}
               convertTo={this.state.convertTo}
               handler={this.recipeHandler}
+              alterType={this.state.alterType}
             />
           </div>
         </div>
