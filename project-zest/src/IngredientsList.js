@@ -49,12 +49,14 @@ class IngredientsList extends Component {
       var checkboxesChecked = [];
       for (var i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
-          checkboxesChecked.push(checkboxes[i].parentElement);
+          checkboxesChecked.push(checkboxes[i]);
         }
       }
+      console.log(checkboxesChecked);
       for (var i = 0; i < checkboxesChecked.length; i++) {
-        var div = checkboxes[i];
-        div.parentElement.remove(div);
+        var del = checkboxesChecked[i];
+        console.log(del);
+        del.parentElement.remove(del);
       }
     }
   }
