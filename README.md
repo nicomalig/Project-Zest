@@ -14,6 +14,7 @@ Project Zest is a fully-featured web application that allows people to cook with
 1. Adjust proportion sizes
 2. Convert unit measurements
 3. Save modified recipes
+
 Rather than juggling multiple sites, cook books, and calculators, you can do everything within Zest at a click of a button. 
 
 ### Use Case
