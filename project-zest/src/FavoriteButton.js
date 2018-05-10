@@ -15,14 +15,15 @@ class FavoriteButton extends Component {
   }
 
   toggleFavorite(e) {
-    console.log("toggleFav");
     e.preventDefault();
     let currentUser = firebase.auth().currentUser;
-    console.log(this.props.url);
-    if (this.state.liked) {
-      this.deleteDataFromDatabase();
-    } else {
-      this.addToDatabase(currentUser);
+    console.log(currentUser);
+    if (currentUser != null) {
+      if (this.state.liked) {
+        this.deleteDataFromDatabase();
+      } else {
+        this.addToDatabase(currentUser);
+      }
     }
   }
 
@@ -86,6 +87,9 @@ class FavoriteButton extends Component {
   isInDatabase() {
     console.log("isINdatabase");
     let currentUser = firebase.auth().currentUser;
+    if (currentUser == null) {
+      return false;
+    }
     var ref = firebase.database().ref("users/" + currentUser.uid);
     var url = this.props.url;
     var check = false;
@@ -112,12 +116,10 @@ class FavoriteButton extends Component {
   render() {
     console.log(this.props.user);
     if (!this.state.liked && this.isInDatabase()) {
-      console.log("is in database - render");
       this.setState({
         liked: true
       });
     } else if (this.state.liked && !this.isInDatabase()) {
-      console.log("is in database - render");
       this.setState({
         liked: false
       });

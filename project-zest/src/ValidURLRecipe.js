@@ -71,6 +71,7 @@ class ValidURLRecipe extends Component {
           />
 
           <RecipeSummaryCard
+            user={this.props.user}
             handler={this.props.handler}
             url={this.props.url}
           />

@@ -11,7 +11,6 @@ class RecipeSummaryCard extends Component {
   // }
 
   render() {
-    console.log(this.props.user);
     return (
       <div id="recipe-summary-div">
         <div id="recipe-name-bar" className="flex-row">

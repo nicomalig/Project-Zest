@@ -24,8 +24,7 @@ class HomeScreenSearchBar extends Component {
     // Verify email address is formatted properly
     if (IsUrl(this.state.url)) {
       this.setState({ errorText: "" });
-      this.props.handler(e, { url: this.state.url });
-      this.props.handler(e, { goToRecipePage: true });
+      this.props.handler(e, { url: this.state.url, goToRecipePage: true });
     } else {
       this.setState({ errorText: "Enter a valid URL" });
     }
