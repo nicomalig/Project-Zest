@@ -12,6 +12,7 @@ import RecipeDirections from "./RecipeDirections";
 import AlterRecipeBar from "./AlterRecipeBar";
 import IngredientsList from "./IngredientsList";
 import ConvertUnits from "convert-units";
+import Scraper from "./Scraper";
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -63,6 +64,7 @@ class ValidURLRecipe extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className="flex-container">
           <p> RECIPE PAGE</p>
+          <Scraper />
           <MainScreenSearchBar
             handler={this.props.handler}
             url={this.props.url}
