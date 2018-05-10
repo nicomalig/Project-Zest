@@ -8,6 +8,7 @@ import SignOutButton from "./SignOutButton";
 import SavedRecipes from "./SavedRecipes";
 import RaisedButton from "material-ui/RaisedButton/RaisedButton";
 import HomeScreenSearchBar from "./HomeScreenSearchBar";
+import MainScreenSearchBar from "./MainScreenSearchBar";
 import RecipeSummaryCard from "./RecipeSummaryCard";
 import RecipeDirections from "./RecipeDirections";
 import AlterRecipeBar from "./AlterRecipeBar";
@@ -36,10 +37,10 @@ const cScraper = () => {
   );
 };
 
-const cHomeScreenSearchBar = () => {
+const cMainScreenSearchBar = () => {
   return (
     <div>
-      <HomeScreenSearchBar handler={this.props.handler} />
+      <MainScreenSearchBar handler={this.props.handler} />
     </div>
   );
 };
@@ -58,11 +59,13 @@ class Recipe extends Component {
     super(props);
     this.state = {
       user: null,
-      open: false
+      open: false,
+      conversion: ""
     };
     this.urlHasRecipe = this.urlHasRecipe.bind(this);
     console.log(this.props.url);
   }
+
   handleClick = e => {
     e.preventDefault();
   };
@@ -87,7 +90,7 @@ class Recipe extends Component {
   Search = () => {
     <div>
       <p> Test </p>
-      <HomeScreenSearchBar handler={this.props.handler} />
+      <MainScreenSearchBar handler={this.props.handler} />
     </div>;
   };
 
@@ -149,16 +152,14 @@ class Recipe extends Component {
           {/* Holding Container */}
           <div className="flex-container">
             {/* ROUTES */}
-            <Route exact path="/search" component={cHomeScreenSearchBar} />
+            <Route exact path="/search" component={MainScreenSearchBar} />
             <Route exact path="/summary" component={RecipeSummaryCard} />
             <Route exact path="/directions" component={RecipeDirections} />
             <Route exact path="/ingredients" component={cIngredients} />
             <Route path="/landing" component={Landing} />
             <Route path="/scraper" component={cScraper} />
-
             {/* END ROUTES */}
           </div>
-
           <div>
             {this.urlHasRecipe(this.props.url) && (
               <ValidURLRecipe
@@ -175,20 +176,7 @@ class Recipe extends Component {
               />
             )}
           </div>
-          {/* END Holding Container */}
         </div>
-
-        {/* 
-            <div className="flex-container">
-                <p>Welcome {this.props.user.displayName}</p>
-                <SignOutButton user={this.props.user} handler={this.props.handler} />
-                <RaisedButton
-                    className="saved-recipes-button"
-                    label="See Your Saved Recipes"
-                />
-                <SavedRecipes user={this.props.user} handler={this.props.handler} />{" "}
-            </div> 
-            */}
       </MuiThemeProvider>
     );
   }

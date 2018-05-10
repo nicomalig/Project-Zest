@@ -6,12 +6,15 @@ import HomePage from "./HomePage";
 import AppBar from "material-ui/AppBar";
 import SignOutButton from "./SignOutButton";
 import FlatButton from "material-ui/FlatButton";
+// import AppBar from "material-ui/AppBar";
+// import FlatButton from "material-ui/FlatButton";
 import MainScreenSearchBar from "./MainScreenSearchBar";
 import RecipeSummaryCard from "./RecipeSummaryCard";
 import RecipeDirections from "./RecipeDirections";
 import AlterRecipeBar from "./AlterRecipeBar";
 import IngredientsList from "./IngredientsList";
 import Landing from "./Landing";
+
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import RaisedButton from "material-ui/RaisedButton/RaisedButton";
 
@@ -35,7 +38,6 @@ class App extends Component {
           url: "",
           user: user
         });
-        console.log("user: " + user.displayName);
       }
     });
   }
@@ -46,7 +48,6 @@ class App extends Component {
   handler(e, newState) {
     e.preventDefault();
     this.setState(newState);
-    console.log(this.state);
   }
 
   render() {
