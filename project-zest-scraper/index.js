@@ -21,13 +21,14 @@ const measures = [
     "tablespoon", "tablespoons", "tbsp", "tbsps",
     "teaspoon", "teaspoons", "tsp", "tsps",
     "liter", "liters", "l",
-    "milliliter", "milliliters", "ml", "mls"
+    "milliliter", "milliliters", "ml", "mls",
+    "stick", "sticks"
 ]
 
 // our handler
 app.get("/v1/scrape/foodnetwork", (req, res, next) => {
     var target = req.query.url
-    console.log(`target URL is ${target}`) // DEBUG
+    // console.log(`target URL is ${target}`) // DEBUG
     
     // first, we send a request over to the url, 
     // assume we handle URL validation clientside
@@ -71,8 +72,8 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
             // ===== REGEX =====
 
             var qty, measure, item
-            qty = whole.match("([0-9])[,/ ]")
-            console.log(`qty pulled as: ${qty}`) // DEBUG
+            qty = whole.match("(?:[1-9][0-9]*|0)(?:\/[1-9][0-9]*)?")
+            // console.log(`qty pulled as: ${qty}`) // DEBUG
 
             console.log(`qty? --> ${qty == null}`);
             // console.log(`!isNaN(qty[0] --> ${!isNaN(qty[0])}`);
@@ -85,17 +86,11 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
             if (qty && (!isNaN(qty[0]) || qty[0].includes("/"))) {
 
                 qty = qty[0].trim()
-                console.log(`parsed qty: ${qty}`);
-                
-                // make sure we get any partial quantities
-                if (qty[0].includes("/")) {
-                    qty = "" + qty[0] + qty[1]
-                    console.log(`new qty is: ${qty}`);
-                    
-                }
+                // console.log(`parsed qty: ${qty}`); // DEBUG 
 
                 measure = whole.match("([a-z]+)")
-                console.log(`measure pulled as: ${measure}`) // DEBUG
+                // console.log(`measure pulled as: ${measure}`) // DEBUG
+
                 if (measure) {
                     // If measure is actually a measure, then pass it through.
                     // Otherwise, it looks like we can't reliably parse this:
@@ -105,7 +100,7 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
                         item = whole.split(measure)
                         if (item) {
                             item = item[1].trim()
-                            console.log(`item extrapolated as: ${item}`) // DEBUG
+                            // console.log(`item extrapolated as: ${item}`) // DEBUG
                         } else {
                             next("no item pulled!")
                         }
