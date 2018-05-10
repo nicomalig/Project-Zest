@@ -36,8 +36,9 @@ class MainScreenSearchBar extends Component {
     e.preventDefault();
     // Verify email address is formatted properly
     if (IsUrl(this.state.url)) {
-      this.setState({ errorText: "", url: this.state.url });
+      console.log("searched url");
       this.props.handler(e, { url: this.state.url });
+      this.setState({ errorText: "", url: this.state.url });
     } else {
       this.setState({ errorText: "Enter a valid URL" });
     }
