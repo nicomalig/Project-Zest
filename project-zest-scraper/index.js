@@ -11,6 +11,19 @@ const app = express()
 const addr = process.env.ADDR || ":80"
 const [host, port] = addr.split(":")
 
+// to ensure that we're getting the right measure
+const measures = [
+    "cup", "cups", 
+    "gallon", "gallons", "gal", "gals", 
+    "quart", "quarts", "qt", "qts",
+    "pint", "pints", "pt", "pts", 
+    "ounce", "ounces", "oz", "ozs", 
+    "tablespoon", "tablespoons", "tbsp", "tbsps",
+    "teaspoon", "teaspoons", "tsp", "tsps",
+    "liter", "liters", "l",
+    "milliliter", "milliliters", "ml", "mls"
+]
+
 // our handler
 app.get("/v1/scrape/foodnetwork", (req, res, next) => {
     var target = req.query.url
@@ -48,22 +61,64 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
         $(".o-Ingredients__a-ListItemText", ".o-Ingredients__m-Body").each((i, e) => {
             // pull the data
             var whole = $(e).text()
+            console.log(`\nprocessing ingredient: ${whole}`);
             
-            // REGEX
-            // qty:     ([0-9])[,/ ]
-            // measure: ([a-z]+) <-- use only first element
-            // item:    ([a-z].+)
-            var qty = whole.match("([0-9])[,/ ]")
-            if (qty) {
+            // ===== REGEX =====
+            // qty:             ([0-9])[,/ ]
+            // qty (first)      (?:^|(?:[.!?]\s))(\w+)
+            // measure:         ([a-z]+) <-- use only first element
+            // item:            ([a-z].+)
+            // ===== REGEX =====
+
+            var qty, measure, item
+            qty = whole.match("([0-9])[,/ ]")
+            console.log(`qty pulled as: ${qty}`) // DEBUG
+
+            console.log(`qty? --> ${qty == null}`);
+            // console.log(`!isNaN(qty[0] --> ${!isNaN(qty[0])}`);
+            // console.log(`qty[0].includes("/") --> ${qty[0].includes("/")}`);
+            
+            
+            
+
+            // if we can pull a value and it's a number
+            if (qty && (!isNaN(qty[0]) || qty[0].includes("/"))) {
+
                 qty = qty[0].trim()
-            }
-            var measure = whole.match("([a-z]+)")
-            if (measure) {
-                measure = measure[0].trim()
-            }
-            var item = whole.split(measure)
-            if (item) {
-                item = item[1].trim()
+                console.log(`parsed qty: ${qty}`);
+                
+                // make sure we get any partial quantities
+                if (qty[0].includes("/")) {
+                    qty = "" + qty[0] + qty[1]
+                    console.log(`new qty is: ${qty}`);
+                    
+                }
+
+                measure = whole.match("([a-z]+)")
+                console.log(`measure pulled as: ${measure}`) // DEBUG
+                if (measure) {
+                    // If measure is actually a measure, then pass it through.
+                    // Otherwise, it looks like we can't reliably parse this:
+                    // we have to hand this ingredient off as just a whole string
+                    measure = measure[0].trim()
+                    if (measures.includes(measure)) {
+                        item = whole.split(measure)
+                        if (item) {
+                            item = item[1].trim()
+                            console.log(`item extrapolated as: ${item}`) // DEBUG
+                        } else {
+                            next("no item pulled!")
+                        }
+                    } else {
+                        qty = null
+                        measure = null
+                        item = whole
+                    }
+                }
+            } else { // not a number! just hand it off
+                console.log("===== ITEM PULLED AS WHOLE");
+                
+                item = whole
             }
 
             // push to our final recipe JSON
