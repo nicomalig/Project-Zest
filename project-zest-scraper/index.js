@@ -53,9 +53,18 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
             // qty:     ([0-9])[,/ ]
             // measure: ([a-z]+) <-- use only first element
             // item:    ([a-z].+)
-            var qty = whole.match("([0-9])[,/ ]")[0].trim()
-            var measure = whole.match("([a-z]+)")[0].trim()
-            var item = whole.split(measure)[1].trim()
+            var qty = whole.match("([0-9])[,/ ]")
+            if (qty) {
+                qty = qty[0].trim()
+            }
+            var measure = whole.match("([a-z]+)")
+            if (measure) {
+                measure = measure[0].trim()
+            }
+            var item = whole.split(measure)
+            if (item) {
+                item = item[1].trim()
+            }
 
             // push to our final recipe JSON
             recipe.ingredients.push({
