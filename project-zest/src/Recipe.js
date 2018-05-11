@@ -8,6 +8,7 @@ import SignOutButton from "./SignOutButton";
 import SavedRecipes from "./SavedRecipes";
 import RaisedButton from "material-ui/RaisedButton/RaisedButton";
 import HomeScreenSearchBar from "./HomeScreenSearchBar";
+import LogInWithFacebookButton from "./LogInWithFacebookButton";
 import MainScreenSearchBar from "./MainScreenSearchBar";
 import RecipeSummaryCard from "./RecipeSummaryCard";
 import RecipeDirections from "./RecipeDirections";
@@ -104,10 +105,15 @@ class Recipe extends Component {
             onLeftIconButtonClick={() => this.setState({ open: true })}
             iconElementRight={
               <div>
-                <SignOutButton
-                  user={this.props.user}
-                  handler={this.props.handler}
-                />
+                {this.props.user && (
+                  <SignOutButton
+                    user={this.props.user}
+                    handler={this.props.handler}
+                  />
+                )}
+                {!this.props.user && (
+                  <LogInWithFacebookButton handler={this.props.handler} />
+                )}
               </div>
             }
           />

@@ -88,7 +88,9 @@ class IngredientsList extends Component {
         tot += eval(a[k]);
       }
       if (amount != "NaN") {
-        amt.innerHTML = tot * this.props.conversion + " ";
+        var num = tot * this.props.conversion;
+        num = Math.round(num * 100) / 100;
+        amt.innerHTML = num + " ";
       }
     }
   }

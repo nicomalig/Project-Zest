@@ -49,7 +49,7 @@ class MainScreenSearchBar extends Component {
       <div className="form">
         <TextField
           floatingLabelText="Paste recipe URL here"
-          value={this.state.url}
+          value={this.props.url}
           onChange={this.handleChange}
           errorText={this.state.errorText}
         />

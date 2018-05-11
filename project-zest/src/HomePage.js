@@ -48,10 +48,7 @@ class HomePage extends Component {
             <div className="flex-row">
               <br />
               <div id="login-div" className="flex-item">
-                <LogInWithFacebookButton
-                  user={this.state.user}
-                  handler={this.handler}
-                />
+                <LogInWithFacebookButton handler={this.handler} />
               </div>
             </div>
           </div>
