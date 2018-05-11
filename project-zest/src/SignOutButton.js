@@ -18,7 +18,10 @@ class SignOutButton extends Component {
       .auth()
       .signOut()
       .then(() => {
-        this.props.handler(e, { user: null });
+        this.props.handler(e, {
+          user: null,
+          goToRecipePage: false
+        });
       });
   }
 

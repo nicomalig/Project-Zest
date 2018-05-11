@@ -1,10 +1,11 @@
 #recipe-name-bar {
   background-color: orange;
   left: inherit;
-  height: auto;
   padding: 5px;
-  width: 650px;
+  width: auto;
+  height: 30px;
 }
+
 #favorite-button {
   position: relative;
   float: right;
@@ -18,16 +19,21 @@
   font-size: 25px;
   color: white;
   padding-left: 5px;
+  float: left;
 }
 
 #recipe-img-div {
-  width: 55%;
-  float: left;
+  width: 50%;
   height: 50px;
 }
 
-#recipe-img-div img {
-  width: 100%;
+#recipe-img-div > #recipe-img {
+  float: left;
+}
+
+#recipe-img > img {
+  width: 50%;
+  float: left;
 }
 
 #recipe-information {
@@ -38,7 +44,7 @@
 }
 
 #recipe-summary-div {
-  border: 1px solid black;
-  box-shadow: 3px 3px hsl(0, 0%, 19%);
+  box-shadow: 2px 2px rgb(74, 74, 74, 0.5);
   display: block;
+  max-width: 600px;
 }

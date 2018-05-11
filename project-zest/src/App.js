@@ -53,7 +53,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <div id="main-screen-body">
           {/* No user is signed in and no url inputted*/}
           {!this.state.user &&
             !this.state.goToRecipePage && <HomePage handler={this.handler} />}

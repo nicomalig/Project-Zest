@@ -13,8 +13,8 @@ class RecipeSummaryCard extends Component {
   render() {
     return (
       <div id="recipe-summary-div">
-        <div id="recipe-name-bar" className="flex-row">
-          <span id="recipe-name">Simple Chocolate Chip Cookie</span>
+        <div id="recipe-name-bar">
+          <span id="recipe-name">Simple Chocolate Chip Cookies</span>
           <FavoriteButton
             url={this.props.url}
             user={this.props.user}

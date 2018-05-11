@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
+import "./HomePage.css";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import LogInWithFacebookButton from "./LogInWithFacebookButton";
@@ -45,9 +45,13 @@ class HomePage extends Component {
                 </p>
               </div>
             </div>
-            <div className="flex-row">
-              <br />
+            <div id="vertical-line" />
+            <div className="flex-item">
               <div id="login-div" className="flex-item">
+                <h2>LOGIN</h2>
+                <h4>
+                  Want to <i id="login-save">save</i> your recipes?
+                </h4>
                 <LogInWithFacebookButton handler={this.handler} />
               </div>
             </div>
