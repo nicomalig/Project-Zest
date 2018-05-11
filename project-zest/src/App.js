@@ -54,11 +54,11 @@ class App extends Component {
     return (
       <Router>
         <div>
-          {/* No user is signed in and no url inputted*/}
+          {/* No user is signed in and no url inputted */}
           {!this.state.user &&
             !this.state.goToRecipePage && <HomePage handler={this.handler} />}
 
-          {/* No user is signed in but url inputed*/}
+          {/* No user is signed in but url inputted */}
           {!this.state.user &&
             this.state.goToRecipePage && (
               <Recipe
