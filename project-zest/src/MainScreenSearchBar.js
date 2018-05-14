@@ -46,10 +46,10 @@ class MainScreenSearchBar extends Component {
 
   render() {
     return (
-      <div className="form">
+      <div className="form flex-item">
         <TextField
           floatingLabelText="Paste recipe URL here"
-          value={this.props.url}
+          value={this.state.url}
           onChange={this.handleChange}
           errorText={this.state.errorText}
         />

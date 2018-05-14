@@ -9,7 +9,6 @@ class RecipeDirections extends Component {
   }
 
   render() {
-    console.log(this.props.user);
     return (
       <div id="direction-div" className="flex-item">
         <h3>Directions</h3>

@@ -14,7 +14,7 @@ class ConversionComponent extends Component {
 
   onConvertClick(e) {
     e.preventDefault();
-    if (this.state.convertFrom != "" && this.state.convertTo != "") {
+    if (this.state.convertFrom !== "" && this.state.convertTo !== "") {
       this.props.handler(e, {
         convertTo: this.state.convertTo,
         convertFrom: this.state.convertFrom,

@@ -52,7 +52,7 @@ class ValidURLRecipe extends Component {
   getConversionRate() {
     var convert = ConvertUnits(1);
     var con = 1;
-    if (this.state.convertFrom != "" && this.state.convertTo != "") {
+    if (this.state.convertFrom !== "" && this.state.convertTo !== "") {
       con = convert.from(this.state.convertFrom).to(this.state.convertTo);
     }
     return con;
