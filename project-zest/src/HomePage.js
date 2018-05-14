@@ -28,7 +28,7 @@ class HomePage extends Component {
    render() {
       return (
          <MuiThemeProvider muiTheme={muiTheme}>
-            <div className="flex-container" id="main-screen">
+            <div className="flex-container fc-overall" id="main-screen">
                <div className="flex-container-left">
 
                   <div className="hs-logo-container flex-item">
@@ -40,7 +40,7 @@ class HomePage extends Component {
                         <h2>Cook with Zest</h2>
                         <p>
                            We make it easy for you to make conversions, cook for any
-                           number of people, and adjust any recipe to your needs!
+                           number of people, and adjust <b>Food Network</b> recipes to your needs!
                         </p>
                         <p>
                            <i>Don't let cooking be a test, use Zest!</i>
