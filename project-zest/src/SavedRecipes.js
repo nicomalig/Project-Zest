@@ -20,23 +20,23 @@ class SavedRecipes extends Component {
       savedRecipes: []
     };
     this.getSavedRecipes = this.getSavedRecipes.bind(this);
+    this.updatePage = this.updatePage.bind(this);
   }
   handleClick = e => {
     e.preventDefault();
   };
 
-  // componentDidMount() {
-  //   this.getSavedRecipes();
-  // }
+  componentDidMount() {
+    this.getSavedRecipes();
+  }
 
   getSavedRecipes() {
-    console.log("get saved recipes");
     let currentUser = firebase.auth().currentUser;
     if (currentUser == null) {
       return false;
     }
     var ref = firebase.database().ref("users/" + currentUser.uid);
-    var saved = ["help", "it", "doesnt", "work"];
+    var saved = [];
     ref.on("value", function(snapshot) {
       snapshot.forEach(function(linkSnapshot) {
         var data = linkSnapshot.val();
@@ -45,19 +45,24 @@ class SavedRecipes extends Component {
             link={data.link}
             name={data.data.name}
             image={data.data.img}
-            id={linkSnapshot.key}
+            key={linkSnapshot.key}
           />
         );
         return;
       });
-      return saved;
+      // updatePage(saved);
     });
+    this.updatePage(saved);
     return saved;
   }
 
+  updatePage(saved) {
+    this.setState({
+      savedRecipes: saved
+    });
+  }
+
   render() {
-    var saved = [];
-    saved = this.getSavedRecipes();
     return (
       <div>
         {this.props.user && (
@@ -72,7 +77,7 @@ class SavedRecipes extends Component {
                 user={this.props.user}
                 handler={this.props.handler}
               />
-              <div>{saved}</div>
+              <div>{this.state.savedRecipes}</div>
             </div>
           </MuiThemeProvider>
         )}

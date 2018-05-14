@@ -61,7 +61,6 @@ class Recipe extends Component {
       conversion: ""
     };
     this.urlHasRecipe = this.urlHasRecipe.bind(this);
-    console.log(this.props.url);
   }
 
   handleClick = e => {

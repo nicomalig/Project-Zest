@@ -21,7 +21,6 @@ class MainScreenSearchBar extends Component {
 
   handleChange(e, newValue) {
     e.preventDefault();
-    console.log(newValue);
     this.setState({ url: newValue });
   }
 
@@ -36,7 +35,6 @@ class MainScreenSearchBar extends Component {
     e.preventDefault();
     // Verify email address is formatted properly
     if (IsUrl(this.state.url)) {
-      console.log("searched url");
       this.props.handler(e, { url: this.state.url });
       this.setState({ errorText: "", url: this.state.url });
     } else {

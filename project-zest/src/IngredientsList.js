@@ -10,6 +10,14 @@ class IngredientsList extends Component {
     switch (unit) {
       case "cup":
         return "cup";
+      case "eigthcup":
+        return "1/8-cup";
+      case "fourthcup":
+        return "1/4-cup";
+      case "thirdcup":
+        return "1/3-cup";
+      case "halfcup":
+        return "1/2-cup";
       case "gal":
         return "gallon";
       case "pnt":
@@ -52,10 +60,8 @@ class IngredientsList extends Component {
           checkboxesChecked.push(checkboxes[j]);
         }
       }
-      console.log(checkboxesChecked);
       for (var k = 0; k < checkboxesChecked.length; k++) {
         var del = checkboxesChecked[k];
-        console.log(del);
         del.parentElement.remove(del);
       }
     }
