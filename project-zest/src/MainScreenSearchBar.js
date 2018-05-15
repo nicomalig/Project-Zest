@@ -46,13 +46,12 @@ class MainScreenSearchBar extends Component {
     return (
       <div className="form flex-item">
         <TextField
-          className="rec-search"
           floatingLabelText="Paste recipe URL here"
           value={this.state.url}
           onChange={this.handleChange}
           errorText={this.state.errorText}
-          fullWidth={true}
         />
+        <br />
         <RaisedButton label="Search" onClick={this.onSearchClick} />
       </div>
     );
