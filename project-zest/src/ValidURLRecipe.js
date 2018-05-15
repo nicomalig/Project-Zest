@@ -38,7 +38,8 @@ class ValidURLRecipe extends Component {
       convertTo: "",
       convertFrom: "",
       conversion: 0,
-      alterType: ""
+      alterType: "",
+      servingSizeChange: 1
     };
     this.recipeHandler = this.recipeHandler.bind(this);
     this.getConversionRate = this.getConversionRate.bind(this);
@@ -103,6 +104,7 @@ class ValidURLRecipe extends Component {
   }
 
   render() {
+    console.log("valid recipe render");
     var con = this.getConversionRate();
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
@@ -117,6 +119,7 @@ class ValidURLRecipe extends Component {
           <RecipeSummaryCard
             user={this.props.user}
             handler={this.props.handler}
+            recipeHandler={this.recipeHandler}
             url={this.props.url}
           />
 
@@ -132,6 +135,7 @@ class ValidURLRecipe extends Component {
             {/* component: IngredientsList */}
             <IngredientsList
               conversion={con}
+              servingSizeChange={this.state.servingSizeChange}
               convertFrom={this.state.convertFrom}
               convertTo={this.state.convertTo}
               handler={this.recipeHandler}

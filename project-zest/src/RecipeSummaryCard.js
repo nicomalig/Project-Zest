@@ -3,12 +3,57 @@ import FavoriteButton from "./FavoriteButton";
 import "./RecipeSummaryCard.css";
 
 class RecipeSummaryCard extends Component {
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({
-  //     url: nextProps.url,
-  //     user: nextProps.user
-  //   });
-  // }
+  constructor(props) {
+    super(props);
+    this.editServingSize = this.editServingSize.bind(this);
+    this.doneEditingServingSize = this.doneEditingServingSize.bind(this);
+  }
+
+  editServingSize(e) {
+    e.preventDefault();
+
+    var span = document.getElementById("yield-span");
+    var input = document.getElementById("yield-input");
+    var edit = document.getElementById("edit-button");
+    var done = document.getElementById("done-button");
+
+    span.style.display = "none";
+    edit.style.display = "none";
+    input.style.display = "inline";
+    input.value = span.innerHTML.trim();
+    input.size = span.innerHTML.length + 3;
+    done.style.display = "inline";
+  }
+
+  doneEditingServingSize(e) {
+    e.preventDefault();
+    var span = document.getElementById("yield-span");
+    var input = document.getElementById("yield-input");
+    var edit = document.getElementById("edit-button");
+    var done = document.getElementById("done-button");
+
+    var before = span.innerHTML.trim();
+    var after = input.value;
+
+    if (after < before) {
+      console.log("less");
+    } else if (after > before) {
+      console.log("more");
+    }
+
+    var multiplier = after / before;
+    multiplier = Math.round(multiplier * 100) / 100;
+
+    this.props.recipeHandler(e, {
+      servingSizeChange: multiplier
+    });
+
+    span.style.display = "inline";
+    edit.style.display = "inline";
+    input.style.display = "none";
+    span.innerHTML = input.value;
+    done.style.display = "none";
+  }
 
   render() {
     return (
@@ -37,10 +82,27 @@ class RecipeSummaryCard extends Component {
           <hr />
           <p>Level: Easy</p>
           <hr />
-          <p>Calories: 78/cookies</p>
-          <hr />
+          {/* <p>Calories: 78/cookies</p>
+          <hr /> */}
           <span>
-            <p>Yield: 30 cookies</p> <button> Edit </button>
+            <p>
+              <text>Yield: </text>
+              <span id="inputSwitch">
+                <span id="yield-span">30 </span>
+                <input id="yield-input" hidden="hidden" type="number" />
+              </span>
+              cookies
+            </p>
+            <button id="edit-button" onClick={this.editServingSize}>
+              Edit
+            </button>
+            <button
+              id="done-button"
+              onClick={this.doneEditingServingSize}
+              hidden="hidden"
+            >
+              Done
+            </button>
           </span>
         </div>
       </div>
