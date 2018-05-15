@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import RaisedButton from "material-ui/RaisedButton";
 import * as firebase from "firebase";
-import FlatButton from "material-ui/FlatButton";
 
 class SignOutButton extends Component {
   constructor(props) {
@@ -26,7 +25,6 @@ class SignOutButton extends Component {
   }
 
   render() {
-    console.log(this.props.user);
     return (
       <div>
         {this.props.user && (

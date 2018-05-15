@@ -10,6 +10,14 @@ class IngredientsList extends Component {
     switch (unit) {
       case "cup":
         return "cup";
+      case "eigthcup":
+        return "1/8-cup";
+      case "fourthcup":
+        return "1/4-cup";
+      case "thirdcup":
+        return "1/3-cup";
+      case "halfcup":
+        return "1/2-cup";
       case "gal":
         return "gallon";
       case "pnt":
@@ -45,17 +53,15 @@ class IngredientsList extends Component {
       }
       this.convertIngredients(checkboxesChecked);
     } else if (this.props.alterType === "remove") {
-      var checkboxes = document.getElementsByName("ingredient");
-      var checkboxesChecked = [];
-      for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) {
-          checkboxesChecked.push(checkboxes[i]);
+      checkboxes = document.getElementsByName("ingredient");
+      checkboxesChecked = [];
+      for (var j = 0; j < checkboxes.length; j++) {
+        if (checkboxes[j].checked) {
+          checkboxesChecked.push(checkboxes[j]);
         }
       }
-      console.log(checkboxesChecked);
-      for (var i = 0; i < checkboxesChecked.length; i++) {
-        var del = checkboxesChecked[i];
-        console.log(del);
+      for (var k = 0; k < checkboxesChecked.length; k++) {
+        var del = checkboxesChecked[k];
         del.parentElement.remove(del);
       }
     }
@@ -69,13 +75,13 @@ class IngredientsList extends Component {
       var input;
       for (var j = 0; j < p.childNodes.length; j++) {
         var elem = p.childNodes[j];
-        if (elem.type == "checkbox") {
+        if (elem.type === "checkbox") {
           input = elem;
         }
-        if (elem.className == "amt") {
+        if (elem.className === "amt") {
           amt = elem;
         }
-        if (elem.className == "unit") {
+        if (elem.className === "unit") {
           unit = elem;
         }
       }
@@ -87,7 +93,7 @@ class IngredientsList extends Component {
       for (var k = 0; k < a.length; k++) {
         tot += eval(a[k]);
       }
-      if (amount != "NaN") {
+      if (amount !== "NaN") {
         var num = tot * this.props.conversion;
         num = Math.round(num * 100) / 100;
         amt.innerHTML = num + " ";

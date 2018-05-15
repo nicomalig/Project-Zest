@@ -3,20 +3,7 @@ import "./App.css";
 import { firebase } from "./FirebaseConfig";
 import Recipe from "./Recipe";
 import HomePage from "./HomePage";
-import AppBar from "material-ui/AppBar";
-import SignOutButton from "./SignOutButton";
-import FlatButton from "material-ui/FlatButton";
-// import AppBar from "material-ui/AppBar";
-// import FlatButton from "material-ui/FlatButton";
-import MainScreenSearchBar from "./MainScreenSearchBar";
-import RecipeSummaryCard from "./RecipeSummaryCard";
-import RecipeDirections from "./RecipeDirections";
-import AlterRecipeBar from "./AlterRecipeBar";
-import IngredientsList from "./IngredientsList";
-import Landing from "./Landing";
-
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import RaisedButton from "material-ui/RaisedButton/RaisedButton";
+import { BrowserRouter as Router } from "react-router-dom";
 
 class App extends Component {
   constructor(props) {

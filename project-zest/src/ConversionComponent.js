@@ -14,7 +14,7 @@ class ConversionComponent extends Component {
 
   onConvertClick(e) {
     e.preventDefault();
-    if (this.state.convertFrom != "" && this.state.convertTo != "") {
+    if (this.state.convertFrom !== "" && this.state.convertTo !== "") {
       this.props.handler(e, {
         convertTo: this.state.convertTo,
         convertFrom: this.state.convertFrom,
@@ -44,6 +44,10 @@ class ConversionComponent extends Component {
       <div id="conversion-div" className="flex-item">
         <select id="from-convert" onChange={this.changeFrom}>
           <option value="cup">cup</option>
+          <option value="eigthcup"> 1/8 cup</option>
+          <option value="fourthcup">1/4 cup</option>
+          <option value="thirdcup">1/3 cup</option>
+          <option value="halfcup">1/2 cup</option>
           <option value="gal">gallon</option>
           <option value="qt">quart</option>
           <option value="pnt">pint</option>
@@ -56,6 +60,10 @@ class ConversionComponent extends Component {
         to
         <select id="to-convert" onChange={this.changeTo}>
           <option value="cup">cup</option>
+          <option value="eigthcup"> 1/8 cup</option>
+          <option value="fourthcup">1/4 cup</option>
+          <option value="thirdcup">1/3 cup</option>
+          <option value="halfcup">1/2 cup</option>
           <option value="gal">gallon</option>
           <option value="qt">quart</option>
           <option value="pnt">pint</option>

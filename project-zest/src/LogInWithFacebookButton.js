@@ -9,7 +9,6 @@ class LogInWithFacebookButton extends Component {
   }
 
   login() {
-    console.log("LOGIN");
     firebase
       .auth()
       .signInWithPopup(provider)

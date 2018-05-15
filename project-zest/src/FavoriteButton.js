@@ -17,7 +17,6 @@ class FavoriteButton extends Component {
   toggleFavorite(e) {
     e.preventDefault();
     let currentUser = firebase.auth().currentUser;
-    console.log(currentUser);
     if (currentUser != null) {
       if (this.state.liked) {
         this.deleteDataFromDatabase();
@@ -32,7 +31,6 @@ class FavoriteButton extends Component {
       this.setState({
         liked: true
       });
-      console.log("liked is TRU");
       database.ref("users/" + currentUser.uid).push({
         link: this.props.url,
         data: {
@@ -52,7 +50,6 @@ class FavoriteButton extends Component {
   }
 
   getIdOfLink() {
-    console.log("getIdOfLink");
     let currentUser = firebase.auth().currentUser;
     var ref = firebase.database().ref("users/" + currentUser.uid);
     var url = this.props.url;
@@ -60,8 +57,7 @@ class FavoriteButton extends Component {
     ref.on("value", function(snapshot) {
       snapshot.forEach(function(linkSnapshot) {
         var data = linkSnapshot.key;
-        console.log(data);
-        if (linkSnapshot.val().link == url) {
+        if (linkSnapshot.val().link === url) {
           id = data;
         }
       });
@@ -75,7 +71,7 @@ class FavoriteButton extends Component {
     });
     var uid = firebase.auth().currentUser.uid;
     var id = this.getIdOfLink();
-    if (id != "") {
+    if (id !== "") {
       firebase
         .database()
         .ref("users/" + uid)
@@ -85,7 +81,6 @@ class FavoriteButton extends Component {
   }
 
   isInDatabase() {
-    console.log("isINdatabase");
     let currentUser = firebase.auth().currentUser;
     if (currentUser == null) {
       return false;
@@ -96,8 +91,7 @@ class FavoriteButton extends Component {
     ref.on("value", function(snapshot) {
       snapshot.forEach(function(linkSnapshot) {
         var data = linkSnapshot.val();
-        if (data.link == url) {
-          console.log("data link = url");
+        if (data.link === url) {
           check = true;
           return check;
         }
@@ -107,14 +101,13 @@ class FavoriteButton extends Component {
   }
 
   canAddLink() {
-    if (this.props.url != "" && !this.isInDatabase()) {
+    if (this.props.url !== "" && !this.isInDatabase()) {
       return true;
     }
     return false;
   }
 
   render() {
-    console.log(this.props.user);
     if (!this.state.liked && this.isInDatabase()) {
       this.setState({
         liked: true

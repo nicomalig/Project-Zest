@@ -21,7 +21,6 @@ class MainScreenSearchBar extends Component {
 
   handleChange(e, newValue) {
     e.preventDefault();
-    console.log(newValue);
     this.setState({ url: newValue });
   }
 
@@ -36,7 +35,6 @@ class MainScreenSearchBar extends Component {
     e.preventDefault();
     // Verify email address is formatted properly
     if (IsUrl(this.state.url)) {
-      console.log("searched url");
       this.props.handler(e, { url: this.state.url });
       this.setState({ errorText: "", url: this.state.url });
     } else {
@@ -46,11 +44,11 @@ class MainScreenSearchBar extends Component {
 
   render() {
     return (
-      <div className="form">
+      <div className="form flex-item">
         <TextField
           className="rec-search"
           floatingLabelText="Paste recipe URL here"
-          value={this.props.url}
+          value={this.state.url}
           onChange={this.handleChange}
           errorText={this.state.errorText}
           fullWidth={true}

@@ -49,14 +49,58 @@ class ValidURLRecipe extends Component {
       this.setState(newState);
    }
 
-   getConversionRate() {
-      var convert = ConvertUnits(1);
-      var con = 1;
-      if (this.state.convertFrom != "" && this.state.convertTo != "") {
-         con = convert.from(this.state.convertFrom).to(this.state.convertTo);
+  getConversionRate() {
+    var convert = ConvertUnits(1);
+    var con = 1;
+    if (this.state.convertFrom !== "" && this.state.convertTo !== "") {
+      var extraCon = 1;
+      var from = this.state.convertFrom;
+      var to = this.state.convertTo;
+      switch (from) {
+        case "eigthcup":
+          from = "cup";
+          extraCon /= 8;
+          break;
+        case "fourthcup":
+          from = "cup";
+          extraCon /= 4;
+          break;
+        case "thirdcup":
+          from = "cup";
+          extraCon /= 3;
+          break;
+        case "halfcup":
+          from = "cup";
+          extraCon /= 2;
+          break;
+        default:
+          break;
       }
-      return con;
-   }
+      switch (to) {
+        case "eigthcup":
+          to = "cup";
+          extraCon *= 8;
+          break;
+        case "fourthcup":
+          to = "cup";
+          extraCon *= 4;
+          break;
+        case "thirdcup":
+          to = "cup";
+          extraCon *= 3;
+          break;
+        case "halfcup":
+          to = "cup";
+          extraCon *= 2;
+          break;
+        default:
+          break;
+      }
+      con = convert.from(from).to(to);
+      con *= extraCon;
+    }
+    return con;
+  }
 
    render() {
       var con = this.getConversionRate();

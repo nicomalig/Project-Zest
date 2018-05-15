@@ -5,9 +5,6 @@ import InvalidURLRecipe from "./InvalidURLRecipe";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import SignOutButton from "./SignOutButton";
-import SavedRecipes from "./SavedRecipes";
-import RaisedButton from "material-ui/RaisedButton/RaisedButton";
-import HomeScreenSearchBar from "./HomeScreenSearchBar";
 import LogInWithFacebookButton from "./LogInWithFacebookButton";
 import MainScreenSearchBar from "./MainScreenSearchBar";
 import RecipeSummaryCard from "./RecipeSummaryCard";
@@ -20,21 +17,13 @@ import Drawer from "material-ui/Drawer";
 import MenuItem from "material-ui/MenuItem";
 import './Recipe.css'
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Route, Link } from "react-router-dom";
 
 const muiTheme = getMuiTheme({
    palette: {
       primary1Color: "#ffaa2d"
    }
 });
-
-const cMainScreenSearchBar = () => {
-   return (
-      <div>
-         <MainScreenSearchBar handler={this.props.handler} />
-      </div>
-   );
-};
 
 const cIngredients = () => {
    return (
