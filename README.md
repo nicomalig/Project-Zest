@@ -26,8 +26,8 @@ _Zest is designed to intuitively collect recipe information and deliver instant 
 ### Screenshots
 [Pre-Production Landing Page](https://drive.google.com/file/d/1X2Q0izxte8uIafGjYoAsQD6QB1bpKMrE/view?usp=sharing)
 
-[Home Page](https://drive.google.com/file/d/1J_XomD1ZJTMT0_IOqg2fF2SwDbBfxnFo/view?usp=sharing)
+[Home Page](https://drive.google.com/file/d/1Q4RgYCdUujymgd-wy94POXSsF8vkjfaS/view?usp=sharing)
 
 [Recipe Page](https://drive.google.com/file/d/1SDyE2OndF4yrl16GsqEFVq2RX6t4iEPM/view?usp=sharing)
 
-[Mobile/Responsive Mockup](https://drive.google.com/file/d/1vmt_3PZ9V_NfEXY7VLob4lN324PIQuwf/view?usp=sharing)
+[Mobile/Responsive Mockup](https://drive.google.com/file/d/1GL8v-SRZyKVcWIbt5zNR1aoEf-r5Oaoe/view?usp=sharing)
