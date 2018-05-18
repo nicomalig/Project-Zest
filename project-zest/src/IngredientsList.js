@@ -3,7 +3,11 @@ import React, { Component } from "react";
 class IngredientsList extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      servingSizeChange: 1
+    };
     this.convertIngredients = this.convertIngredients.bind(this);
+    this.changeServingSize = this.changeServingSize.bind(this);
   }
 
   getUnit(unit) {
@@ -67,6 +71,29 @@ class IngredientsList extends Component {
     }
   }
 
+  changeServingSize() {
+    var amounts = document.getElementsByClassName("amt");
+    for (var j = 0; j < amounts.length; j++) {
+      var amount = amounts[j];
+      var amt = amount.innerHTML.trim();
+      var a = amt.split(" ");
+      var tot = 0;
+      for (var k = 0; k < a.length; k++) {
+        tot += eval(a[k]);
+      }
+      if (amt !== "NaN" || tot != "NaN") {
+        var num = tot * this.props.servingSizeChange;
+        num = Math.round(num * 100) / 100;
+        console.log(num);
+        amount.innerHTML = num + " ";
+      }
+    }
+    var curr = this.props.servingSizeChange;
+    this.setState({
+      servingSizeChange: curr
+    });
+  }
+
   convertIngredients(checked) {
     for (var i = 0; i < checked.length; i++) {
       var p = checked[i];
@@ -93,7 +120,7 @@ class IngredientsList extends Component {
       for (var k = 0; k < a.length; k++) {
         tot += eval(a[k]);
       }
-      if (amount !== "NaN") {
+      if (amount !== "NaN" || tot != "NaN") {
         var num = tot * this.props.conversion;
         num = Math.round(num * 100) / 100;
         amt.innerHTML = num + " ";
@@ -102,6 +129,9 @@ class IngredientsList extends Component {
   }
 
   render() {
+    if (this.state.servingSizeChange != this.props.servingSizeChange) {
+      this.changeServingSize();
+    }
     return (
       <div id="ingredients-list" className="flex-item">
         <form id="checkboxes">
