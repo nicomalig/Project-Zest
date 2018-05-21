@@ -104,7 +104,6 @@ class ValidURLRecipe extends Component {
   }
 
   render() {
-    console.log("valid recipe render");
     var con = this.getConversionRate();
     return (
       <MuiThemeProvider muiTheme={muiTheme}>

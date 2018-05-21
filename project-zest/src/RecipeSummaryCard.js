@@ -35,12 +35,6 @@ class RecipeSummaryCard extends Component {
     var before = span.innerHTML.trim();
     var after = input.value;
 
-    if (after < before) {
-      console.log("less");
-    } else if (after > before) {
-      console.log("more");
-    }
-
     var multiplier = after / before;
     multiplier = Math.round(multiplier * 100) / 100;
 
