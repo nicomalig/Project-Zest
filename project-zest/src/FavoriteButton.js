@@ -121,6 +121,7 @@ class FavoriteButton extends Component {
       <div>
         <button
           id="favorite-button"
+
           label="favorite recipe"
           onClick={this.toggleFavorite}
         >

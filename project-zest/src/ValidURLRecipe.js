@@ -50,59 +50,137 @@ class ValidURLRecipe extends Component {
     this.setState(newState);
   }
 
-  getConversionRate() {
-    var convert = ConvertUnits(1);
-    var con = 1;
-    if (this.state.convertFrom !== "" && this.state.convertTo !== "") {
-      var extraCon = 1;
-      var from = this.state.convertFrom;
-      var to = this.state.convertTo;
-      switch (from) {
-        case "eigthcup":
-          from = "cup";
-          extraCon /= 8;
-          break;
-        case "fourthcup":
-          from = "cup";
-          extraCon /= 4;
-          break;
-        case "thirdcup":
-          from = "cup";
-          extraCon /= 3;
-          break;
-        case "halfcup":
-          from = "cup";
-          extraCon /= 2;
-          break;
-        default:
-          break;
+   getConversionRate() {
+      var convert = ConvertUnits(1);
+      var con = 1;
+      if (this.state.convertFrom !== "" && this.state.convertTo !== "") {
+         var extraCon = 1;
+         var from = this.state.convertFrom;
+         var to = this.state.convertTo;
+         switch (from) {
+            case "eigthcup":
+               from = "cup";
+               extraCon /= 8;
+               break;
+            case "fourthcup":
+               from = "cup";
+               extraCon /= 4;
+               break;
+            case "thirdcup":
+               from = "cup";
+               extraCon /= 3;
+               break;
+            case "halfcup":
+               from = "cup";
+               extraCon /= 2;
+               break;
+            default:
+               break;
+         }
+         switch (to) {
+            case "eigthcup":
+               to = "cup";
+               extraCon *= 8;
+               break;
+            case "fourthcup":
+               to = "cup";
+               extraCon *= 4;
+               break;
+            case "thirdcup":
+               to = "cup";
+               extraCon *= 3;
+               break;
+            case "halfcup":
+               to = "cup";
+               extraCon *= 2;
+               break;
+            default:
+               break;
+         }
+         con = convert.from(from).to(to);
+         con *= extraCon;
       }
-      switch (to) {
-        case "eigthcup":
-          to = "cup";
-          extraCon *= 8;
-          break;
-        case "fourthcup":
-          to = "cup";
-          extraCon *= 4;
-          break;
-        case "thirdcup":
-          to = "cup";
-          extraCon *= 3;
-          break;
-        case "halfcup":
-          to = "cup";
-          extraCon *= 2;
-          break;
-        default:
-          break;
-      }
-      con = convert.from(from).to(to);
-      con *= extraCon;
-    }
-    return con;
-  }
+      return con;
+   }
 
+<<<<<<< HEAD
+   render() {
+      var con = this.getConversionRate();
+
+      return (
+         <MuiThemeProvider muiTheme={muiTheme}>
+            <div className="flex-container-m">
+               <div className="flex-item mssb">
+                  <MainScreenSearchBar
+                     handler={this.props.handler}
+                     url={this.props.url}
+                  />
+               </div>
+
+               <div className="flex-container-content">
+                  <div className="flex-container-left flex-item">
+                     <div className="flex-item top-l">
+                        <RecipeSummaryCard
+                           user={this.props.user}
+                           handler={this.props.handler}
+                           url={this.props.url}
+                        />
+                     </div>
+
+                     {/* component: RecipeIngredients */}
+                     <div id="ingredients-div">
+                        <h2>Recipe</h2>
+
+                        {/* component: AlterRecipeBar */}
+                        <AlterRecipeBar handler={this.recipeHandler} />
+
+                        {/* component: IngredientsList */}
+                        <IngredientsList
+                           conversion={con}
+                           convertFrom={this.state.convertFrom}
+                           convertTo={this.state.convertTo}
+                           handler={this.recipeHandler}
+                           alterType={this.state.alterType}
+                        />
+                     </div>
+                  </div>
+                  <div className="flex-item">
+                     <RecipeDirections />
+                  </div>
+
+                  <div className="flex-item">
+                     {this.props.user && (
+                        <div>
+                           <p>Welcome {this.props.user.displayName}</p>
+                           <SignOutButton
+                              user={this.props.user}
+                              handler={this.props.handler}
+                           />
+                           <RaisedButton
+                              className="saved-recipes-button"
+                              label="See Your Saved Recipes" /*onClick={ GO TO SAVED RECIPES PAGE }*/
+                           />
+                           <SavedRecipes user={this.props.user} handler={this.props.handler} />
+                        </div>
+                     )}
+                     {!this.props.user && (
+                        <div>
+                           <p>Login to save your recipes!</p>
+                           <div id="login-div" className="flex-item">
+                              <LogInWithFacebookButton
+                                 user={this.props.user}
+                                 handler={this.props.handler}
+                              />
+                           </div>
+                        </div>
+                     )}
+                  </div>
+               </div>
+            </div>
+         </MuiThemeProvider>
+      );
+   }
+=======
   render() {
     var con = this.getConversionRate();
     return (
@@ -170,6 +248,7 @@ class ValidURLRecipe extends Component {
       </MuiThemeProvider>
     );
   }
+>>>>>>> 31e798d708695afa7fc7a69a38fc0155095e3af4
 }
 
 export default ValidURLRecipe;

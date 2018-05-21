@@ -48,11 +48,12 @@ img {
    height: auto;
 }
 
+/* Mobile */
 @media only screen and (max-width: 1235px) {
    #main-screen {
       background-position: bottom;
    }
-
+   
    .hs-logo-container {
       width: 75px;
    }
@@ -61,26 +62,38 @@ img {
       width: 100%;
       height: auto;
    }
-
+   
    .flex-container {
       flex-direction: column;
    }
-
+   
    .flex-item {
       word-wrap: break-word;
    }
-
+   
    #vertical-line {
       display: none;
    }
-
+   
    .flex-container-left {
       margin: 0%;
       padding: 5%;
    }
-
+   
    .flex-container-right {
       margin: 0%;
       padding: 5%;
+   }
+}
+
+/* Landscape on mobile */
+@media all and (orientation: landscape) and (max-width: 1235px)  {
+   .flex-container {
+      flex-direction: row;
+      margin: 5%;
+   }
+   
+   .flex-container-right {
+      display: none;
    }
 }
