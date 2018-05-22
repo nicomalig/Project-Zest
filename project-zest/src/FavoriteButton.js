@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { firebase, database } from "./FirebaseConfig";
+import { SSL_OP_COOKIE_EXCHANGE } from "constants";
 
 class FavoriteButton extends Component {
   constructor(props) {
@@ -43,7 +44,18 @@ class FavoriteButton extends Component {
               item: "name/description of item"
             }
           ],
-          directions: ["each", "paragraph", "or maybe the entire string"]
+          directions: ["each", "paragraph", "or maybe the entire string"],
+          details: {
+            total: "hours",
+            prep: "hours",
+            inactive: "minutes",
+            cook: "days",
+            level: "easy",
+            yield: {
+              amount: 30,
+              type: "cookie"
+            }
+          }
         }
       });
     }
@@ -121,7 +133,6 @@ class FavoriteButton extends Component {
       <div>
         <button
           id="favorite-button"
-
           label="favorite recipe"
           onClick={this.toggleFavorite}
         >

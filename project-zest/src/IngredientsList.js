@@ -9,6 +9,8 @@ class IngredientsList extends Component {
     this.convertIngredients = this.convertIngredients.bind(this);
     this.changeServingSize = this.changeServingSize.bind(this);
     this.addIngredient = this.addIngredient.bind(this);
+    this.getUnit = this.getUnit.bind(this);
+    this.getUnitValue = this.getUnitValue.bind(this);
   }
 
   getUnit(unit) {
@@ -44,6 +46,39 @@ class IngredientsList extends Component {
     }
   }
 
+  getUnitValue(unit) {
+    switch (unit) {
+      case "cup":
+        return "cup";
+      case "1/8-cup":
+        return "eigthcup";
+      case "1/4-cup":
+        return "fourthcup";
+      case "1/3-cup":
+        return "thirdcup";
+      case "1/2-cup":
+        return "halfcup";
+      case "gallon":
+        return "gal";
+      case "pint":
+        return "pint";
+      case "quart":
+        return "qt";
+      case "ounce":
+        return "fl-oz";
+      case "Tablespoon":
+        return "Tbs";
+      case "teaspoon":
+        return "tsp";
+      case "liter":
+        return "l";
+      case "milliliter":
+        return "ml";
+      default:
+        return unit;
+    }
+  }
+
   componentDidUpdate() {
     if (this.props.alterType === "convert") {
       var checkboxes = document.getElementsByName("ingredient");
@@ -69,6 +104,18 @@ class IngredientsList extends Component {
         var del = checkboxesChecked[k];
         del.parentElement.remove(del);
       }
+    } else if (this.props.alterType === "modify") {
+      var checkboxes = document.getElementsByName("ingredient");
+      var checkboxesChecked = [];
+      // loop over them all
+      for (var i = 0; i < checkboxes.length; i++) {
+        // And stick the checked ones onto an array...
+        var val = checkboxes[i].parentElement.getAttribute("value");
+        if (checkboxes[i].checked) {
+          checkboxesChecked.push(checkboxes[i].parentElement);
+        }
+      }
+      this.modifyIngredients(checkboxesChecked);
     }
   }
 
@@ -77,6 +124,7 @@ class IngredientsList extends Component {
 
     var input = document.createElement("input");
     input.type = "checkbox";
+    input.name = "ingredient";
     var amtSpan = document.createElement("span");
     var unitSpan = document.createElement("span");
     var text = document.createElement("text");
@@ -94,6 +142,7 @@ class IngredientsList extends Component {
       div.appendChild(input);
       if (amtVal != "") {
         var amtNode = document.createTextNode(amtVal + " ");
+        amtSpan.className = "amt";
         amtSpan.appendChild(amtNode);
         div.appendChild(amtSpan);
       }
@@ -101,7 +150,11 @@ class IngredientsList extends Component {
         var val = this.getUnit(unitVal);
         var unitNode = document.createTextNode(val + " ");
         unitSpan.appendChild(unitNode);
+        unitSpan.className = "unit";
         div.appendChild(unitSpan);
+        div.setAttribute("value", unitVal);
+      } else if (unitVal == "none") {
+        div.setAttribute("value", "none");
       }
       if (descVal != "") {
         var descNode = document.createTextNode(descVal);
@@ -155,7 +208,9 @@ class IngredientsList extends Component {
         }
       }
       checked[i].setAttribute("value", this.props.convertTo);
-      unit.innerHTML = this.getUnit(this.props.convertTo) + " ";
+      if (unit != undefined) {
+        unit.innerHTML = this.getUnit(this.props.convertTo) + " ";
+      }
       var amount = amt.innerHTML.trim();
       var a = amount.split(" ");
       var tot = 0;
@@ -167,6 +222,112 @@ class IngredientsList extends Component {
         num = Math.round(num * 100) / 100;
         amt.innerHTML = num + " ";
       }
+    }
+  }
+
+  modifyIngredients(checked) {
+    for (var i = 0; i < checked.length; i++) {
+      var p = checked[i];
+      var unit;
+      var amt;
+      var input;
+      var desc;
+      var hr;
+      for (var j = 0; j < p.childNodes.length; j++) {
+        var elem = p.childNodes[j];
+        if (elem.type === "checkbox") {
+          input = elem;
+        }
+        if (elem.className === "amt") {
+          amt = elem;
+        }
+        if (elem.className === "unit") {
+          unit = elem;
+        }
+        if (elem.nodeName === "TEXT") {
+          desc = elem;
+        }
+        if (elem.nodeName === "HR") {
+          hr = elem;
+        }
+      }
+      input.style.display = "none";
+      amt.style.display = "none";
+      unit.style.display = "none";
+      desc.style.display = "none";
+      hr.style.display = "none";
+
+      var amtInput = document.createElement("input");
+      amtInput.type = "number";
+      if (amt.innerHTML != undefined) {
+        var amount = amt.innerHTML.trim();
+        var a = amount.split(" ");
+        var tot = 0;
+        for (var k = 0; k < a.length; k++) {
+          tot += eval(a[k]);
+        }
+        amtInput.value = tot;
+      }
+      var values = [
+        "none",
+        "cup",
+        "eigthcup",
+        "fourthcup",
+        "thirdcup",
+        "halfcup",
+        "gal",
+        "qt",
+        "pnt",
+        "fl-oz",
+        "Tbs",
+        "tsp",
+        "l",
+        "ml"
+      ];
+      var innerTexts = [
+        " ",
+        "cup",
+        "1/8 cup",
+        "1/4 cup",
+        "1/3 cup",
+        "1/2 cup",
+        "gallon",
+        "quart",
+        "pint",
+        "ounce",
+        "Tablespoon",
+        "teaspoon",
+        "liter",
+        "milliliter"
+      ];
+      var unitSelect = document.createElement("select");
+      var none = document.createElement("option");
+      for (var op = 0; op < values.length; op++) {
+        var option = document.createElement("option");
+        option.value = values[op];
+        option.innerHTML = innerTexts[op];
+        unitSelect.appendChild(option);
+      }
+      if (unit.value != undefined) {
+        console.log(unit);
+        console.log(unit.value);
+        var uVal = unit.innerHTML.trim();
+        console.log(uVal);
+        if (uVal.endsWith("s")) {
+          uVal = uVal.substring(0, uVal.length - 1);
+        }
+        unitSelect.value = this.getUnitValue(uVal);
+      }
+      var text = document.createElement("input");
+      if (desc != undefined) {
+        text.value = desc.value;
+      }
+      var hr = document.createElement("hr");
+
+      p.appendChild(amtInput);
+      p.appendChild(unitSelect);
+      p.appendChild(text);
+      p.appendChild(hr);
     }
   }
 
@@ -235,7 +396,7 @@ class IngredientsList extends Component {
           <button id="add-ingredient" onClick={this.addIngredient}>
             <text> + </text>
           </button>
-          <input id="amount-input" type="number" />
+          <input id="amount-input" type="number" placeholder="Quantity" />
           <select id="unit-select">
             <option value="none"> </option>
             <option value="cup">cup</option>
@@ -247,13 +408,13 @@ class IngredientsList extends Component {
             <option value="qt">quart</option>
             <option value="pnt">pint</option>
             <option value="fl-oz">ounce</option>
-            <option value="Tbs">tablespoon</option>
+            <option value="Tbs">Tablespoon</option>
             <option value="tsp">teaspoon</option>
             <option value="l">liter</option>
             <option value="ml">milliliter</option>
           </select>
+          <input id="desc-input" placeholder="Ingredient" />
         </div>
-        <input id="desc-input" />
       </div>
     );
   }
