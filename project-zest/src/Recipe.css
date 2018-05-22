@@ -46,18 +46,21 @@
    margin: auto;
    margin-top: 10px;
    flex-direction: row;
+   padding-top: 1%;
 }
 
 .flex-container-c-left {
    flex-grow: 2;
+   padding-right: 1%;
 }
 
 .flex-container-c-right {
+   padding-left: 1%;
    align-self: flex-start;
 }
 
 .fcc-fi {
-   padding: 1%;
+
 }
 
 body {
@@ -93,8 +96,7 @@ img {
 }
 
 .directions {
-   margin: 0px;
-   padding: 0px;
+
 }
 
 .conversion-bar {

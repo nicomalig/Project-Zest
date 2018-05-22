@@ -7,16 +7,16 @@
 }
 
 #favorite-button {
+   width: 30px;
    position: relative;
    float: right;
-   padding: 5;
-   padding-top: 3px;
-   border: none;
+   margin-right: 2px;
    background: none;
-   background-color: black;
-
+   background-color: #a0da58;
+   border: 1px solid white;
+   
    /* need to fix the overall layout... and then  */
-   display: none; 
+   /* display: none;  */
    /* we can tackle this giant heart button */
 }
 
@@ -25,11 +25,6 @@
    color: white;
    padding-left: 5px;
    float: left;
-}
-
-#recipe-img-div {
-   width: 50%;
-   height: 50px;
 }
 
 #recipe-img-div > #recipe-img {
