@@ -7,16 +7,16 @@
 }
 
 #favorite-button {
+   width: 30px;
    position: relative;
    float: right;
-   padding: 5;
-   padding-top: 3px;
-   border: none;
+   margin-right: 2px;
    background: none;
-   background-color: black;
-
+   background-color: #a0da58;
+   border: 1px solid white;
+   
    /* need to fix the overall layout... and then  */
-   display: none; 
+   /* display: none;  */
    /* we can tackle this giant heart button */
 }
 
@@ -25,11 +25,6 @@
    color: white;
    padding-left: 5px;
    float: left;
-}
-
-#recipe-img-div {
-   width: 50%;
-   height: 50px;
 }
 
 #recipe-img-div > #recipe-img {
@@ -44,7 +39,7 @@
 #recipe-information {
    float: left;
    width: 45%;
-   height: 50px;
+   height: 100%;
    line-height: 4px;
    margin-left: 15px;
 }
@@ -57,5 +52,41 @@
 
 .rs-card {
    height: 100%;
-   
+   width: 30vw;
+}
+
+@media only screen and (max-width: 992px) {
+   #recipe-name {
+      font-size: 16px;
+      float: center;
+      width: 100%;
+      margin: auto;
+      padding: auto;
+   }
+
+   #recipe-name-bar {
+      text-align: center;
+      height: 1rem;
+   }
+
+   #recipe-information {
+      font-size: 18px;
+      text-align: center;
+      float: center;
+      width: 100%;
+      margin-left: 0px;
+   }
+
+   #recipe-img > img {
+      float: center;
+      width: 100%;
+   }
+
+   #favorite-button {
+      display: none;
+   }
+
+   .rs-card {
+      width: 75vw;
+   }
 }

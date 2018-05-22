@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ConversionComponent from "./ConversionComponent";
+import './Recipe.css'
 
 class AlterRecipeBar extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class AlterRecipeBar extends Component {
 
   render() {
     return (
-      <div id="conversion-bar" className="flex-item">
+      <div className="conversion-bar">
         <button id="remove-button" onClick={this.removeIngredient}>
           Remove
         </button>

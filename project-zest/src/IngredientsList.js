@@ -138,15 +138,15 @@ class IngredientsList extends Component {
     document.getElementById("unit-select").value = "";
     document.getElementById("desc-input").value = "";
 
-    if (descVal != "") {
+    if (descVal !== "") {
       div.appendChild(input);
-      if (amtVal != "") {
+      if (amtVal !== "") {
         var amtNode = document.createTextNode(amtVal + " ");
         amtSpan.className = "amt";
         amtSpan.appendChild(amtNode);
         div.appendChild(amtSpan);
       }
-      if (unitVal != "none") {
+      if (unitVal !== "none") {
         var val = this.getUnit(unitVal);
         var unitNode = document.createTextNode(val + " ");
         unitSpan.appendChild(unitNode);
@@ -156,7 +156,7 @@ class IngredientsList extends Component {
       } else if (unitVal == "none") {
         div.setAttribute("value", "none");
       }
-      if (descVal != "") {
+      if (descVal !== "") {
         var descNode = document.createTextNode(descVal);
         text.appendChild(descNode);
       }
@@ -177,7 +177,7 @@ class IngredientsList extends Component {
       for (var k = 0; k < a.length; k++) {
         tot += eval(a[k]);
       }
-      if (amt !== "NaN" || tot != "NaN") {
+      if (amt !== "NaN" || tot !== "NaN") {
         var num = tot * this.props.servingSizeChange;
         num = Math.round(num * 100) / 100;
         amount.innerHTML = num + " ";
@@ -217,7 +217,7 @@ class IngredientsList extends Component {
       for (var k = 0; k < a.length; k++) {
         tot += eval(a[k]);
       }
-      if (amount !== "NaN" || tot != "NaN") {
+      if (amount !== "NaN" || tot !== "NaN") {
         var num = tot * this.props.conversion;
         num = Math.round(num * 100) / 100;
         amt.innerHTML = num + " ";
@@ -332,11 +332,11 @@ class IngredientsList extends Component {
   }
 
   render() {
-    if (this.state.servingSizeChange != this.props.servingSizeChange) {
+    if (this.state.servingSizeChange !== this.props.servingSizeChange) {
       this.changeServingSize();
     }
     return (
-      <div id="ingredients-list" className="flex-item">
+      <div>
         <form id="checkboxes">
           <div value="cup">
             <input type="checkbox" name="ingredient" />

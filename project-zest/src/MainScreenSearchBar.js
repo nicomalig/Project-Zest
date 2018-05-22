@@ -4,7 +4,7 @@ import RaisedButton from "material-ui/RaisedButton";
 import IsUrl from "is-url";
 import "./Recipe.css";
 import logo from "./img/zest.png";
-
+import SignOutButton from "./SignOutButton";
 
 class MainScreenSearchBar extends Component {
    constructor(props) {
@@ -48,26 +48,53 @@ class MainScreenSearchBar extends Component {
    render() {
       return (
          <div className="form flex-container-sb">
-            <div className="rec-logo-container flex-item">
+            <div className="rec-logo-container flex-item fi-sb">
                <img src={logo} alt="logo" />
             </div>
 
             <div className="flex-item">
                <TextField
                   className="rec-search"
-                  floatingLabelText="Paste Food Network URL here"
+                  floatingLabelText="Food Network URL"
                   value={this.state.url}
                   onChange={this.handleChange}
                   errorText={this.state.errorText}
                   fullWidth={true}
                />
+            </div>
 
+            <div className="flex-item fi-sb">
                <RaisedButton
-                  label="Search"
-                  onClick={this.onSearchClick}
                   className="rec-submit"
+                  label="Search"
+                  labelColor="rgba(0, 0, 0, .80)"
+                  onClick={this.onSearchClick}
                />
             </div>
+
+            <div className="flex-item fi-sb mssb-filler" />
+
+            <div className="flex-item fi-sb">
+               {this.props.user &&
+                  <RaisedButton
+                     className="saved-rec-btn"
+                     label="Saved Recipes"
+                     backgroundColor="#a0da58"
+                     labelColor="rgba(0, 0, 0, .80)"
+                  />
+               }
+            </div>
+
+            <div className="flex-item fi-sb mssb-so">
+               {this.props.user &&
+                  <SignOutButton
+                     user={this.props.user}
+                     handler={this.props.handler}
+                  />
+               }
+            </div>
+
+
          </div>
       );
    }
