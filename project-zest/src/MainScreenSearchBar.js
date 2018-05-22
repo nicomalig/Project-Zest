@@ -52,33 +52,48 @@ class MainScreenSearchBar extends Component {
                <img src={logo} alt="logo" />
             </div>
 
-            <div className="flex-item fi-sb">
+            <div className="flex-item">
                <TextField
                   className="rec-search"
-                  floatingLabelText="Paste Food Network URL here"
+                  floatingLabelText="Food Network URL"
                   value={this.state.url}
                   onChange={this.handleChange}
                   errorText={this.state.errorText}
                   fullWidth={true}
                />
-
-               <RaisedButton
-                  label="Search"
-                  onClick={this.onSearchClick}
-                  className="rec-submit"
-               />
             </div>
 
             <div className="flex-item fi-sb">
-               <div>
-                  {this.props.user &&
-                     <SignOutButton
-                        user={this.props.user}
-                        handler={this.props.handler}
-                     />
-                  }
-               </div>
+               <RaisedButton
+                  className="rec-submit"
+                  label="Search"
+                  onClick={this.onSearchClick}
+               />
             </div>
+
+            <div className="flex-item fi-sb mssb-filler" />
+
+            <div className="flex-item fi-sb">
+               {this.props.user &&
+                  <RaisedButton
+                     className="saved-rec-btn"
+                     label="Saved Recipes"
+                     backgroundColor="#a0da58"
+                     labelColor="#000"
+                  />
+               }
+            </div>
+
+            <div className="flex-item fi-sb mssb-so">
+               {this.props.user &&
+                  <SignOutButton
+                     user={this.props.user}
+                     handler={this.props.handler}
+                  />
+               }
+            </div>
+
+
          </div>
       );
    }

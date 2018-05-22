@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import './Recipe.css'
 
 class RecipeDirections extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class RecipeDirections extends Component {
 
   render() {
     return (
-      <div id="direction-div">
+      <div className="directions">
         <h2>Directions</h2>
         <p>
           Position 2 racks in the center of the oven, and preheat to 375 degrees

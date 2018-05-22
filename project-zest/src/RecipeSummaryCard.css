@@ -44,7 +44,7 @@
 #recipe-information {
    float: left;
    width: 45%;
-   height: 50px;
+   height: 100%;
    line-height: 4px;
    margin-left: 15px;
 }
@@ -57,5 +57,5 @@
 
 .rs-card {
    height: 100%;
-   
+   width: 30vw;
 }

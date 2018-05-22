@@ -102,8 +102,6 @@ class ValidURLRecipe extends Component {
       return con;
    }
 
-
-
    render() {
       console.log("valid recipe render");
       var con = this.getConversionRate();
@@ -119,7 +117,7 @@ class ValidURLRecipe extends Component {
                </div>
 
                <div className="flex-container-content">
-                  <div className="flex-container-left flex-item">
+                  <div className="flex-container-c-left flex-item fcc-fi">
                      <div className="flex-item top-l">
                         <RecipeSummaryCard
                            user={this.props.user}
@@ -147,11 +145,12 @@ class ValidURLRecipe extends Component {
                         />
                      </div>
                   </div>
-                  <div className="flex-item">
+
+                  <div className="flex-container-c-right flex-item fcc-fi">
                      <RecipeDirections />
                   </div>
 
-                  <div className="flex-item">
+                  {/* <div className="flex-item">
                      {this.props.user && (
                         <div>
                            <p>Welcome {this.props.user.displayName}</p>
@@ -161,7 +160,7 @@ class ValidURLRecipe extends Component {
                            />
                            <RaisedButton
                               className="saved-recipes-button"
-                              label="See Your Saved Recipes" /*onClick={ GO TO SAVED RECIPES PAGE }*/
+                              label="See Your Saved Recipes"
                            />
                            <SavedRecipes user={this.props.user} handler={this.props.handler} />
                         </div>
@@ -177,7 +176,8 @@ class ValidURLRecipe extends Component {
                            </div>
                         </div>
                      )}
-                  </div>
+                  </div> */}
+
                </div>
             </div>
          </MuiThemeProvider>
