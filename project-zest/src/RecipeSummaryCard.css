@@ -7,13 +7,11 @@
 }
 
 #favorite-button {
-   width: 30px;
+   width: 35px;
    position: relative;
    float: right;
-   margin-right: 2px;
-   background: none;
-   background-color: #a0da58;
-   border: 1px solid white;
+   background-color: rgba(0, 0, 0, 0);
+   border: 0px solid white;
    
    /* need to fix the overall layout... and then  */
    /* display: none;  */

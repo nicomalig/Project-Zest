@@ -32,7 +32,9 @@ class SignOutButton extends Component {
             className="signout-button"
             label={"Sign Out " + this.props.user.displayName}
             onClick={this.signOut}
-            backgroundColor="#A80B00"
+            // backgroundColor="#A80B00"
+            // backgroundColor="#CC5803"
+            backgroundColor="#C75146"
             labelColor="#FFF"
             // style={{
             //   verticalAlign: "center"

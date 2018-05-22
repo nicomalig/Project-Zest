@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import TextField from "material-ui/TextField";
+import FlatButton from "material-ui/FlatButton";
 import RaisedButton from "material-ui/RaisedButton";
 import IsUrl from "is-url";
 import "./Recipe.css";
@@ -76,11 +77,14 @@ class MainScreenSearchBar extends Component {
 
             <div className="flex-item fi-sb">
                {this.props.user &&
-                  <RaisedButton
+                  <FlatButton
                      className="saved-rec-btn"
                      label="Saved Recipes"
-                     backgroundColor="#a0da58"
-                     labelColor="rgba(0, 0, 0, .80)"
+                     // backgroundColor="#a0da58"
+                     // backgroundColor="#D2FF96"
+                     // labelColor="rgba(0, 0, 0, .80)"
+                     labelStyle={{color:"rgba(0, 0, 0, .80)"}}
+                     hoverColor="#A0DA58"
                   />
                }
             </div>
