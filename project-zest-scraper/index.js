@@ -13,6 +13,8 @@ const [host, port] = addr.split(":")
 
 // our handler
 app.get("/v1/scrape/foodnetwork", (req, res, next) => {
+    res.set('Access-Control-Allow-Origin', '*')
+    
     var target = req.query.url
     console.log(`target URL is ${target}`) // DEBUG
     

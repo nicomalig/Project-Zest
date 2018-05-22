@@ -21,6 +21,13 @@ class RecipeSummaryCard extends Component {
       span.style.display = "none";
       edit.style.display = "none";
       input.style.display = "inline";
+
+      input.style.width = "3rem"
+      input.style.width = "3em"
+      input.style.marginLeft = "5px"
+      input.style.marginRight = "5px"
+
+
       input.value = span.innerHTML.trim();
       input.size = span.innerHTML.length + 3;
       done.style.display = "inline";
@@ -52,7 +59,7 @@ class RecipeSummaryCard extends Component {
       span.style.display = "inline";
       edit.style.display = "inline";
       input.style.display = "none";
-      span.innerHTML = input.value;
+      span.innerHTML = input.value + " ";
       done.style.display = "none";
    }
 
@@ -94,9 +101,7 @@ class RecipeSummaryCard extends Component {
                      </span>
                      cookies
             </p>
-                  <button id="edit-button" onClick={this.editServingSize}>
-                     Edit
-            </button>
+                  <button id="edit-button" onClick={this.editServingSize}>Edit</button>
                   <button
                      id="done-button"
                      onClick={this.doneEditingServingSize}

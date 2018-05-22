@@ -67,6 +67,7 @@ class MainScreenSearchBar extends Component {
                <RaisedButton
                   className="rec-submit"
                   label="Search"
+                  labelColor="rgba(0, 0, 0, .80)"
                   onClick={this.onSearchClick}
                />
             </div>
@@ -79,7 +80,7 @@ class MainScreenSearchBar extends Component {
                      className="saved-rec-btn"
                      label="Saved Recipes"
                      backgroundColor="#a0da58"
-                     labelColor="#000"
+                     labelColor="rgba(0, 0, 0, .80)"
                   />
                }
             </div>

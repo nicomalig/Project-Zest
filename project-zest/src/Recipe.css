@@ -1,3 +1,8 @@
+html {
+   color: rgba(0, 0, 0, .80)
+
+}
+
 .flex-container, .flex-container-sb {
    display: flex;
    flex-direction: row;
@@ -18,8 +23,8 @@
 .mssb {
    background-color: rgba(200, 200, 200, .15);
    padding: 1px;
-
-   width: 85%; /* change this for grey width */
+   
+   width: 100%; /* change this for grey width */
    margin: auto;
 }
 
@@ -50,6 +55,7 @@
 }
 
 .flex-container-c-left {
+   display: flex;
    flex-grow: 2;
    padding-right: 1%;
 }
@@ -60,7 +66,7 @@
 }
 
 .fcc-fi {
-
+   
 }
 
 body {
@@ -96,17 +102,39 @@ img {
 }
 
 .directions {
-
+   line-height: 1.5em;
 }
 
 .conversion-bar {
    margin-bottom: 2%;
 }
 
-@media only screen and (max-width: 950px) {
+@media only screen and (max-width: 992px) {
+   .flex-container-content {
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 90%;
+   }
+
+   .flex-container-c-left {
+      flex-direction: column;
+   }
+
    .flex-container-sb {
       flex-wrap: wrap;
       justify-content: center;
+      flex-direction: column;
+   }
+   
+   .rec-search {
+      width: 85vw !important;
+      margin: 0px;
+      padding: 0px;
+   }
+
+   .rec-submit {
+      margin: 0px;
+      width: 75vw !important;
    }
    
    .fi-sb {
@@ -119,11 +147,11 @@ img {
    }
    
    .saved-rec-btn {
-      width: 40vh !important;
+      width: 75vw !important;
    }
    
    .signout-button {
-      width: 35vh !important;
+      width: 75vw !important;
    }
    
    .rec-logo-container {

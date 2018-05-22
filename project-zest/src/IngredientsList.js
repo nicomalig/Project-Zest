@@ -175,7 +175,7 @@ class IngredientsList extends Component {
       this.changeServingSize();
     }
     return (
-      <div id="ingredients-list" className="flex-item">
+      <div>
         <form id="checkboxes">
           <div value="cup">
             <input type="checkbox" name="ingredient" />

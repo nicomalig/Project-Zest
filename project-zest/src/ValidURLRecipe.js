@@ -118,7 +118,7 @@ class ValidURLRecipe extends Component {
 
                <div className="flex-container-content">
                   <div className="flex-container-c-left flex-item fcc-fi">
-                     <div className="flex-item top-l">
+                     <div className="flex-item">
                         <RecipeSummaryCard
                            user={this.props.user}
                            handler={this.props.handler}
@@ -128,7 +128,7 @@ class ValidURLRecipe extends Component {
                      </div>
 
                      {/* component: RecipeIngredients */}
-                     <div id="ingredients-div">
+                     <div id="ingredients-div" className="flex-item fcc-fi">
                         <h2>Recipe</h2>
 
                         {/* component: AlterRecipeBar */}

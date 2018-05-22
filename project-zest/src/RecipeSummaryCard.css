@@ -54,3 +54,39 @@
    height: 100%;
    width: 30vw;
 }
+
+@media only screen and (max-width: 992px) {
+   #recipe-name {
+      font-size: 16px;
+      float: center;
+      width: 100%;
+      margin: auto;
+      padding: auto;
+   }
+
+   #recipe-name-bar {
+      text-align: center;
+      height: 1rem;
+   }
+
+   #recipe-information {
+      font-size: 18px;
+      text-align: center;
+      float: center;
+      width: 100%;
+      margin-left: 0px;
+   }
+
+   #recipe-img > img {
+      float: center;
+      width: 100%;
+   }
+
+   #favorite-button {
+      display: none;
+   }
+
+   .rs-card {
+      width: 75vw;
+   }
+}
