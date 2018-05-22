@@ -12,43 +12,42 @@ import RecipeDirections from "./RecipeDirections";
 import AlterRecipeBar from "./AlterRecipeBar";
 import IngredientsList from "./IngredientsList";
 import ConvertUnits from "convert-units";
-import Scraper from "./Scraper";
 
 const muiTheme = getMuiTheme({
-  palette: {
-    primary1Color: "#ffaa2d"
-  }
+   palette: {
+      primary1Color: "#ffaa2d"
+   }
 });
 
 class ValidURLRecipe extends Component {
-  handleClick = e => {
-    e.preventDefault();
-  };
+   handleClick = e => {
+      e.preventDefault();
+   };
 
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({
-  //     url: nextProps.url,
-  //     user: nextProps.user
-  //   });
-  // }
+   // componentWillReceiveProps(nextProps) {
+   //   this.setState({
+   //     url: nextProps.url,
+   //     user: nextProps.user
+   //   });
+   // }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      convertTo: "",
-      convertFrom: "",
-      conversion: 0,
-      alterType: "",
-      servingSizeChange: 1
-    };
-    this.recipeHandler = this.recipeHandler.bind(this);
-    this.getConversionRate = this.getConversionRate.bind(this);
-  }
+   constructor(props) {
+      super(props);
+      this.state = {
+         convertTo: "",
+         convertFrom: "",
+         conversion: 0,
+         alterType: "",
+         servingSizeChange: 1
+      };
+      this.recipeHandler = this.recipeHandler.bind(this);
+      this.getConversionRate = this.getConversionRate.bind(this);
+   }
 
-  recipeHandler(e, newState) {
-    e.preventDefault();
-    this.setState(newState);
-  }
+   recipeHandler(e, newState) {
+      e.preventDefault();
+      this.setState(newState);
+   }
 
    getConversionRate() {
       var convert = ConvertUnits(1);
@@ -103,17 +102,17 @@ class ValidURLRecipe extends Component {
       return con;
    }
 
-<<<<<<< HEAD
    render() {
+      console.log("valid recipe render");
       var con = this.getConversionRate();
-
       return (
          <MuiThemeProvider muiTheme={muiTheme}>
             <div className="flex-container-m">
-               <div className="flex-item mssb">
+               <div className="mssb">
                   <MainScreenSearchBar
                      handler={this.props.handler}
                      url={this.props.url}
+                     user={this.props.user}
                   />
                </div>
 
@@ -123,6 +122,7 @@ class ValidURLRecipe extends Component {
                         <RecipeSummaryCard
                            user={this.props.user}
                            handler={this.props.handler}
+                           recipeHandler={this.recipeHandler}
                            url={this.props.url}
                         />
                      </div>
@@ -137,6 +137,7 @@ class ValidURLRecipe extends Component {
                         {/* component: IngredientsList */}
                         <IngredientsList
                            conversion={con}
+                           servingSizeChange={this.state.servingSizeChange}
                            convertFrom={this.state.convertFrom}
                            convertTo={this.state.convertTo}
                            handler={this.recipeHandler}
@@ -180,76 +181,6 @@ class ValidURLRecipe extends Component {
          </MuiThemeProvider>
       );
    }
-=======
-  render() {
-    console.log("valid recipe render");
-    var con = this.getConversionRate();
-    return (
-      <MuiThemeProvider muiTheme={muiTheme}>
-        <div className="flex-container">
-          <p> RECIPE PAGE</p>
-          <Scraper />
-          <MainScreenSearchBar
-            handler={this.props.handler}
-            url={this.props.url}
-          />
-
-          <RecipeSummaryCard
-            user={this.props.user}
-            handler={this.props.handler}
-            recipeHandler={this.recipeHandler}
-            url={this.props.url}
-          />
-
-          <RecipeDirections />
-
-          {/* component: RecipeIngredients */}
-          <div id="ingredients-div">
-            <h2>Recipe</h2>
-
-            {/* component: AlterRecipeBar */}
-            <AlterRecipeBar handler={this.recipeHandler} />
-
-            {/* component: IngredientsList */}
-            <IngredientsList
-              conversion={con}
-              servingSizeChange={this.state.servingSizeChange}
-              convertFrom={this.state.convertFrom}
-              convertTo={this.state.convertTo}
-              handler={this.recipeHandler}
-              alterType={this.state.alterType}
-            />
-          </div>
-        </div>
-        {this.props.user && (
-          <div>
-            <p>Welcome {this.props.user.displayName}</p>
-            <SignOutButton
-              user={this.props.user}
-              handler={this.props.handler}
-            />
-            <RaisedButton
-              className="saved-recipes-button"
-              label="See Your Saved Recipes" /*onClick={ GO TO SAVED RECIPES PAGE }*/
-            />
-            <SavedRecipes user={this.props.user} handler={this.props.handler} />
-          </div>
-        )}
-        {!this.props.user && (
-          <div>
-            <p>Login to save your recipes!</p>
-            <div id="login-div" className="flex-item">
-              <LogInWithFacebookButton
-                user={this.props.user}
-                handler={this.props.handler}
-              />
-            </div>
-          </div>
-        )}
-      </MuiThemeProvider>
-    );
-  }
->>>>>>> 31e798d708695afa7fc7a69a38fc0155095e3af4
 }
 
 export default ValidURLRecipe;

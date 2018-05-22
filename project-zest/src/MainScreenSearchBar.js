@@ -4,7 +4,7 @@ import RaisedButton from "material-ui/RaisedButton";
 import IsUrl from "is-url";
 import "./Recipe.css";
 import logo from "./img/zest.png";
-
+import SignOutButton from "./SignOutButton";
 
 class MainScreenSearchBar extends Component {
    constructor(props) {
@@ -48,11 +48,11 @@ class MainScreenSearchBar extends Component {
    render() {
       return (
          <div className="form flex-container-sb">
-            <div className="rec-logo-container flex-item">
+            <div className="rec-logo-container flex-item fi-sb">
                <img src={logo} alt="logo" />
             </div>
 
-            <div className="flex-item">
+            <div className="flex-item fi-sb">
                <TextField
                   className="rec-search"
                   floatingLabelText="Paste Food Network URL here"
@@ -67,6 +67,17 @@ class MainScreenSearchBar extends Component {
                   onClick={this.onSearchClick}
                   className="rec-submit"
                />
+            </div>
+
+            <div className="flex-item fi-sb">
+               <div>
+                  {this.props.user &&
+                     <SignOutButton
+                        user={this.props.user}
+                        handler={this.props.handler}
+                     />
+                  }
+               </div>
             </div>
          </div>
       );

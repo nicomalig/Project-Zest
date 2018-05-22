@@ -34,9 +34,9 @@ class SignOutButton extends Component {
             onClick={this.signOut}
             backgroundColor="#A80B00"
             labelColor="#FFF"
-            style={{
-              verticalAlign: "center"
-            }}
+            // style={{
+            //   verticalAlign: "center"
+            // }}
           />
         )}
       </div>

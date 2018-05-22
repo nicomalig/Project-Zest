@@ -58,7 +58,7 @@ class RecipeSummaryCard extends Component {
 
   render() {
     return (
-      <div className="rs-card"> //id="recipe-summary-div"
+      <div className="rs-card" /* id="recipe-summary-div" */> 
         <div id="recipe-name-bar">
           <span id="recipe-name">Simple Chocolate Chip Cookies</span>
           <FavoriteButton

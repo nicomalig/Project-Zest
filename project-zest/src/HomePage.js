@@ -30,7 +30,6 @@ class HomePage extends Component {
          <MuiThemeProvider muiTheme={muiTheme}>
             <div className="flex-container fc-overall" id="main-screen">
                <div className="flex-container-left">
-
                   <div className="hs-logo-container flex-item">
                      <img src={logo} alt="logo"/>
                   </div>

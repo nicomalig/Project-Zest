@@ -14,6 +14,9 @@ html {
    text-align: center;
    padding-left: 2.5%;
    padding-right: 2.5%;
+
+   width: 50%;
+   margin: auto;
 }
 
 .flex-row {
