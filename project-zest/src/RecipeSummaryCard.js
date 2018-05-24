@@ -82,8 +82,6 @@ class RecipeSummaryCard extends Component {
           <hr />
           <p>Level: Easy</p>
           <hr />
-          {/* <p>Calories: 78/cookies</p>
-          <hr /> */}
           <span>
             <p>
               <text>Yield: </text>

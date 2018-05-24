@@ -11,6 +11,8 @@ class IngredientsList extends Component {
     this.addIngredient = this.addIngredient.bind(this);
     this.getUnit = this.getUnit.bind(this);
     this.getUnitValue = this.getUnitValue.bind(this);
+    this.doneModifying = this.doneModifying.bind(this);
+    this.cancelModifying = this.cancelModifying.bind(this);
   }
 
   getUnit(unit) {
@@ -160,6 +162,7 @@ class IngredientsList extends Component {
         var descNode = document.createTextNode(descVal);
         text.appendChild(descNode);
       }
+      text.className = "text";
       div.appendChild(text);
       div.appendChild(hr);
       var element = document.getElementById("checkboxes");
@@ -251,15 +254,26 @@ class IngredientsList extends Component {
           hr = elem;
         }
       }
-      input.style.display = "none";
-      amt.style.display = "none";
-      unit.style.display = "none";
-      desc.style.display = "none";
-      hr.style.display = "none";
+      if (input) {
+        input.style.display = "none";
+      }
+      if (amt) {
+        amt.style.display = "none";
+      }
+      if (unit) {
+        unit.style.display = "none";
+      }
+      if (desc) {
+        desc.style.display = "none";
+      }
+      if (hr) {
+        hr.style.display = "none";
+      }
 
       var amtInput = document.createElement("input");
+      amtInput.className = "temp-mod temp-amt";
       amtInput.type = "number";
-      if (amt.innerHTML != undefined) {
+      if (amt && amt.innerHTML != undefined) {
         var amount = amt.innerHTML.trim();
         var a = amount.split(" ");
         var tot = 0;
@@ -301,6 +315,7 @@ class IngredientsList extends Component {
         "milliliter"
       ];
       var unitSelect = document.createElement("select");
+      unitSelect.className = "temp-mod temp-unit";
       var none = document.createElement("option");
       for (var op = 0; op < values.length; op++) {
         var option = document.createElement("option");
@@ -308,27 +323,72 @@ class IngredientsList extends Component {
         option.innerHTML = innerTexts[op];
         unitSelect.appendChild(option);
       }
-      if (unit.value != undefined) {
-        console.log(unit);
-        console.log(unit.value);
+      if (unit && unit.innerHTML != undefined) {
         var uVal = unit.innerHTML.trim();
-        console.log(uVal);
         if (uVal.endsWith("s")) {
           uVal = uVal.substring(0, uVal.length - 1);
         }
         unitSelect.value = this.getUnitValue(uVal);
       }
       var text = document.createElement("input");
-      if (desc != undefined) {
-        text.value = desc.value;
+      text.className = "temp-mod temp-text";
+      if (desc && desc.innerHTML != undefined) {
+        text.value = desc.innerHTML;
       }
       var hr = document.createElement("hr");
+      hr.className = "temp-mod";
+
+      var doneBtn = document.createElement("button");
+      doneBtn.innerHTML = "Done";
+      doneBtn.className = "temp-mod";
+      doneBtn.onclick = this.doneModifying;
+      var cancelBtn = document.createElement("button");
+      cancelBtn.innerHTML = "Cancel";
+      cancelBtn.className = "temp-mod";
+      cancelBtn.onclick = this.cancelModifying;
 
       p.appendChild(amtInput);
       p.appendChild(unitSelect);
       p.appendChild(text);
+      p.appendChild(doneBtn);
+      p.appendChild(cancelBtn);
       p.appendChild(hr);
     }
+  }
+
+  cancelModifying(e) {
+    e.preventDefault();
+    console.log(e.target.parentElement);
+    var children = e.target.parentElement.childNodes;
+    console.log(children);
+    for (var i = 0; i < children.length; i++) {
+      var child = children[i];
+      console.log(i + "\n " + child);
+      if (
+        child.classList.contains("temp-mod") ||
+        child.className == "temp-mod"
+      ) {
+        console.log("removing");
+        child.parentElement.removeChild(child);
+      }
+      if (
+        child.classList.contains("unit") ||
+        child.classList.contains("amt") ||
+        child.classList.contains("text") ||
+        child.classList.contains("hr") ||
+        (child.name == "ingredient" && child.type == "checkbox")
+      ) {
+        if (child.type == "checkbox") {
+          child.checked = false;
+        }
+        child.style.display = "inline";
+      }
+    }
+  }
+
+  doneModifying(e) {
+    e.preventDefault();
+    console.log(e.target.parentElement);
   }
 
   render() {
@@ -342,54 +402,56 @@ class IngredientsList extends Component {
             <input type="checkbox" name="ingredient" />
             <span className="amt">2 1/4 </span>
             <span className="unit">cups </span>
-            <text>all-purpose flour</text>
-            <hr />
+            <text className="text">all-purpose flour</text>
+            <hr className="hr" />
           </div>
           <div value="tsp">
             <input type="checkbox" name="ingredient" />
             <span className="amt">1 </span>
             <span className="unit">teaspoon </span>
-            <text>baking soda</text>
-            <hr />
+            <text className="text">baking soda</text>
+            <hr className="hr" />
           </div>
           <div value="Tbs">
             <input type="checkbox" name="ingredient" />
             <span className="amt">12 </span>
             <span className="unit">tablespoons </span>
-            <text>unsalted butter, at room temperature</text>
-            <hr />
+            <text className="text">unsalted butter, at room temperature</text>
+            <hr className="hr" />
           </div>
           <div value="cup">
             <input type="checkbox" name="ingredient" />
             <span className="amt">3/4 </span>
             <span className="unit">cup </span>
-            <text>packed light brown sugar</text>
-            <hr />
+            <text className="text">packed light brown sugar</text>
+            <hr className="hr" />
           </div>
           <div value="cup">
             <input type="checkbox" name="ingredient" />
             <span className="amt">2/3 </span>
             <span className="unit">cup </span>
-            <text>granulated sugar</text>
-            <hr />
+            <text className="text">granulated sugar</text>
+            <hr className="hr" />
           </div>
           <div value="none">
             <input type="checkbox" name="ingredient" />
             <span className="amt">2 </span>
-            <text>large eggs</text>
-            <hr />
+            <text className="text">large eggs</text>
+            <hr className="hr" />
           </div>
           <div value="tsp">
             <input type="checkbox" name="ingredient" />
             <span className="amt">1 </span>
             <span className="unit">teaspoon </span>
-            <text>pure vanilla extract</text>
-            <hr />
+            <text className="text">pure vanilla extract</text>
+            <hr className="hr" />
           </div>
           <div value="none">
             <input type="checkbox" name="ingredient" />
-            <text>One 12-ounce bag semisweet chocolate chips</text>
-            <hr />
+            <text className="text">
+              One 12-ounce bag semisweet chocolate chips
+            </text>
+            <hr className="hr" />
           </div>
         </form>
         <div>
