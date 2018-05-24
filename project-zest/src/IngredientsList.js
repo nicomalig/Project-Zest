@@ -107,12 +107,12 @@ class IngredientsList extends Component {
         del.parentElement.remove(del);
       }
     } else if (this.props.alterType === "modify") {
-      var checkboxes = document.getElementsByName("ingredient");
-      var checkboxesChecked = [];
+      checkboxes = document.getElementsByName("ingredient");
+      checkboxesChecked = [];
       // loop over them all
-      for (var i = 0; i < checkboxes.length; i++) {
+      for (i = 0; i < checkboxes.length; i++) {
         // And stick the checked ones onto an array...
-        var val = checkboxes[i].parentElement.getAttribute("value");
+        val = checkboxes[i].parentElement.getAttribute("value");
         if (checkboxes[i].checked) {
           checkboxesChecked.push(checkboxes[i].parentElement);
         }
@@ -155,7 +155,7 @@ class IngredientsList extends Component {
         unitSpan.className = "unit";
         div.appendChild(unitSpan);
         div.setAttribute("value", unitVal);
-      } else if (unitVal == "none") {
+      } else if (unitVal === "none") {
         div.setAttribute("value", "none");
       }
       if (descVal !== "") {
@@ -211,20 +211,23 @@ class IngredientsList extends Component {
         }
       }
       checked[i].setAttribute("value", this.props.convertTo);
-      if (unit != undefined) {
+      if (unit !== undefined) {
         unit.innerHTML = this.getUnit(this.props.convertTo) + " ";
       }
-      var amount = amt.innerHTML.trim();
-      var a = amount.split(" ");
-      var tot = 0;
-      for (var k = 0; k < a.length; k++) {
-        tot += eval(a[k]);
+      if (amt) {
+        var amount = amt.innerHTML.trim();
+        var a = amount.split(" ");
+        var tot = 0;
+        for (var k = 0; k < a.length; k++) {
+          tot += eval(a[k]);
+        }
+        if (amount !== "NaN" || tot !== "NaN") {
+          var num = tot * this.props.conversion;
+          num = Math.round(num * 100) / 100;
+          amt.innerHTML = num + " ";
+        }
       }
-      if (amount !== "NaN" || tot !== "NaN") {
-        var num = tot * this.props.conversion;
-        num = Math.round(num * 100) / 100;
-        amt.innerHTML = num + " ";
-      }
+      input.checked = false;
     }
   }
 
@@ -267,13 +270,14 @@ class IngredientsList extends Component {
         desc.style.display = "none";
       }
       if (hr) {
-        hr.style.display = "none";
+        hr.parentElement.removeChild(hr);
       }
 
+      //creating input for amounts
       var amtInput = document.createElement("input");
       amtInput.className = "temp-mod temp-amt";
       amtInput.type = "number";
-      if (amt && amt.innerHTML != undefined) {
+      if (amt && amt.innerHTML !== undefined) {
         var amount = amt.innerHTML.trim();
         var a = amount.split(" ");
         var tot = 0;
@@ -282,6 +286,8 @@ class IngredientsList extends Component {
         }
         amtInput.value = tot;
       }
+
+      //creating selection for units
       var values = [
         "none",
         "cup",
@@ -315,80 +321,187 @@ class IngredientsList extends Component {
         "milliliter"
       ];
       var unitSelect = document.createElement("select");
-      unitSelect.className = "temp-mod temp-unit";
-      var none = document.createElement("option");
       for (var op = 0; op < values.length; op++) {
         var option = document.createElement("option");
         option.value = values[op];
         option.innerHTML = innerTexts[op];
         unitSelect.appendChild(option);
       }
-      if (unit && unit.innerHTML != undefined) {
+      unitSelect.className = "temp-mod temp-unit";
+      if (unit && unit.innerHTML !== undefined) {
         var uVal = unit.innerHTML.trim();
         if (uVal.endsWith("s")) {
           uVal = uVal.substring(0, uVal.length - 1);
         }
         unitSelect.value = this.getUnitValue(uVal);
       }
+
+      //creating input for description of ingredient
       var text = document.createElement("input");
       text.className = "temp-mod temp-text";
-      if (desc && desc.innerHTML != undefined) {
+      if (desc && desc.innerHTML !== undefined) {
         text.value = desc.innerHTML;
       }
-      var hr = document.createElement("hr");
-      hr.className = "temp-mod";
 
+      var newHR = document.createElement("hr");
+
+      //creating buttons for finishing modifying
       var doneBtn = document.createElement("button");
       doneBtn.innerHTML = "Done";
       doneBtn.className = "temp-mod";
       doneBtn.onclick = this.doneModifying;
       var cancelBtn = document.createElement("button");
-      cancelBtn.innerHTML = "Cancel";
       cancelBtn.className = "temp-mod";
+      cancelBtn.innerHTML = "Cancel";
       cancelBtn.onclick = this.cancelModifying;
 
+      //adding new elements to div
       p.appendChild(amtInput);
       p.appendChild(unitSelect);
       p.appendChild(text);
       p.appendChild(doneBtn);
       p.appendChild(cancelBtn);
-      p.appendChild(hr);
+      p.appendChild(newHR);
     }
   }
 
   cancelModifying(e) {
     e.preventDefault();
-    console.log(e.target.parentElement);
     var children = e.target.parentElement.childNodes;
-    console.log(children);
+    var elementsToDelete = [];
+    for (var j = 0; j < children.length; j++) {
+      if (children[j].classList.contains("temp-mod")) {
+        children[j].style.display = "none";
+        elementsToDelete.push(children[j]);
+      }
+    }
     for (var i = 0; i < children.length; i++) {
       var child = children[i];
-      console.log(i + "\n " + child);
-      if (
-        child.classList.contains("temp-mod") ||
-        child.className == "temp-mod"
-      ) {
-        console.log("removing");
-        child.parentElement.removeChild(child);
-      }
       if (
         child.classList.contains("unit") ||
         child.classList.contains("amt") ||
         child.classList.contains("text") ||
-        child.classList.contains("hr") ||
-        (child.name == "ingredient" && child.type == "checkbox")
+        (child.name === "ingredient" && child.type === "checkbox")
       ) {
-        if (child.type == "checkbox") {
+        if (child.type === "checkbox") {
           child.checked = false;
         }
         child.style.display = "inline";
       }
     }
+    for (j = 0; j < elementsToDelete.length; j++) {
+      elementsToDelete[j].parentElement.removeChild(elementsToDelete[j]);
+    }
   }
 
   doneModifying(e) {
     e.preventDefault();
-    console.log(e.target.parentElement);
+    var children = e.target.parentElement.childNodes;
+    var newAmt;
+    var newUnit;
+    var newText;
+    var elementsToDelete = [];
+    for (var j = 0; j < children.length; j++) {
+      if (children[j].classList.contains("temp-mod")) {
+        children[j].style.display = "none";
+        elementsToDelete.push(children[j]);
+      }
+    }
+    for (var k = 0; k < children.length; k++) {
+      if (children[k].classList.contains("temp-amt")) {
+        newAmt = children[k].value;
+      }
+      if (children[k].classList.contains("temp-unit")) {
+        newUnit = children[k].value;
+      }
+      if (children[k].classList.contains("temp-text")) {
+        newText = children[k].value;
+      }
+    }
+    var hasAmt = false;
+    var hasUnit = false;
+
+    var oldAmt;
+    var oldUnit;
+    var oldText;
+    for (var i = 0; i < children.length; i++) {
+      var child = children[i];
+      if (child.classList.contains("amt") && newAmt && newAmt.trim() !== "") {
+        hasAmt = true;
+        oldAmt = child;
+        child.innerHTML = newAmt + " ";
+      }
+      if (
+        child.classList.contains("unit") &&
+        newUnit &&
+        newUnit.trim() !== ""
+      ) {
+        hasUnit = true;
+        oldUnit = child;
+        child.innerHTML = this.getUnit(newUnit) + " ";
+        e.target.parentElement.setAttribute("value", newUnit);
+      }
+      if (
+        child.classList.contains("text") &&
+        newText &&
+        newText.trim() !== ""
+      ) {
+        oldText = child;
+        child.innerHTML = newText + " ";
+      }
+      if (
+        child.classList.contains("unit") ||
+        child.classList.contains("amt") ||
+        child.classList.contains("text") ||
+        (child.name === "ingredient" && child.type === "checkbox")
+      ) {
+        if (child.type === "checkbox") {
+          child.checked = false;
+        }
+        child.style.display = "inline";
+      }
+    }
+    if (!hasAmt && !hasUnit) {
+      if (newAmt) {
+        oldAmt = document.createElement("span");
+        var amtNode = document.createTextNode(newAmt + " ");
+        oldAmt.className = "amt";
+        oldAmt.appendChild(amtNode);
+        e.target.parentElement.insertBefore(oldAmt, oldText);
+      }
+      if (newUnit) {
+        if (newUnit !== "none") {
+          oldUnit = document.createElement("span");
+          var val = this.getUnit(newUnit);
+          var unitNode = document.createTextNode(val + " ");
+          oldUnit.appendChild(unitNode);
+          oldUnit.className = "unit";
+          e.target.parentElement.insertBefore(oldUnit, oldText);
+          e.target.parentElement.setAttribute("value", newUnit);
+        }
+      }
+    } else if (!hasAmt && hasUnit) {
+      if (newAmt) {
+        oldAmt = document.createElement("span");
+        amtNode = document.createTextNode(newAmt + " ");
+        oldAmt.className = "amt";
+        oldAmt.appendChild(amtNode);
+        e.target.parentElement.insertBefore(oldAmt, oldUnit);
+      }
+    } else if (hasAmt && !hasUnit) {
+      if (newUnit !== "none") {
+        oldUnit = document.createElement("span");
+        val = this.getUnit(newUnit);
+        unitNode = document.createTextNode(val + " ");
+        oldUnit.appendChild(unitNode);
+        oldUnit.className = "unit";
+        e.target.parentElement.insertBefore(oldUnit, oldText);
+        e.target.parentElement.setAttribute("value", newUnit);
+      }
+    }
+    for (j = 0; j < elementsToDelete.length; j++) {
+      elementsToDelete[j].parentElement.removeChild(elementsToDelete[j]);
+    }
   }
 
   render() {
@@ -403,55 +516,55 @@ class IngredientsList extends Component {
             <span className="amt">2 1/4 </span>
             <span className="unit">cups </span>
             <text className="text">all-purpose flour</text>
-            <hr className="hr" />
+            <hr />
           </div>
           <div value="tsp">
             <input type="checkbox" name="ingredient" />
             <span className="amt">1 </span>
             <span className="unit">teaspoon </span>
             <text className="text">baking soda</text>
-            <hr className="hr" />
+            <hr />
           </div>
           <div value="Tbs">
             <input type="checkbox" name="ingredient" />
             <span className="amt">12 </span>
             <span className="unit">tablespoons </span>
             <text className="text">unsalted butter, at room temperature</text>
-            <hr className="hr" />
+            <hr />
           </div>
           <div value="cup">
             <input type="checkbox" name="ingredient" />
             <span className="amt">3/4 </span>
             <span className="unit">cup </span>
             <text className="text">packed light brown sugar</text>
-            <hr className="hr" />
+            <hr />
           </div>
           <div value="cup">
             <input type="checkbox" name="ingredient" />
             <span className="amt">2/3 </span>
             <span className="unit">cup </span>
             <text className="text">granulated sugar</text>
-            <hr className="hr" />
+            <hr />
           </div>
           <div value="none">
             <input type="checkbox" name="ingredient" />
             <span className="amt">2 </span>
             <text className="text">large eggs</text>
-            <hr className="hr" />
+            <hr />
           </div>
           <div value="tsp">
             <input type="checkbox" name="ingredient" />
             <span className="amt">1 </span>
             <span className="unit">teaspoon </span>
             <text className="text">pure vanilla extract</text>
-            <hr className="hr" />
+            <hr />
           </div>
           <div value="none">
             <input type="checkbox" name="ingredient" />
             <text className="text">
               One 12-ounce bag semisweet chocolate chips
             </text>
-            <hr className="hr" />
+            <hr />
           </div>
         </form>
         <div>
