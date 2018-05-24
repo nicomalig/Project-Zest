@@ -51,9 +51,9 @@ class FavoriteButton extends Component {
             inactive: "minutes",
             cook: "days",
             level: "easy",
-            yield: {
+            servings: {
               amount: 30,
-              type: "cookie"
+              item: "cookie"
             }
           }
         }
