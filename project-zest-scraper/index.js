@@ -29,20 +29,103 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
         var $ = cheerio.load(html)
 
         // declare variables
-        var title, ingredients, ingrQuantity, ingrMeasure, ingrItem, directions, dirStep, dirStepText
+        // var link, name, data, img,
+        //     details, total, prep, inactive, cook, level, servings,
+        //     ingredients, qty, measure, item, 
+        //     directions, step, text
+
+        var link, data, name, img,
+            details, total, prep, inactive, cook, level,
+            servings, amount, item,
+            ingredients
 
         var recipe = {
-            title: "",
-            source: target,
-            ingredients: [], // JSON array of ingredients
-            directions: [], // JSON array of directions
+            link: target,
+            data: {
+                name,
+                img,
+                details: {
+                    total,
+                    prep,
+                    inactive,
+                    cook,
+                    level,
+                    servings: {
+                        amount,
+                        item,
+                    },
+                },
+                ingredients: [], // JSON array of ingredients
+                directions: [], // JSON array of directions
+            },
         }
 
         // ***** BEGIN EXTRACTING *****
         // First, the title
         // title section: recipe-lead
         // title text: o-AssetTitle__a-HeadlineText
-        recipe.title = $(".o-AssetTitle__a-HeadlineText", ".recipe-lead").text()
+        recipe.data.name = $(".o-AssetTitle__a-HeadlineText", ".recipe-lead").text()
+
+        // Pull the image URL 
+        let sURL = $("o-AssetMultiMedia__a-Image")
+        if (sURL) {
+            recipe.data.img = sURL.attr("src")
+        } else {
+            recipe.data.img = null
+        }
+
+        // Next, the cooking times
+        // total: o-RecipeInfo__a-Description--Total
+        recipe.data.details.total = $(".o-RecipeInfo__a-Description--Total").text()
+
+        // Next, pull the prep, inactive, and cook times if they exist
+        $(".o-RecipeInfo__a-Headline").each((i, elem) => {
+            let headline = $(this).text().toLowerCase()
+            if (headline.includes("prep")) {
+                recipe.data.details.prep = headline
+                    .next(".o-RecipeInfo__a-Description").text()
+
+            } else if (headline.includes("inactive")) {
+                recipe.data.details.inactive = headline
+                    .next(".o-RecipeInfo__a-Description").text()
+
+            } else if (headline.includes("cook")) {
+                recipe.data.details.cook = headline
+                    .next(".o-RecipeInfo__a-Description").text()
+            }
+        })
+
+        // Pull the level
+        let sLevel = $("o-RecipeInfo__a-Description", "o-RecipeInfo o-Level").text()
+        if (sLevel) {
+            recipe.data.details.level = sLevel
+        } else {
+            recipe.data.details.level = null
+        }
+
+        // Pull the yield/servings
+        let yieldText = $(".o-RecipeInfo__a-Description", ".o-RecipeInfo o-Yield").text()
+
+        // ASSERTION: the amount is a number and is the first element in the string
+        let servingAmount = yieldText.match("([0-9]+)")
+        if (servingAmount) {
+            servingAmount = servingAmount[0].trim()
+        }
+
+        // captures the very last word in the string
+        let servingItem = yieldText.match("\s(\w+)$")
+        if (servingItem) {
+            servingItem = servingItem[0].trim()
+        }
+
+        // validate yield scraping
+        if (!servingAmount || !servingItem) {
+            recipe.data.details.servings.amount = null
+            recipe.data.details.servings.item = yieldText // just duct tape whole thing
+        } else {
+            recipe.data.details.servings.amount = servingAmount
+            recipe.data.details.servings.item = servingItem
+        }
 
         // Next, all the ingredients
         // ingredients section: o-Ingredients__m-Body
@@ -69,22 +152,18 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
             }
 
             // push to our final recipe JSON
-            recipe.ingredients.push({
-                ingrNumber: i + 1,
-                ingrQuantity: qty,
-                ingrMeasure: measure,
-                ingrItem: item,
+            recipe.data.ingredients.push({
+                amount: qty,
+                unit: measure,
+                item: item,
             })
         })
 
-        // Finally, pull the directions
+        // Pull the directions
         // directions section: o-Method__m-Body
         // each direction is a <p> tag
         $("p", ".o-Method__m-Body").each((i, e) => {
-            recipe.directions.push({
-                dirStep: i + 1, 
-                dirStepText: $(e).text().trim(),
-            })
+            recipe.data.directions.push($(e).text().trim())
         })
         // ***** END EXTRACTING *****
 
