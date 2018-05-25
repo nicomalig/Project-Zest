@@ -80,7 +80,7 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
         recipe.data.name = $(".o-AssetTitle__a-HeadlineText", ".recipe-lead").text()
 
         // Pull the image URL 
-        let sURL = $("o-AssetMultiMedia__a-Image")
+        let sURL = $(".o-AssetMultiMedia__a-Image")
         if (sURL) {
             recipe.data.img = sURL.attr("src")
         }
@@ -181,7 +181,11 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
         // directions section: o-Method__m-Body
         // each direction is a <p> tag
         $("p", ".o-Method__m-Body").each((i, e) => {
-            recipe.data.directions.push($(e).text().trim())
+            let dir = $(e).text().trim()
+            // don't push this direction (common in a lot of FN recipes)
+            if (!dir.includes("how to make this recipe")) {
+                recipe.data.directions.push(dir)
+            }
         })
         // ***** END EXTRACTING *****
 
