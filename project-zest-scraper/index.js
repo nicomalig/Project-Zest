@@ -11,30 +11,47 @@ const app = express()
 const addr = process.env.ADDR || ":80"
 const [host, port] = addr.split(":")
 
+const HttpCode = {
+    ok: 200,
+    created: 201,
+    badRequest: 400,
+    unauthorized: 401,
+    forbidden: 403,
+    notFound: 404,
+    methodNotSupported: 405,
+    internalServerError: 500,
+}
+
 // our handler
 app.get("/v1/scrape/foodnetwork", (req, res, next) => {
     res.set('Access-Control-Allow-Origin', '*')
-    
+
     var target = req.query.url
     console.log(`received scrape request for ${target}`) // DEBUG
-    
-    // first, we send a request over to the url, 
-    // assume we handle URL validation clientside
+
+    // Validate that this is a Food Network URL
+    const targetURL = new URL(target)
+    if (!targetURL.host.includes("foodnetwork")) {
+        res.status(HttpCode.badRequest).send("Only Food Network recipes permitted")
+        return
+    }
+
+    // first, we send a request over to the url
     request(target, (err, response, html) => {
         if (err) {
             return next(err)
         }
-    
+
         // load cheerio with our html
         var $ = cheerio.load(html)
 
         // declare variables
-
         var link, data, name, img,
             details, total, prep, inactive, cook, level,
             servings, amount, item,
             ingredients
 
+        // declare recipe to return to client
         var recipe = {
             link: target,
             data: {
@@ -70,16 +87,16 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
 
         // Next, the cooking times
         // total: o-RecipeInfo__a-Description--Total
-        recipe.data.details.total = 
+        recipe.data.details.total =
             $(".o-RecipeInfo__a-Description--Total", "dl").first().text()
-        
+
         console.log($("dl", ".o-RecipeInfo o-Time").children());
-        
+
 
         // Next, pull the prep, inactive, and cook times if they exist
         $("dl", ".o-RecipeInfo o-Time").children().each((i, elem) => {
             console.log($(this));
-            
+
             // let headline = $(this).text().toLowerCase()
 
             if ($(this).text().toLowerCase().includes("prep")) {
@@ -131,7 +148,7 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
         $(".o-Ingredients__a-ListItemText", ".o-Ingredients__m-Body").each((i, e) => {
             // pull the data
             var whole = $(e).text()
-            
+
             // REGEX
             // qty:     ([0-9])[,/ ]
             // measure: ([a-z]+) <-- use only first element
@@ -143,6 +160,9 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
             var measure = whole.match("([a-z]+)")
             if (measure) {
                 measure = measure[0].trim()
+
+                // check for measure, otherwise, just push the whole thing
+                // as the item  
             }
             var item = whole.split(measure)
             if (item) {
