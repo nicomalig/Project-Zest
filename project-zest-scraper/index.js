@@ -16,7 +16,7 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
     res.set('Access-Control-Allow-Origin', '*')
     
     var target = req.query.url
-    console.log(`target URL is ${target}`) // DEBUG
+    console.log(`received scrape request for ${target}`) // DEBUG
     
     // first, we send a request over to the url, 
     // assume we handle URL validation clientside
@@ -29,10 +29,6 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
         var $ = cheerio.load(html)
 
         // declare variables
-        // var link, name, data, img,
-        //     details, total, prep, inactive, cook, level, servings,
-        //     ingredients, qty, measure, item, 
-        //     directions, step, text
 
         var link, data, name, img,
             details, total, prep, inactive, cook, level,
@@ -42,17 +38,17 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
         var recipe = {
             link: target,
             data: {
-                name,
-                img,
+                name: null,
+                img: null,
                 details: {
-                    total,
-                    prep,
-                    inactive,
-                    cook,
-                    level,
+                    total: null,
+                    prep: null,
+                    inactive: null,
+                    cook: null,
+                    level: null,
                     servings: {
-                        amount,
-                        item,
+                        amount: null,
+                        item: null,
                     },
                 },
                 ingredients: [], // JSON array of ingredients
@@ -70,26 +66,31 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
         let sURL = $("o-AssetMultiMedia__a-Image")
         if (sURL) {
             recipe.data.img = sURL.attr("src")
-        } else {
-            recipe.data.img = null
         }
 
         // Next, the cooking times
         // total: o-RecipeInfo__a-Description--Total
-        recipe.data.details.total = $(".o-RecipeInfo__a-Description--Total").text()
+        recipe.data.details.total = 
+            $(".o-RecipeInfo__a-Description--Total", "dl").first().text()
+        
+        console.log($("dl", ".o-RecipeInfo o-Time").children());
+        
 
         // Next, pull the prep, inactive, and cook times if they exist
-        $(".o-RecipeInfo__a-Headline").each((i, elem) => {
-            let headline = $(this).text().toLowerCase()
-            if (headline.includes("prep")) {
+        $("dl", ".o-RecipeInfo o-Time").children().each((i, elem) => {
+            console.log($(this));
+            
+            // let headline = $(this).text().toLowerCase()
+
+            if ($(this).text().toLowerCase().includes("prep")) {
                 recipe.data.details.prep = headline
                     .next(".o-RecipeInfo__a-Description").text()
 
-            } else if (headline.includes("inactive")) {
+            } else if ($(this).text().toLowerCase().includes("inactive")) {
                 recipe.data.details.inactive = headline
                     .next(".o-RecipeInfo__a-Description").text()
 
-            } else if (headline.includes("cook")) {
+            } else if ($(this).text().toLowerCase().includes("cook")) {
                 recipe.data.details.cook = headline
                     .next(".o-RecipeInfo__a-Description").text()
             }
@@ -99,8 +100,6 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
         let sLevel = $("o-RecipeInfo__a-Description", "o-RecipeInfo o-Level").text()
         if (sLevel) {
             recipe.data.details.level = sLevel
-        } else {
-            recipe.data.details.level = null
         }
 
         // Pull the yield/servings
@@ -109,18 +108,17 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
         // ASSERTION: the amount is a number and is the first element in the string
         let servingAmount = yieldText.match("([0-9]+)")
         if (servingAmount) {
-            servingAmount = servingAmount[0].trim()
+            recipe.data.details.servings.amount = servingAmount[0].trim()
         }
 
         // captures the very last word in the string
         let servingItem = yieldText.match("\s(\w+)$")
         if (servingItem) {
-            servingItem = servingItem[0].trim()
+            recipe.data.details.servings.item = servingItem[0].trim()
         }
 
         // validate yield scraping
         if (!servingAmount || !servingItem) {
-            recipe.data.details.servings.amount = null
             recipe.data.details.servings.item = yieldText // just duct tape whole thing
         } else {
             recipe.data.details.servings.amount = servingAmount
