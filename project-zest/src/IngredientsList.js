@@ -80,7 +80,7 @@ class IngredientsList extends Component {
       case "milliliter":
         return "ml";
       default:
-        return unit;
+        return "none";
     }
   }
 
@@ -337,6 +337,7 @@ class IngredientsList extends Component {
         if (uVal.endsWith("s")) {
           uVal = uVal.substring(0, uVal.length - 1);
         }
+
         unitSelect.value = this.getUnitValue(uVal);
       }
 
@@ -542,7 +543,7 @@ class IngredientsList extends Component {
           if (unit.endsWith("s")) {
             unit = unit.substring(0, unit.length - 1);
           }
-          div.setAttribute("value", this.getUnit(unit));
+          div.setAttribute("value", this.getUnitValue(unit));
           div.appendChild(unitSpan);
         }
 
@@ -575,7 +576,7 @@ class IngredientsList extends Component {
     return (
       <div id="ingredients-main-div">
         <form id="checkboxes-form">
-          <div value="cup">
+          {/* <div value="cup">
             <input type="checkbox" name="ingredient" />
             <span className="amt">2 1/4 </span>
             <span className="unit">cups </span>
@@ -594,7 +595,7 @@ class IngredientsList extends Component {
               One 12-ounce bag semisweet chocolate chips
             </text>
             <hr />
-          </div>
+          </div> */}
         </form>
         <div id="add-new-ingredient-div">
           <button id="add-ingredient" onClick={this.addIngredient}>

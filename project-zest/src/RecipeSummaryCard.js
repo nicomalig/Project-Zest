@@ -5,8 +5,13 @@ import "./RecipeSummaryCard.css";
 class RecipeSummaryCard extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      user: props.user,
+      recipeInformation: props.recipeInformation
+    };
     this.editServingSize = this.editServingSize.bind(this);
     this.doneEditingServingSize = this.doneEditingServingSize.bind(this);
+    this.updateSummary = this.updateSummary.bind(this);
   }
 
   editServingSize(e) {
@@ -55,7 +60,28 @@ class RecipeSummaryCard extends Component {
     done.style.display = "none";
   }
 
+  updateSummary() {
+    var nameSpan = document.getElementById("recipe-name");
+    var detailsDiv = document.getElementById("recipe-information");
+
+    var name = this.props.recipeInformation.data.name;
+    var details = this.props.recipeInformation.data.details;
+    if (details != null) {
+      nameSpan.innerHTML = name;
+    } else {
+      var div = document.createElement("div");
+      var p = document.createElement("p");
+      p.innerText = "Could not find directions for this recipe";
+      div.appendChild(p);
+      details.appendChild(div);
+    }
+    this.setState({ recipeInformation: this.props.recipeInformation });
+  }
+
   render() {
+    if (this.props.recipeInformation != this.state.recipeInformation) {
+      this.updateSummary();
+    }
     return (
       <div className="rs-card" /* id="recipe-summary-div" */>
         <div id="recipe-name-bar">
@@ -82,7 +108,7 @@ class RecipeSummaryCard extends Component {
           <hr />
           <p>Level: Easy</p>
           <hr />
-          <span>
+          <span id="yield-span">
             <p>
               <text>Yield: </text>
               <span id="inputSwitch">
