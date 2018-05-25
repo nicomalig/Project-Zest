@@ -5,23 +5,14 @@ class RecipeDirections extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null
+      user: null,
+      recipeInformation: props.recipeInformation,
+      directions: []
     };
     this.editDirections = this.editDirections.bind(this);
     this.doneEditing = this.doneEditing.bind(this);
     this.cancelEditing = this.cancelEditing.bind(this);
-  }
-
-  componentWillMount() {
-    fetch(
-      "http://api.project-zest.nicomalig.com/v1/scrape/foodnetwork?url=https://www.foodnetwork.com/recipes/alton-brown/the-chewy-recipe-1909046"
-    )
-      .then(results => {
-        console.log(results);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.updateDirections = this.updateDirections.bind(this);
   }
 
   editDirections(e) {
@@ -31,11 +22,33 @@ class RecipeDirections extends Component {
     var button;
     var paragraph;
     for (var i = 0; i < children.length; i++) {
-      if (children[i].classList.contains("edit-direction-button")) {
+      if (
+        children[i].classList.contains("edit-direction-button") ||
+        children[i].className === "edit-direction-button"
+      ) {
         button = children[i];
         button.style.display = "none";
       }
-      if (children[i].classList.contains("direction-paragraph")) {
+      if (
+        children[i].classList.contains("direction-paragraph") ||
+        children[i].className === "direction-paragraph"
+      ) {
+        paragraph = children[i];
+        paragraph.style.display = "none";
+      }
+    }
+    for (var i = 0; i < children.length; i++) {
+      if (
+        children[i].classList.contains("edit-direction-button") ||
+        children[i].className === "edit-direction-button"
+      ) {
+        button = children[i];
+        button.style.display = "none";
+      }
+      if (
+        children[i].classList.contains("direction-paragraph") ||
+        children[i].className === "direction-paragraph"
+      ) {
         paragraph = children[i];
         paragraph.style.display = "none";
       }
@@ -90,11 +103,19 @@ class RecipeDirections extends Component {
       }
     }
     if (newText && paragraph) {
-      paragraph.innerText = newText.value;
-      paragraph.style.display = "block";
+      if (newText.value.trim() == "") {
+        elementsToDelete.push(paragraph);
+      } else {
+        paragraph.innerText = newText.value;
+        paragraph.style.display = "block";
+      }
     }
-    if (editBtn) {
-      editBtn.style.display = "block";
+    if (newText && editBtn) {
+      if (newText.value.trim() == "") {
+        elementsToDelete.push(editBtn);
+      } else {
+        editBtn.style.display = "block";
+      }
     }
     for (var j = 0; j < elementsToDelete.length; j++) {
       elementsToDelete[j].parentElement.removeChild(elementsToDelete[j]);
@@ -121,63 +142,48 @@ class RecipeDirections extends Component {
     }
   }
 
+  updateDirections() {
+    var directionDiv = document.getElementById("directions-tgt");
+    while (directionDiv.firstChild) {
+      directionDiv.removeChild(directionDiv.firstChild);
+    }
+    var directions = this.props.recipeInformation.data.directions;
+    if (directions != null) {
+      for (var i = 0; i < directions.length; i++) {
+        var div = document.createElement("div");
+        var button = document.createElement("button");
+        var p = document.createElement("p");
+
+        button.onclick = this.editDirections;
+        button.className = "edit-direction-button";
+        button.innerHTML = "pencil";
+
+        p.className = "direction-paragraph";
+        p.innerText = directions[i];
+
+        div.appendChild(button);
+        div.appendChild(p);
+
+        directionDiv.appendChild(div);
+      }
+    } else {
+      var div = document.createElement("div");
+      var p = document.createElement("p");
+      p.innerText = "Could not find directions for this recipe";
+      div.appendChild(p);
+      directionDiv.appendChild(div);
+    }
+    this.setState({ recipeInformation: this.props.recipeInformation });
+  }
+
   render() {
+    if (this.props.recipeInformation != this.state.recipeInformation) {
+      this.updateDirections();
+    }
     return (
       <div className="directions">
         <h2>Directions</h2>
-        <div id="directions-tgt">
-          <div>
-            <button
-              className="edit-direction-button"
-              onClick={this.editDirections}
-            >
-              pencil
-            </button>
-            <p className="direction-paragraph">
-              Position 2 racks in the center of the oven, and preheat to 375
-              degrees F. Line 2 baking sheets with parchment.
-            </p>
-          </div>
-          <div>
-            <button onClick={this.editDirections}> pencil </button>
-            <p className="direction-paragraph">
-              Whisk together the flour, baking soda and 1 teaspoon salt in a
-              large bowl.
-            </p>
-          </div>
-          <div>
-            <button onClick={this.editDirections}> pencil </button>
-            <p className="direction-paragraph">
-              Beat the butter and both sugars on medium-high speed in the bowl
-              of a stand mixer fitted with a paddle attachment (or in a large
-              bowl if using a handheld mixer) until light and fluffy, about 4
-              minutes. Add the eggs, one at time, beating after each addition to
-              incorporate. Beat in the vanilla. Scrape down the side of the bowl
-              as needed. Reduce the speed to medium, add the flour mixture and
-              beat until just incorporated. Stir in the chocolate chips.
-            </p>
-          </div>
-          <div>
-            <button onClick={this.editDirections}> pencil </button>
-            <p className="direction-paragraph">
-              Scoop 12 heaping tablespoons of dough about 2 inches apart onto
-              each prepared baking sheet. Roll the dough into balls with
-              slightly wet hands. Bake, rotating the cookie sheets from upper to
-              lower racks halfway through, until golden but still soft in the
-              center, 12 to 15 minutes (the longer the cook time, the crunchier
-              the cookies). Let cool for a few minutes on the baking sheet, and
-              then transfer to a rack to cool completely.
-            </p>
-          </div>
-          <div>
-            <button onClick={this.editDirections}> pencil </button>
-            <p className="direction-paragraph">
-              Let the baking sheets cool completely, scoop the remaining dough
-              onto 1 sheet and bake. Store the cookies in a tightly sealed
-              container at room temperature for up to 5 days.
-            </p>
-          </div>
-        </div>
+        <div id="directions-tgt" />
       </div>
     );
   }

@@ -29,35 +29,15 @@ class InvalidURLRecipe extends Component {
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div className="flex-container">
-          <p> Search for a recipe! </p>
-          <MainScreenSearchBar handler={this.props.handler} />
-        </div>
-        {this.props.user && (
-          <div>
-            <p>Welcome {this.props.user.displayName}</p>
-            <SignOutButton
-              user={this.props.user}
+        <div className="flex-container-m">
+          <div className="mssb">
+            <MainScreenSearchBar
               handler={this.props.handler}
+              url={this.props.url}
+              user={this.props.user}
             />
-            <RaisedButton
-              className="saved-recipes-button"
-              label="See Your Saved Recipes" /*onClick={ GO TO SAVED RECIPES PAGE }*/
-            />
-            <SavedRecipes user={this.props.user} handler={this.props.handler} />
           </div>
-        )}
-        {!this.props.user && (
-          <div>
-            <p>Login to save your recipes!</p>
-            <div id="login-div" className="flex-item">
-              <LogInWithFacebookButton
-                user={this.state.user}
-                handler={this.props.handler}
-              />
-            </div>
-          </div>
-        )}
+        </div>
       </MuiThemeProvider>
     );
   }

@@ -3,11 +3,16 @@ import FavoriteButton from "./FavoriteButton";
 import "./RecipeSummaryCard.css";
 
 class RecipeSummaryCard extends Component {
-   constructor(props) {
-      super(props);
-      this.editServingSize = this.editServingSize.bind(this);
-      this.doneEditingServingSize = this.doneEditingServingSize.bind(this);
-   }
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: props.user,
+      recipeInformation: props.recipeInformation
+    };
+    this.editServingSize = this.editServingSize.bind(this);
+    this.doneEditingServingSize = this.doneEditingServingSize.bind(this);
+    this.updateSummary = this.updateSummary.bind(this);
+  }
 
    editServingSize(e) {
       e.preventDefault();
@@ -55,57 +60,78 @@ class RecipeSummaryCard extends Component {
       done.style.display = "none";
    }
 
-   render() {
-      return (
-         <div className="rs-card" /* id="recipe-summary-div" */>
-            <div id="recipe-name-bar">
-               <div id="recipe-name">Simple Chocolate Chip Cookies</div>
-               <FavoriteButton
-                  url={this.props.url}
-                  user={this.props.user}
-                  handler={this.props.handler}
-               />
-            </div>
-            <div id="recipe-img">
-               <img
-                  src={require("./img/chocolateChipCookies.jpg")}
-                  width="400"
-                  height="240"
-                  alt="recipe"
-               />
-            </div>
-            <div id="recipe-information">
-               <p>Total: 1hr 20min</p>
-               <p>Prep: 5min</p>
-               <p>Inactive: 45min</p>
-               <p>Cook: 30min</p>
-               <hr />
-               <p>Level: Easy</p>
-               <hr />
-               <span>
-                  <p>
-                     <text>Yield: </text>
-                     <span id="inputSwitch">
-                        <span id="yield-span">30 </span>
-                        <input id="yield-input" hidden="hidden" type="number" />
-                     </span>
-                     cookies
-                  </p>
-                  <button id="edit-button" onClick={this.editServingSize}>
-                     Edit
-                  </button>
-                  <button
-                     id="done-button"
-                     onClick={this.doneEditingServingSize}
-                     hidden="hidden"
-                  >
-                     Done
-                  </button>
-               </span>
-            </div>
-         </div>
-      );
-   }
+  updateSummary() {
+    var nameSpan = document.getElementById("recipe-name");
+    var detailsDiv = document.getElementById("recipe-information");
+
+    var name = this.props.recipeInformation.data.name;
+    var details = this.props.recipeInformation.data.details;
+    if (details != null) {
+      nameSpan.innerHTML = name;
+    } else {
+      var div = document.createElement("div");
+      var p = document.createElement("p");
+      p.innerText = "Could not find directions for this recipe";
+      div.appendChild(p);
+      details.appendChild(div);
+    }
+    this.setState({ recipeInformation: this.props.recipeInformation });
+  }
+
+  render() {
+    if (this.props.recipeInformation != this.state.recipeInformation) {
+      this.updateSummary();
+    }
+    return (
+      <div className="rs-card" /* id="recipe-summary-div" */>
+        <div id="recipe-name-bar">
+          <span id="recipe-name">Cookies</span>
+          <FavoriteButton
+            url={this.props.url}
+            user={this.props.user}
+            handler={this.props.handler}
+          />
+        </div>
+        <div id="recipe-img">
+          <img
+            src={require("./img/chocolateChipCookies.jpg")}
+            width="400"
+            height="240"
+            alt="recipe"
+          />
+        </div>
+        <div id="recipe-information">
+          <p>Total: 1hr 20min</p>
+          <p>Prep: 5min</p>
+          <p>Inactive: 45min</p>
+          <p>Cook: 30min</p>
+          <hr />
+          <p>Level: Easy</p>
+          <hr />
+          <span id="yield-span">
+            <p>
+              <text>Yield: </text>
+              <span id="inputSwitch">
+                <span id="yield-span">30 </span>
+                <input id="yield-input" hidden="hidden" type="number" />
+              </span>
+              cookies
+            </p>
+            <button id="edit-button" onClick={this.editServingSize}>
+              Edit
+            </button>
+            <button
+              id="done-button"
+              onClick={this.doneEditingServingSize}
+              hidden="hidden"
+            >
+              Done
+            </button>
+          </span>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default RecipeSummaryCard;
