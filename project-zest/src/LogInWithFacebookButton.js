@@ -17,7 +17,10 @@ class LogInWithFacebookButton extends Component {
         // var token = result.credential.accessToken;
         // The signed-in user info.
         var currentUser = result.user;
-        this.props.handler({ user: currentUser });
+        this.props.handler({
+          user: currentUser,
+          goToRecipePage: true
+        });
         // ...
       })
       .catch(function(error) {

@@ -11,7 +11,9 @@ class App extends Component {
     this.state = {
       user: null,
       url: "",
-      goToRecipePage: false
+      goToRecipePage: false,
+      recipeInformation: {},
+      urlChange: false
     };
     this.handler = this.handler.bind(this);
   }
@@ -37,7 +39,35 @@ class App extends Component {
     this.setState(newState);
   }
 
+  getScrapedData(url) {
+    console.log("get scraped data");
+    var apiBase =
+      "http://api.project-zest.nicomalig.com/v1/scrape/foodnetwork?url=";
+    fetch(apiBase + url)
+      .then(results => results.json())
+      .then(json => {
+        this.setState({ recipeInformation: json });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   render() {
+    if (this.state.urlChange) {
+      var url = this.state.url;
+      var apiBase =
+        "http://api.project-zest.nicomalig.com/v1/scrape/foodnetwork?url=";
+      fetch(apiBase + url)
+        .then(results => results.json())
+        .then(json => {
+          this.setState({ recipeInformation: json, urlChange: false });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      // this.setState({ urlChange: false });
+    }
     return (
       <Router>
         <div id="main-screen-body">
@@ -46,23 +76,32 @@ class App extends Component {
             !this.state.goToRecipePage && <HomePage handler={this.handler} />}
 
           {/* No user is signed in but url inputed*/}
-          {!this.state.user &&
+          {((!this.state.user && this.state.goToRecipePage) ||
+            this.state.user) && (
+            <Recipe
+              user={this.state.user}
+              handler={this.handler}
+              url={this.state.url}
+              recipeInformation={this.state.recipeInformation}
+            />
+          )}
+          {/* User is signed in
+          {this.state.user &&
             this.state.goToRecipePage && (
               <Recipe
                 user={this.state.user}
                 handler={this.handler}
                 url={this.state.url}
               />
-            )}
-
+            )} */}
           {/* User is signed in */}
-          {this.state.user && (
+          {/* {this.state.user && (
             <Recipe
               user={this.state.user}
               handler={this.handler}
               url={this.state.url}
             />
-          )}
+          )} */}
         </div>
       </Router>
     );

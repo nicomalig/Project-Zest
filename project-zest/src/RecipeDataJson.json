@@ -1,0 +1,28 @@
+[
+  {
+    "link": "this.props.url",
+    "data": {
+      "name": "name of the recipe",
+      "img": "image url or null if its not there",
+      "ingredients": [
+        {
+          "amount": 69,
+          "unit": "string",
+          "item": "name/description of item"
+        }
+      ],
+      "directions": ["each", "paragraph", "or maybe the entire string"],
+      "details": {
+        "total": "hours",
+        "prep": "hours",
+        "inactive": "minutes",
+        "cook": "days",
+        "level": "easy",
+        "servings": {
+          "amount": 420,
+          "item": "cookie"
+        }
+      }
+    }
+  }
+]

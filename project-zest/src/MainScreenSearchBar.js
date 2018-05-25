@@ -13,16 +13,14 @@ class MainScreenSearchBar extends Component {
     super(props);
     this.state = {
       errorText: "",
-      url: props.url
+      url: props.url,
+      recipeInformation: {}
     };
     this.handleChange = this.handleChange.bind(this);
+    this.isFoodNetworkUrl = this.isFoodNetworkUrl.bind(this);
+    // this.getScrapedData = this.getScrapedData.bind(this);
+    // this.setData = this.setData.bind(this);
   }
-
-  // componentDidMount(newValue) {
-  //   this.setState({
-  //     url: this.props.url
-  //   });
-  // }
 
   handleChange(e, newValue) {
     e.preventDefault();
@@ -36,18 +34,37 @@ class MainScreenSearchBar extends Component {
     });
   }
 
+  isFoodNetworkUrl(url) {
+    if (IsUrl(url)) {
+      var regex = new RegExp(
+        `https:\/\/www\.foodnetwork\.com\/recipes\/[a-z\-\/\d]+`
+      );
+      if (regex.test(url)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return false;
+  }
+
+  //   setData(e, json) {
+  //     e.preventDefault();
+  //     this.props.recipeHandler(e, { recipeInformation: json });
+  //   }
+
   onSearchClick = e => {
     e.preventDefault();
-    // Verify email address is formatted properly
-    if (IsUrl(this.state.url)) {
-      this.props.handler(e, { url: this.state.url });
+    if (this.isFoodNetworkUrl(this.state.url)) {
+      this.props.handler(e, { url: this.state.url, urlChange: true });
       this.setState({ errorText: "", url: this.state.url });
     } else {
-      this.setState({ errorText: "Enter a valid URL" });
+      this.setState({ errorText: "Enter a valid FoodNetwork Recipe URL" });
     }
   };
 
   render() {
+    console.log(this.state);
     return (
       <div className="form flex-container-sb">
         <div className="rec-logo-container flex-item fi-sb">
@@ -93,12 +110,10 @@ class MainScreenSearchBar extends Component {
         )}
         {this.props.user && (
           <div className="flex-item fi-sb mssb-so">
-            {this.props.user && (
-              <SignOutButton
-                user={this.props.user}
-                handler={this.props.handler}
-              />
-            )}
+            <SignOutButton
+              user={this.props.user}
+              handler={this.props.handler}
+            />
           </div>
         )}
         {!this.props.user && (
