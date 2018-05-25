@@ -4,7 +4,9 @@ class IngredientsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      servingSizeChange: 1
+      servingSizeChange: 1,
+      recipeInformation: props.recipeInformation,
+      ingredients: []
     };
     this.convertIngredients = this.convertIngredients.bind(this);
     this.changeServingSize = this.changeServingSize.bind(this);
@@ -13,6 +15,7 @@ class IngredientsList extends Component {
     this.getUnitValue = this.getUnitValue.bind(this);
     this.doneModifying = this.doneModifying.bind(this);
     this.cancelModifying = this.cancelModifying.bind(this);
+    this.updateIngredients = this.updateIngredients.bind(this);
   }
 
   getUnit(unit) {
@@ -243,6 +246,7 @@ class IngredientsList extends Component {
         var elem = p.childNodes[j];
         if (elem.type === "checkbox") {
           input = elem;
+          input.checked = false;
         }
         if (elem.className === "amt") {
           amt = elem;
@@ -504,13 +508,73 @@ class IngredientsList extends Component {
     }
   }
 
+  updateIngredients() {
+    var ingrDiv = document.getElementById("cingredients-main-div");
+    var ingrForm = document.getElementById("checkboxes-form");
+    while (ingrForm.firstChild) {
+      ingrForm.removeChild(ingrForm.firstChild);
+    }
+    var ingredients = this.props.recipeInformation.data.ingredients;
+    if (ingredients != null) {
+      for (var i = 0; i < ingredients.length; i++) {
+        var ingr = ingredients[i];
+        var div = document.createElement("div");
+        var input = document.createElement("input");
+        var amtSpan = document.createElement("span");
+        var unitSpan = document.createElement("span");
+        var text = document.createElement("text");
+        var hr = document.createElement("hr");
+
+        input.type = "checkbox";
+        input.name = "ingredient";
+        div.appendChild(input);
+
+        if (ingr.amount) {
+          amtSpan.className = "amt";
+          amtSpan.innerHTML = ingr.amount + " ";
+          div.appendChild(amtSpan);
+        }
+
+        if (ingr.unit) {
+          unitSpan.className = "unit";
+          var unit = ingr.unit.trim();
+          unitSpan.innerHTML = unit + " ";
+          if (unit.endsWith("s")) {
+            unit = unit.substring(0, unit.length - 1);
+          }
+          div.setAttribute("value", this.getUnit(unit));
+          div.appendChild(unitSpan);
+        }
+
+        if (ingr.item) {
+          text.className = "text";
+          text.innerHTML = ingr.item;
+          div.appendChild(text);
+        }
+        div.appendChild(hr);
+
+        ingrForm.appendChild(div);
+      }
+    } else {
+      var div = document.createElement("div");
+      var p = document.createElement("p");
+      p.innerText = "Could not find ingredients for this recipe";
+      div.appendChild(p);
+      ingrForm.appendChild(div);
+    }
+    this.setState({ recipeInformation: this.props.recipeInformation });
+  }
+
   render() {
     if (this.state.servingSizeChange !== this.props.servingSizeChange) {
       this.changeServingSize();
     }
+    if (this.props.recipeInformation != this.state.recipeInformation) {
+      this.updateIngredients();
+    }
     return (
-      <div>
-        <form id="checkboxes">
+      <div id="ingredients-main-div">
+        <form id="checkboxes-form">
           <div value="cup">
             <input type="checkbox" name="ingredient" />
             <span className="amt">2 1/4 </span>
@@ -518,45 +582,10 @@ class IngredientsList extends Component {
             <text className="text">all-purpose flour</text>
             <hr />
           </div>
-          <div value="tsp">
-            <input type="checkbox" name="ingredient" />
-            <span className="amt">1 </span>
-            <span className="unit">teaspoon </span>
-            <text className="text">baking soda</text>
-            <hr />
-          </div>
-          <div value="Tbs">
-            <input type="checkbox" name="ingredient" />
-            <span className="amt">12 </span>
-            <span className="unit">tablespoons </span>
-            <text className="text">unsalted butter, at room temperature</text>
-            <hr />
-          </div>
-          <div value="cup">
-            <input type="checkbox" name="ingredient" />
-            <span className="amt">3/4 </span>
-            <span className="unit">cup </span>
-            <text className="text">packed light brown sugar</text>
-            <hr />
-          </div>
-          <div value="cup">
-            <input type="checkbox" name="ingredient" />
-            <span className="amt">2/3 </span>
-            <span className="unit">cup </span>
-            <text className="text">granulated sugar</text>
-            <hr />
-          </div>
           <div value="none">
             <input type="checkbox" name="ingredient" />
             <span className="amt">2 </span>
             <text className="text">large eggs</text>
-            <hr />
-          </div>
-          <div value="tsp">
-            <input type="checkbox" name="ingredient" />
-            <span className="amt">1 </span>
-            <span className="unit">teaspoon </span>
-            <text className="text">pure vanilla extract</text>
             <hr />
           </div>
           <div value="none">
@@ -567,7 +596,7 @@ class IngredientsList extends Component {
             <hr />
           </div>
         </form>
-        <div>
+        <div id="add-new-ingredient-div">
           <button id="add-ingredient" onClick={this.addIngredient}>
             <text> + </text>
           </button>

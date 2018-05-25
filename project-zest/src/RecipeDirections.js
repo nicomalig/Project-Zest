@@ -177,10 +177,6 @@ class RecipeDirections extends Component {
   }
 
   render() {
-    console.log("HEY HEY HEY I UPDATED BOOGIEWOOGIE");
-    console.log("HEY HEY HEY I UPDATED BOOGIEWOOGIE");
-    console.log("HEY HEY HEY I UPDATED BOOGIEWOOGIE");
-    console.log(this.props);
     if (this.props.recipeInformation != this.state.recipeInformation) {
       this.updateDirections();
     }
