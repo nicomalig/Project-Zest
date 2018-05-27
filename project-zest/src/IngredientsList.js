@@ -168,7 +168,7 @@ class IngredientsList extends Component {
       text.className = "text";
       div.appendChild(text);
       div.appendChild(hr);
-      var element = document.getElementById("checkboxes");
+      var element = document.getElementById("checkboxes-form");
       element.appendChild(div);
     }
   }
@@ -443,7 +443,12 @@ class IngredientsList extends Component {
       ) {
         hasUnit = true;
         oldUnit = child;
-        child.innerHTML = this.getUnit(newUnit) + " ";
+        var unitHtml = this.getUnit(newUnit);
+        if (unitHtml != "none") {
+          child.innerHTML = this.getUnit(newUnit) + " ";
+        } else {
+          child.innerHTML = "";
+        }
         e.target.parentElement.setAttribute("value", newUnit);
       }
       if (
@@ -539,7 +544,9 @@ class IngredientsList extends Component {
         if (ingr.unit) {
           unitSpan.className = "unit";
           var unit = ingr.unit.trim();
-          unitSpan.innerHTML = unit + " ";
+          if (unit != "none") {
+            unitSpan.innerHTML = unit + " ";
+          }
           if (unit.endsWith("s")) {
             unit = unit.substring(0, unit.length - 1);
           }

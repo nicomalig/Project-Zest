@@ -14,51 +14,51 @@ class RecipeSummaryCard extends Component {
     this.updateSummary = this.updateSummary.bind(this);
   }
 
-   editServingSize(e) {
-      e.preventDefault();
+  editServingSize(e) {
+    e.preventDefault();
 
-      var span = document.getElementById("yield-span");
-      var input = document.getElementById("yield-input");
-      var edit = document.getElementById("edit-button");
-      var done = document.getElementById("done-button");
+    var span = document.getElementById("yield-span");
+    var input = document.getElementById("yield-input");
+    var edit = document.getElementById("edit-button");
+    var done = document.getElementById("done-button");
 
-      span.style.display = "none";
-      edit.style.display = "none";
-      input.style.display = "inline";
+    span.style.display = "none";
+    edit.style.display = "none";
+    input.style.display = "inline";
 
-      input.style.width = "3rem";
-      input.style.width = "3em";
-      input.style.marginLeft = "5px";
-      input.style.marginRight = "5px";
+    input.style.width = "3rem";
+    input.style.width = "3em";
+    input.style.marginLeft = "5px";
+    input.style.marginRight = "5px";
 
-      input.value = span.innerHTML.trim();
-      input.size = span.innerHTML.length + 3;
-      done.style.display = "inline";
-   }
+    input.value = span.innerHTML.trim();
+    input.size = span.innerHTML.length + 3;
+    done.style.display = "inline";
+  }
 
-   doneEditingServingSize(e) {
-      e.preventDefault();
-      var span = document.getElementById("yield-span");
-      var input = document.getElementById("yield-input");
-      var edit = document.getElementById("edit-button");
-      var done = document.getElementById("done-button");
+  doneEditingServingSize(e) {
+    e.preventDefault();
+    var span = document.getElementById("yield-span");
+    var input = document.getElementById("yield-input");
+    var edit = document.getElementById("edit-button");
+    var done = document.getElementById("done-button");
 
-      var before = span.innerHTML.trim();
-      var after = input.value;
+    var before = span.innerHTML.trim();
+    var after = input.value;
 
-      var multiplier = after / before;
-      multiplier = Math.round(multiplier * 100) / 100;
+    var multiplier = after / before;
+    multiplier = Math.round(multiplier * 100) / 100;
 
-      this.props.recipeHandler(e, {
-         servingSizeChange: multiplier
-      });
+    this.props.recipeHandler(e, {
+      servingSizeChange: multiplier
+    });
 
-      span.style.display = "inline";
-      edit.style.display = "inline";
-      input.style.display = "none";
-      span.innerHTML = input.value + " ";
-      done.style.display = "none";
-   }
+    span.style.display = "inline";
+    edit.style.display = "inline";
+    input.style.display = "none";
+    span.innerHTML = input.value + " ";
+    done.style.display = "none";
+  }
 
   updateSummary() {
     var nameSpan = document.getElementById("recipe-name");
@@ -101,10 +101,10 @@ class RecipeSummaryCard extends Component {
           />
         </div>
         <div id="recipe-information">
-          <p>Total: 1hr 20min</p>
-          <p>Prep: 5min</p>
-          <p>Inactive: 45min</p>
-          <p>Cook: 30min</p>
+          <p>Total: 1 hr 50 min</p>
+          <p>Prep: 20 min</p>
+          <p>Inactive: 1 hr</p>
+          <p>Cook: 30 min</p>
           <hr />
           <p>Level: Easy</p>
           <hr />
@@ -112,7 +112,7 @@ class RecipeSummaryCard extends Component {
             <p>
               <text>Yield: </text>
               <span id="inputSwitch">
-                <span id="yield-span">30 </span>
+                <span id="yield-span">24 </span>
                 <input id="yield-input" hidden="hidden" type="number" />
               </span>
               cookies
