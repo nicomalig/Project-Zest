@@ -22,6 +22,20 @@ const HttpCode = {
     internalServerError: 500,
 }
 
+// to ensure that we're getting the right measure
+const measures = [
+    "cup", "cups", 
+    "gallon", "gallons", "gal", "gals", 
+    "quart", "quarts", "qt", "qts",
+    "pint", "pints", "pt", "pts", 
+    "ounce", "ounces", "oz", "ozs", 
+    "tablespoon", "tablespoons", "tbsp", "tbsps",
+    "teaspoon", "teaspoons", "tsp", "tsps",
+    "liter", "liters", "l",
+    "milliliter", "milliliters", "ml", "mls",
+    "stick", "sticks"
+]
+
 // our handler
 app.get("/v1/scrape/foodnetwork", (req, res, next) => {
     res.set('Access-Control-Allow-Origin', '*')
@@ -80,7 +94,7 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
         recipe.data.name = $(".o-AssetTitle__a-HeadlineText", ".recipe-lead").text()
 
         // Pull the image URL 
-        let sURL = $("o-AssetMultiMedia__a-Image")
+        let sURL = $(".o-AssetMultiMedia__a-Image")
         if (sURL) {
             recipe.data.img = sURL.attr("src")
         }
@@ -148,25 +162,40 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
         $(".o-Ingredients__a-ListItemText", ".o-Ingredients__m-Body").each((i, e) => {
             // pull the data
             var whole = $(e).text()
+            // ===== REGEX =====
+            // qty:             ([0-9])[,/ ]
+            // qty (first)      (?:^|(?:[.!?]\s))(\w+)
+            // measure:         ([a-z]+) <-- use only first element
+            // item:            ([a-z].+)
+            // ===== REGEX =====[0-9])[,/ ]")
+            var qty, measure, item
 
-            // REGEX
-            // qty:     ([0-9])[,/ ]
-            // measure: ([a-z]+) <-- use only first element
-            // item:    ([a-z].+)
-            var qty = whole.match("([0-9])[,/ ]")
-            if (qty) {
+            qty = whole.match("(?:[1-9][0-9]*|0)(?:\/[1-9][0-9]*)?")
+
+            if (qty && (!isNaN(qty[0]) || qty[0].includes("/"))) {
                 qty = qty[0].trim()
-            }
-            var measure = whole.match("([a-z]+)")
-            if (measure) {
-                measure = measure[0].trim()
+                measure = whole.match("([a-z]+)")
 
-                // check for measure, otherwise, just push the whole thing
-                // as the item  
-            }
-            var item = whole.split(measure)
-            if (item) {
-                item = item[1].trim()
+                if (measure) {
+                    // If measure is actually a measure, then pass it through.
+                    // Otherwise, it looks like we can't reliably parse this:
+                    // we have to hand this ingredient off as just a whole string
+                    measure = measure[0].trim()
+                    if (measures.includes(measure)) {
+                        item = whole.split(measure)
+                        if (item) {
+                            item = item[1].trim()
+                        } else {
+                            next("no item pulled!")
+                        }
+                    } else {
+                        qty = qty
+                        measure = null
+                        item = whole.split(qty)[1].trim()
+                    }
+                }
+            } else { // not a number! just hand it off
+                item = whole
             }
 
             // push to our final recipe JSON
@@ -181,7 +210,11 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
         // directions section: o-Method__m-Body
         // each direction is a <p> tag
         $("p", ".o-Method__m-Body").each((i, e) => {
-            recipe.data.directions.push($(e).text().trim())
+            let dir = $(e).text().trim()
+            // don't push this direction (common in a lot of FN recipes)
+            if (!dir.includes("how to make this recipe")) {
+                recipe.data.directions.push(dir)
+            }
         })
         // ***** END EXTRACTING *****
 
