@@ -93,7 +93,6 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
 
         // ===== IMAGE ===== 
         let sURL = $(".o-AssetMultiMedia__a-Image")
-        
         if (sURL && sURL.length != 0) {
             recipe.data.img = sURL.attr("src")
         } else {
@@ -158,19 +157,10 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
 
         // ===== INGREDIENTS =====
         $(".o-Ingredients__a-ListItemText", ".o-Ingredients__m-Body").each((i, e) => {
-            // ===== REGEX =====
-            // qty:             ([0-9])[,/ ]
-            // qty (first)      (?:^|(?:[.!?]\s))(\w+)
-            // measure:         ([a-z]+) <-- use only first element
-            // item:            ([a-z].+)
-            // ===== REGEX =====[0-9])[,/ ]")
-
             // pull the data
             let whole = $(e).text()
             var qty, measure, item
 
-            // qty = whole.match("(?:[1-9][0-9]*|0)(?:\/[1-9][0-9]*)?")
-            // qty = whole.match("(\\d+[\\/\\d. ]*|\\d)")
             qty = whole.match("^[\\d\\/\\s]*")[0]
             
             if (qty && (!isNaN(qty) || qty.includes("/"))) {
