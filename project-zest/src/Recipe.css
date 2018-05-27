@@ -1,6 +1,6 @@
 html {
-   color: rgba(0, 0, 0, .80)
-
+   color: rgba(0, 0, 0, .80);
+   margin-bottom: 10px;
 }
 
 .flex-container, .flex-container-sb {
@@ -115,11 +115,11 @@ img {
       flex-wrap: wrap;
       width: 90%;
    }
-
+   
    .flex-container-c-left {
       flex-direction: column;
    }
-
+   
    .flex-container-sb {
       flex-wrap: wrap;
       justify-content: center;
@@ -131,7 +131,7 @@ img {
       margin: 0px;
       padding: 0px;
    }
-
+   
    .rec-submit {
       margin: 0px;
       width: 75vw !important;
