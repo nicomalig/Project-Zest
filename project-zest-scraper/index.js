@@ -185,37 +185,18 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
                         item = whole.split(measure)
                         if (item) {
                             item = item[1].trim()
-                            // console.log(`item extrapolated as: ${item}`) // DEBUG
                         } else {
                             next("no item pulled!")
                         }
                     } else {
-                        qty = null
-                        measure = "none"
-                        item = whole
+                        qty = qty
+                        measure = null
+                        item = whole.split(qty)[1].trim()
                     }
                 }
             } else { // not a number! just hand it off
-                console.log("===== ITEM PULLED AS WHOLE");
-
                 item = whole
             }
-
-            // old scrape
-            // if (qty) {
-            //     qty = qty[0].trim()
-            // }
-            // var measure = whole.match("([a-z]+)")
-            // if (measure) {
-            //     measure = measure[0].trim()
-
-            //     // check for measure, otherwise, just push the whole thing
-            //     // as the item  
-            // }
-            // var item = whole.split(measure)
-            // if (item) {
-            //     item = item[1].trim()
-            // }
 
             // push to our final recipe JSON
             recipe.data.ingredients.push({
