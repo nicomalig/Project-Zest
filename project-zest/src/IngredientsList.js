@@ -16,6 +16,7 @@ class IngredientsList extends Component {
     this.doneModifying = this.doneModifying.bind(this);
     this.cancelModifying = this.cancelModifying.bind(this);
     this.updateIngredients = this.updateIngredients.bind(this);
+    this.removeIngredients = this.removeIngredients.bind(this);
   }
 
   getUnit(unit) {
@@ -98,17 +99,7 @@ class IngredientsList extends Component {
       }
       this.convertIngredients(checkboxesChecked);
     } else if (this.props.alterType === "remove") {
-      checkboxes = document.getElementsByName("ingredient");
-      checkboxesChecked = [];
-      for (var j = 0; j < checkboxes.length; j++) {
-        if (checkboxes[j].checked) {
-          checkboxesChecked.push(checkboxes[j]);
-        }
-      }
-      for (var k = 0; k < checkboxesChecked.length; k++) {
-        var del = checkboxesChecked[k];
-        del.parentElement.remove(del);
-      }
+      this.removeIngredients();
     } else if (this.props.alterType === "modify") {
       checkboxes = document.getElementsByName("ingredient");
       checkboxesChecked = [];
@@ -124,7 +115,41 @@ class IngredientsList extends Component {
     }
   }
 
-  addIngredient() {
+  removeIngredients() {
+    var ingredients = this.state.ingredients;
+    var checkboxes = document.getElementsByName("ingredient");
+    var checkboxesChecked = [];
+    var indexes = [];
+    for (var j = 0; j < checkboxes.length; j++) {
+      if (checkboxes[j].checked) {
+        checkboxesChecked.push(checkboxes[j]);
+        indexes.push(j);
+      }
+    }
+    var updateState = false;
+    for (var h = indexes.length - 1; h >= 0; h--) {
+      ingredients.splice(ingredients[indexes[h]], 1);
+      updateState = true;
+    }
+    for (var k = 0; k < checkboxesChecked.length; k++) {
+      var del = checkboxesChecked[k];
+      del.parentElement.remove(del);
+    }
+    if (updateState) {
+      updateState = false;
+      var tempRec = this.state.recipeInformation;
+      tempRec.data.ingredients = ingredients;
+      this.setState({
+        ingredients: ingredients
+      });
+      // this.props.handler(e, {
+      //   recipeInformation: tempRec
+      // });
+    }
+  }
+
+  addIngredient(e) {
+    e.preventDefault();
     var div = document.createElement("div");
 
     var input = document.createElement("input");
@@ -143,10 +168,17 @@ class IngredientsList extends Component {
     document.getElementById("unit-select").value = "";
     document.getElementById("desc-input").value = "";
 
+    var ingrObj = {
+      amount: null,
+      unit: null,
+      item: ""
+    };
+
     if (descVal !== "") {
       div.appendChild(input);
       if (amtVal !== "") {
         var amtNode = document.createTextNode(amtVal + " ");
+        ingrObj.amount = amtVal + "";
         amtSpan.className = "amt";
         amtSpan.appendChild(amtNode);
         div.appendChild(amtSpan);
@@ -154,6 +186,7 @@ class IngredientsList extends Component {
       if (unitVal !== "none") {
         var val = this.getUnit(unitVal);
         var unitNode = document.createTextNode(val + " ");
+        ingrObj.unit = val + "";
         unitSpan.appendChild(unitNode);
         unitSpan.className = "unit";
         div.appendChild(unitSpan);
@@ -163,6 +196,7 @@ class IngredientsList extends Component {
       }
       if (descVal !== "") {
         var descNode = document.createTextNode(descVal);
+        ingrObj.item = descVal + "";
         text.appendChild(descNode);
       }
       text.className = "text";
@@ -170,6 +204,16 @@ class IngredientsList extends Component {
       div.appendChild(hr);
       var element = document.getElementById("checkboxes-form");
       element.appendChild(div);
+
+      var ingredients = this.state.ingredients;
+      ingredients.push(ingrObj);
+      var tempRec = this.state.recipeInformation;
+      tempRec.data.ingredients = ingredients;
+
+      this.setState({
+        ingredients: ingredients
+      });
+      this.props.handler(e, { recipeInformation: tempRec });
     }
   }
 
@@ -406,6 +450,10 @@ class IngredientsList extends Component {
     var newUnit;
     var newText;
     var elementsToDelete = [];
+    var updateState = false;
+
+    var ingredients = this.props.recipeInformation.data.ingredients;
+
     for (var j = 0; j < children.length; j++) {
       if (children[j].classList.contains("temp-mod")) {
         children[j].style.display = "none";
@@ -429,11 +477,26 @@ class IngredientsList extends Component {
     var oldAmt;
     var oldUnit;
     var oldText;
+
+    var indexIngrObj = {
+      amount: null,
+      unit: null,
+      item: ""
+    };
+
+    var ingrObj = {
+      amount: null,
+      unit: null,
+      item: ""
+    };
+
     for (var i = 0; i < children.length; i++) {
       var child = children[i];
       if (child.classList.contains("amt") && newAmt && newAmt.trim() !== "") {
         hasAmt = true;
         oldAmt = child;
+        indexIngrObj.amount = child.innerHTML.trim();
+        ingrObj.amount = newAmt;
         child.innerHTML = newAmt + " ";
       }
       if (
@@ -443,8 +506,10 @@ class IngredientsList extends Component {
       ) {
         hasUnit = true;
         oldUnit = child;
+        indexIngrObj.unit = child.innerHTML.trim();
         var unitHtml = this.getUnit(newUnit);
         if (unitHtml != "none") {
+          ingrObj.unit = this.getUnit(newUnit);
           child.innerHTML = this.getUnit(newUnit) + " ";
         } else {
           child.innerHTML = "";
@@ -457,6 +522,8 @@ class IngredientsList extends Component {
         newText.trim() !== ""
       ) {
         oldText = child;
+        ingrObj.item = newText;
+        indexIngrObj.item = child.innerHTML.trim();
         child.innerHTML = newText + " ";
       }
       if (
@@ -471,10 +538,30 @@ class IngredientsList extends Component {
         child.style.display = "inline";
       }
     }
+
+    console.log(ingredients);
+    console.log(indexIngrObj);
+    console.log(ingrObj);
+
+    var ingrIndex;
+    for (var h = 0; h < ingredients.length; h++) {
+      var obj = ingredients[h];
+      if (
+        obj.amount === indexIngrObj.amount &&
+        obj.unit === indexIngrObj.unit &&
+        obj.item === indexIngrObj.item
+      ) {
+        ingrIndex = h;
+        updateState = true;
+      }
+    }
+
     if (!hasAmt && !hasUnit) {
       if (newAmt) {
         oldAmt = document.createElement("span");
         var amtNode = document.createTextNode(newAmt + " ");
+        ingrObj.amount = newAmt + "";
+        updateState = true;
         oldAmt.className = "amt";
         oldAmt.appendChild(amtNode);
         e.target.parentElement.insertBefore(oldAmt, oldText);
@@ -484,6 +571,8 @@ class IngredientsList extends Component {
           oldUnit = document.createElement("span");
           var val = this.getUnit(newUnit);
           var unitNode = document.createTextNode(val + " ");
+          ingrObj.unit = val + "";
+          updateState = true;
           oldUnit.appendChild(unitNode);
           oldUnit.className = "unit";
           e.target.parentElement.insertBefore(oldUnit, oldText);
@@ -494,6 +583,8 @@ class IngredientsList extends Component {
       if (newAmt) {
         oldAmt = document.createElement("span");
         amtNode = document.createTextNode(newAmt + " ");
+        ingrObj.amount = newAmt + "";
+        updateState = true;
         oldAmt.className = "amt";
         oldAmt.appendChild(amtNode);
         e.target.parentElement.insertBefore(oldAmt, oldUnit);
@@ -503,6 +594,8 @@ class IngredientsList extends Component {
         oldUnit = document.createElement("span");
         val = this.getUnit(newUnit);
         unitNode = document.createTextNode(val + " ");
+        ingrObj.unit = val + "";
+        updateState = true;
         oldUnit.appendChild(unitNode);
         oldUnit.className = "unit";
         e.target.parentElement.insertBefore(oldUnit, oldText);
@@ -511,6 +604,19 @@ class IngredientsList extends Component {
     }
     for (j = 0; j < elementsToDelete.length; j++) {
       elementsToDelete[j].parentElement.removeChild(elementsToDelete[j]);
+    }
+
+    if (updateState) {
+      updateState = false;
+      ingredients[ingrIndex] = ingrObj;
+      var tempRec = this.state.recipeInformation;
+      tempRec.data.ingredients = ingredients;
+      this.setState({
+        ingredients: ingredients
+      });
+      this.props.handler(e, {
+        recipeInformation: tempRec
+      });
     }
   }
 
@@ -570,7 +676,10 @@ class IngredientsList extends Component {
       div.appendChild(p);
       ingrForm.appendChild(div);
     }
-    this.setState({ recipeInformation: this.props.recipeInformation });
+    this.setState({
+      recipeInformation: this.props.recipeInformation,
+      ingredients: ingredients
+    });
   }
 
   render() {
@@ -580,6 +689,7 @@ class IngredientsList extends Component {
     if (this.props.recipeInformation != this.state.recipeInformation) {
       this.updateIngredients();
     }
+    console.log(this.state);
     return (
       <div id="ingredients-main-div">
         <form id="checkboxes-form">

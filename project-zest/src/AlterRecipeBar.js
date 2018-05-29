@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ConversionComponent from "./ConversionComponent";
-import './Recipe.css'
+import "./Recipe.css";
 
 class AlterRecipeBar extends Component {
   constructor(props) {

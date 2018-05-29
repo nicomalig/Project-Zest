@@ -90,6 +90,7 @@ class RecipeSummaryCard extends Component {
             url={this.props.url}
             user={this.props.user}
             handler={this.props.handler}
+            recipeInformation={this.props.recipeInformation}
           />
         </div>
         <div id="recipe-img">

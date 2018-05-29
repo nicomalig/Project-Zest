@@ -32,31 +32,11 @@ class FavoriteButton extends Component {
       this.setState({
         liked: true
       });
+      var link = this.props.recipeInformation.link;
+      var data = this.props.recipeInformation.data;
       database.ref("users/" + currentUser.uid).push({
-        link: this.props.url,
-        data: {
-          name: "name",
-          img: "image url",
-          ingredients: [
-            {
-              amount: "number",
-              unit: "string",
-              item: "name/description of item"
-            }
-          ],
-          directions: ["each", "paragraph", "or maybe the entire string"],
-          details: {
-            total: "hours",
-            prep: "hours",
-            inactive: "minutes",
-            cook: "days",
-            level: "easy",
-            servings: {
-              amount: 30,
-              item: "cookie"
-            }
-          }
-        }
+        link: link,
+        data: data
       });
     }
   }

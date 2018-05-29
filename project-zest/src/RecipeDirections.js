@@ -88,6 +88,7 @@ class RecipeDirections extends Component {
     var newText;
     var editBtn;
     var paragraph;
+    var updateState = false;
     for (var i = 0; i < children.length; i++) {
       if (children[i].classList.contains("temp-edit")) {
         elementsToDelete.push(children[i]);
@@ -102,11 +103,22 @@ class RecipeDirections extends Component {
         paragraph = children[i];
       }
     }
+    var oldTxt = paragraph.innerHTML;
+    var dirIndex = this.state.directions.indexOf(oldTxt);
+    var directions = this.state.directions;
     if (newText && paragraph) {
       if (newText.value.trim() == "") {
         elementsToDelete.push(paragraph);
+        if (dirIndex > -1) {
+          directions.splice(dirIndex, 1);
+          updateState = true;
+        }
       } else {
         paragraph.innerText = newText.value;
+        if (dirIndex > -1) {
+          directions[dirIndex] = newText.value;
+          updateState = true;
+        }
         paragraph.style.display = "block";
       }
     }
@@ -119,6 +131,18 @@ class RecipeDirections extends Component {
     }
     for (var j = 0; j < elementsToDelete.length; j++) {
       elementsToDelete[j].parentElement.removeChild(elementsToDelete[j]);
+    }
+
+    if (updateState) {
+      updateState = false;
+      var tempRec = this.state.recipeInformation;
+      tempRec.data.directions = directions;
+      this.setState({
+        directions: directions
+      });
+      this.props.handler(e, {
+        recipeInformation: tempRec
+      });
     }
   }
 
@@ -173,7 +197,10 @@ class RecipeDirections extends Component {
       div.appendChild(p);
       directionDiv.appendChild(div);
     }
-    this.setState({ recipeInformation: this.props.recipeInformation });
+    this.setState({
+      recipeInformation: this.props.recipeInformation,
+      directions: directions
+    });
   }
 
   render() {
