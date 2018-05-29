@@ -295,6 +295,7 @@ class IngredientsList extends Component {
         updateState = true;
       }
     }
+    console.log(ingredients);
     if (updateState) {
       updateState = false;
       var tempRec = this.state.recipeInformation;
@@ -662,11 +663,14 @@ class IngredientsList extends Component {
     var ingrIndex;
     for (var h = 0; h < ingredients.length; h++) {
       var obj = ingredients[h];
+      console.log(obj);
+      console.log(indexIngrObj);
       if (
-        obj.amount === indexIngrObj.amount &&
-        obj.unit === indexIngrObj.unit &&
-        obj.item === indexIngrObj.item
+        obj.amount == indexIngrObj.amount &&
+        obj.unit == indexIngrObj.unit &&
+        obj.item == indexIngrObj.item
       ) {
+        console.log("ITS A MATCH");
         ingrIndex = h;
         updateState = true;
       }
