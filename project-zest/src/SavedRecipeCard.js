@@ -9,7 +9,7 @@ class SavedRecipeCard extends Component {
     return (
       <div className="saved-recipe-card">
         <h2>{this.props.name}</h2>
-        <p>{this.props.image}</p>
+        <img src={this.props.image} width="300px" />
         <p>{this.props.link}</p>
       </div>
     );

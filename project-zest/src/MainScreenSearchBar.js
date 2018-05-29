@@ -18,6 +18,7 @@ class MainScreenSearchBar extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.isFoodNetworkUrl = this.isFoodNetworkUrl.bind(this);
+    this.onSearchClick = this.onSearchClick.bind(this)
     // this.getScrapedData = this.getScrapedData.bind(this);
     // this.setData = this.setData.bind(this);
   }
@@ -102,8 +103,10 @@ class MainScreenSearchBar extends Component {
                 // backgroundColor="#a0da58"
                 // backgroundColor="#D2FF96"
                 // labelColor="rgba(0, 0, 0, .80)"
-                labelStyle={{ color: "rgba(0, 0, 0, .80)" }}
+               //  labelStyle={{ color: "rgba(0, 0, 0, .80)" }}
                 hoverColor="#A0DA58"
+                onClick={this.props.handleSavedClick}
+                disabled={this.props.renderSaved}
               />
             )}
           </div>
