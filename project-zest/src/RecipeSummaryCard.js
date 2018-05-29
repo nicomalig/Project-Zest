@@ -72,6 +72,9 @@ class RecipeSummaryCard extends Component {
   updateSummary() {
     var nameSpan = document.getElementById("recipe-name");
     var detailsDiv = document.getElementById("recipe-information");
+    while (detailsDiv.firstChild) {
+      detailsDiv.removeChild(detailsDiv.firstChild);
+    }
 
     var firstPart = false;
     var secondPart = false;
