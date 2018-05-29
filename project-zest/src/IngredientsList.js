@@ -17,6 +17,7 @@ class IngredientsList extends Component {
     this.cancelModifying = this.cancelModifying.bind(this);
     this.updateIngredients = this.updateIngredients.bind(this);
     this.removeIngredients = this.removeIngredients.bind(this);
+    this.convertUnitsIngredients = this.convertUnitsIngredients.bind(this);
   }
 
   getUnit(unit) {
@@ -87,31 +88,83 @@ class IngredientsList extends Component {
 
   componentDidUpdate() {
     if (this.props.alterType === "convert") {
+      // var checkboxes = document.getElementsByName("ingredient");
+      // var checkboxesChecked = [];
+      // // loop over them all
+      // for (var i = 0; i < checkboxes.length; i++) {
+      //   // And stick the checked ones onto an array...
+      //   var val = checkboxes[i].parentElement.getAttribute("value");
+      //   if (checkboxes[i].checked && val === this.props.convertFrom) {
+      //     checkboxesChecked.push(checkboxes[i].parentElement);
+      //   }
+      // }
+      // this.convertIngredients(checkboxesChecked);
+      this.convertUnitsIngredients();
+    } else if (this.props.alterType === "remove") {
+      this.removeIngredients();
+    } else if (this.props.alterType === "modify") {
       var checkboxes = document.getElementsByName("ingredient");
       var checkboxesChecked = [];
       // loop over them all
       for (var i = 0; i < checkboxes.length; i++) {
         // And stick the checked ones onto an array...
         var val = checkboxes[i].parentElement.getAttribute("value");
-        if (checkboxes[i].checked && val === this.props.convertFrom) {
-          checkboxesChecked.push(checkboxes[i].parentElement);
-        }
-      }
-      this.convertIngredients(checkboxesChecked);
-    } else if (this.props.alterType === "remove") {
-      this.removeIngredients();
-    } else if (this.props.alterType === "modify") {
-      checkboxes = document.getElementsByName("ingredient");
-      checkboxesChecked = [];
-      // loop over them all
-      for (i = 0; i < checkboxes.length; i++) {
-        // And stick the checked ones onto an array...
-        val = checkboxes[i].parentElement.getAttribute("value");
         if (checkboxes[i].checked) {
           checkboxesChecked.push(checkboxes[i].parentElement);
         }
       }
       this.modifyIngredients(checkboxesChecked);
+    }
+  }
+
+  convertUnitsIngredients() {
+    var ingredients = this.state.ingredients;
+    var checkboxes = document.getElementsByName("ingredient");
+    var checkboxesChecked = [];
+    var indexes = [];
+    for (var i = 0; i < checkboxes.length; i++) {
+      var val = checkboxes[i].parentElement.getAttribute("value");
+      if (checkboxes[i].checked && val === this.props.convertFrom) {
+        checkboxesChecked.push(checkboxes[i].parentElement);
+        indexes.push(i);
+      }
+    }
+    this.convertIngredients(checkboxesChecked);
+    var updateState = false;
+    for (var h = 0; h < indexes.length; h++) {
+      var index = indexes[h];
+      var ingr = ingredients[index];
+      if (ingr.amount) {
+        var amount = ingr.amount + "";
+        amount = amount.trim();
+        var a = amount.split(" ");
+        var tot = 0;
+        for (var k = 0; k < a.length; k++) {
+          tot += eval(a[k]);
+        }
+        if (amount !== "NaN" || tot !== "NaN") {
+          var num = tot * this.props.conversion;
+          num = Math.round(num * 100) / 100;
+          ingr.amount = num;
+          ingredients[index] = ingr;
+          updateState = true;
+        }
+      }
+      if (ingr.unit) {
+        ingr.unit = this.getUnit(this.props.convertTo);
+        ingredients[index] = ingr;
+      }
+    }
+    if (updateState) {
+      updateState = false;
+      var tempRec = this.state.recipeInformation;
+      tempRec.data.ingredients = ingredients;
+      this.setState({
+        ingredients: ingredients
+      });
+      // this.props.handler(e, {
+      //   recipeInformation: tempRec
+      // });
     }
   }
 
@@ -218,7 +271,9 @@ class IngredientsList extends Component {
   }
 
   changeServingSize() {
+    var ingredients = this.state.ingredients;
     var amounts = document.getElementsByClassName("amt");
+    var updateState = false;
     for (var j = 0; j < amounts.length; j++) {
       var amount = amounts[j];
       var amt = amount.innerHTML.trim();
@@ -233,6 +288,33 @@ class IngredientsList extends Component {
         amount.innerHTML = num + " ";
       }
     }
+
+    for (var i = 0; i < ingredients.length; i++) {
+      var ingr = ingredients[i];
+      var amt = ingr.amount.trim();
+      var a = amt.split(" ");
+      var tot = 0;
+      for (var k = 0; k < a.length; k++) {
+        tot += eval(a[k]);
+      }
+      if (amt !== "NaN" || tot !== "NaN") {
+        var num = tot * this.props.servingSizeChange;
+        num = Math.round(num * 100) / 100;
+        ingr.amount = num;
+      }
+    }
+    if (updateState) {
+      updateState = false;
+      var tempRec = this.state.recipeInformation;
+      tempRec.data.ingredients = ingredients;
+      this.setState({
+        ingredients: ingredients
+      });
+      // this.props.handler(e, {
+      //   recipeInformation: tempRec
+      // });
+    }
+
     var curr = this.props.servingSizeChange;
     this.setState({
       servingSizeChange: curr
