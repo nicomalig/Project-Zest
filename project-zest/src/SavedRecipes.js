@@ -68,15 +68,7 @@ class SavedRecipes extends Component {
         {this.props.user && (
           <MuiThemeProvider muiTheme={muiTheme}>
             <div>
-              <p>Saved Recipes for {this.props.user.displayName}</p>
-              <RaisedButton
-                className="go-home-button"
-                label="Search for Recipes" /*onClick={ GO TO SAVED RECIPES PAGE }*/
-              />
-              <SignOutButton
-                user={this.props.user}
-                handler={this.props.handler}
-              />
+              <h1>Saved Recipes for {this.props.user.displayName}</h1>
               <div>{this.state.savedRecipes}</div>
             </div>
           </MuiThemeProvider>

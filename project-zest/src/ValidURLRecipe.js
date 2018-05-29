@@ -40,10 +40,12 @@ class ValidURLRecipe extends Component {
       alterType: "",
       servingSizeChange: 1,
       recipeInformation: {},
-      e: null
+      e: null,
+      renderSaved: false
     };
     this.recipeHandler = this.recipeHandler.bind(this);
     this.getConversionRate = this.getConversionRate.bind(this);
+    this.handleSavedClick = this.handleSavedClick.bind(this);
   }
 
   recipeHandler(e, newState) {
@@ -104,9 +106,16 @@ class ValidURLRecipe extends Component {
     return con;
   }
 
+  handleSavedClick = e => {
+    e.preventDefault();
+    this.setState({ renderSaved: !this.state.renderSaved });
+  };
+
   render() {
+    console.log("valid recipe render");
     var con = this.getConversionRate();
 
+    console.log(this.state);
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className="flex-container-m">
@@ -115,50 +124,68 @@ class ValidURLRecipe extends Component {
               handler={this.props.handler}
               url={this.props.url}
               user={this.props.user}
+              handleSavedClick={this.handleSavedClick}
+              renderSaved={this.state.renderSaved}
             />
           </div>
 
-          <div className="flex-container-content">
-            <div className="flex-container-c-left flex-item fcc-fi">
-              <div className="flex-item">
-                <RecipeSummaryCard
-                  user={this.props.user}
-                  handler={this.props.handler}
-                  recipeHandler={this.recipeHandler}
-                  url={this.props.url}
-                  recipeInformation={this.props.recipeInformation}
-                  e={this.state.e}
-                />
-              </div>
-
-              {/* component: RecipeIngredients */}
-              <div id="ingredients-div" className="flex-item fcc-fi">
-                <h2>Recipe</h2>
-
-                {/* component: AlterRecipeBar */}
-                <AlterRecipeBar handler={this.recipeHandler} e={this.state.e} />
-
-                {/* component: IngredientsList */}
-                <IngredientsList
-                  conversion={con}
-                  servingSizeChange={this.state.servingSizeChange}
-                  convertFrom={this.state.convertFrom}
-                  convertTo={this.state.convertTo}
-                  handler={this.recipeHandler}
-                  alterType={this.state.alterType}
-                  recipeInformation={this.props.recipeInformation}
-                  e={this.state.e}
-                />
-              </div>
-            </div>
-
-            <div className="flex-container-c-right flex-item fcc-fi">
-              <RecipeDirections
-                handler={this.recipeHandler}
-                recipeInformation={this.props.recipeInformation}
+          {/* DISPLAY SAVED RECIPES */}
+          {this.state.renderSaved && (
+            <div className="flex-container-content">
+              <SavedRecipes
+                user={this.props.user}
+                handler={this.props.handler}
               />
             </div>
-          </div>
+          )}
+
+          {/* DISPLAY CURRENT RECIPE */}
+          {!this.state.renderSaved && (
+            <div className="flex-container-content">
+              <div className="flex-container-c-left flex-item fcc-fi">
+                <div className="flex-item">
+                  <RecipeSummaryCard
+                    user={this.props.user}
+                    handler={this.props.handler}
+                    recipeHandler={this.recipeHandler}
+                    url={this.props.url}
+                    recipeInformation={this.props.recipeInformation}
+                    e={this.state.e}
+                  />
+                </div>
+
+                {/* component: RecipeIngredients */}
+                <div id="ingredients-div" className="flex-item fcc-fi">
+                  <h2>Recipe</h2>
+
+                  {/* component: AlterRecipeBar */}
+                  <AlterRecipeBar
+                    handler={this.recipeHandler}
+                    e={this.state.e}
+                  />
+
+                  {/* component: IngredientsList */}
+                  <IngredientsList
+                    conversion={con}
+                    servingSizeChange={this.state.servingSizeChange}
+                    convertFrom={this.state.convertFrom}
+                    convertTo={this.state.convertTo}
+                    handler={this.recipeHandler}
+                    alterType={this.state.alterType}
+                    recipeInformation={this.props.recipeInformation}
+                    e={this.state.e}
+                  />
+                </div>
+              </div>
+
+              <div className="flex-container-c-right flex-item fcc-fi">
+                <RecipeDirections
+                  handler={this.recipeHandler}
+                  recipeInformation={this.props.recipeInformation}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </MuiThemeProvider>
     );
