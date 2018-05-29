@@ -72,7 +72,6 @@ class RecipeSummaryCard extends Component {
   updateSummary() {
     var nameSpan = document.getElementById("recipe-name");
     var detailsDiv = document.getElementById("recipe-information");
-    var imgDiv = document.getElementById("recipe-img");
 
     var firstPart = false;
     var secondPart = false;
@@ -177,8 +176,11 @@ class RecipeSummaryCard extends Component {
         servingDiv.appendChild(doneBtn);
         detailsDiv.appendChild(servingDiv);
       }
+
+      var imgElement = document.getElementById("recipe-img-element");
       var img = this.props.recipeInformation.data.img;
       if (img && img != "") {
+        imgElement.setAttribute("src", img);
       }
       nameSpan.innerHTML = name;
     } else {
@@ -209,6 +211,7 @@ class RecipeSummaryCard extends Component {
         </div>
         <div id="recipe-img">
           <img
+            id="recipe-img-element"
             src={require("./img/defaultImage.png")}
             width="400"
             height="240"
