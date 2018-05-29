@@ -18,7 +18,8 @@ class ConversionComponent extends Component {
       this.props.handler(e, {
         convertTo: this.state.convertTo,
         convertFrom: this.state.convertFrom,
-        alterType: "convert"
+        alterType: "convert",
+        e: e
       });
     }
   }
@@ -27,7 +28,8 @@ class ConversionComponent extends Component {
     e.preventDefault();
     var newValue = document.getElementById("to-convert").value;
     this.setState({
-      convertTo: newValue
+      convertTo: newValue,
+      e: e
     });
   }
 
@@ -35,7 +37,8 @@ class ConversionComponent extends Component {
     e.preventDefault();
     var newValue = document.getElementById("from-convert").value;
     this.setState({
-      convertFrom: newValue
+      convertFrom: newValue,
+      e: e
     });
   }
 

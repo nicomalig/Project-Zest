@@ -88,17 +88,6 @@ class IngredientsList extends Component {
 
   componentDidUpdate() {
     if (this.props.alterType === "convert") {
-      // var checkboxes = document.getElementsByName("ingredient");
-      // var checkboxesChecked = [];
-      // // loop over them all
-      // for (var i = 0; i < checkboxes.length; i++) {
-      //   // And stick the checked ones onto an array...
-      //   var val = checkboxes[i].parentElement.getAttribute("value");
-      //   if (checkboxes[i].checked && val === this.props.convertFrom) {
-      //     checkboxesChecked.push(checkboxes[i].parentElement);
-      //   }
-      // }
-      // this.convertIngredients(checkboxesChecked);
       this.convertUnitsIngredients();
     } else if (this.props.alterType === "remove") {
       this.removeIngredients();
@@ -162,9 +151,9 @@ class IngredientsList extends Component {
       this.setState({
         ingredients: ingredients
       });
-      // this.props.handler(e, {
-      //   recipeInformation: tempRec
-      // });
+      this.props.handler(this.props.e, {
+        recipeInformation: tempRec
+      });
     }
   }
 
@@ -195,9 +184,9 @@ class IngredientsList extends Component {
       this.setState({
         ingredients: ingredients
       });
-      // this.props.handler(e, {
-      //   recipeInformation: tempRec
-      // });
+      this.props.handler(this.props.e, {
+        recipeInformation: tempRec
+      });
     }
   }
 
@@ -266,7 +255,7 @@ class IngredientsList extends Component {
       this.setState({
         ingredients: ingredients
       });
-      this.props.handler(e, { recipeInformation: tempRec });
+      this.props.handler(e, { recipeInformation: tempRec, e: e });
     }
   }
 
@@ -291,7 +280,8 @@ class IngredientsList extends Component {
 
     for (var i = 0; i < ingredients.length; i++) {
       var ingr = ingredients[i];
-      var amt = ingr.amount.trim();
+      var amt = ingr.amount + "";
+      amt = amt.trim();
       var a = amt.split(" ");
       var tot = 0;
       for (var k = 0; k < a.length; k++) {
@@ -301,6 +291,8 @@ class IngredientsList extends Component {
         var num = tot * this.props.servingSizeChange;
         num = Math.round(num * 100) / 100;
         ingr.amount = num;
+        ingredients[i] = ingr;
+        updateState = true;
       }
     }
     if (updateState) {
@@ -310,9 +302,9 @@ class IngredientsList extends Component {
       this.setState({
         ingredients: ingredients
       });
-      // this.props.handler(e, {
-      //   recipeInformation: tempRec
-      // });
+      this.props.handler(this.props.e, {
+        recipeInformation: tempRec
+      });
     }
 
     var curr = this.props.servingSizeChange;
@@ -578,7 +570,7 @@ class IngredientsList extends Component {
         hasAmt = true;
         oldAmt = child;
         indexIngrObj.amount = child.innerHTML.trim();
-        ingrObj.amount = newAmt;
+        ingrObj.amount = newAmt.trim();
         child.innerHTML = newAmt + " ";
       }
       if (
@@ -604,7 +596,7 @@ class IngredientsList extends Component {
         newText.trim() !== ""
       ) {
         oldText = child;
-        ingrObj.item = newText;
+        ingrObj.item = newText.trim();
         indexIngrObj.item = child.innerHTML.trim();
         child.innerHTML = newText + " ";
       }
@@ -621,29 +613,12 @@ class IngredientsList extends Component {
       }
     }
 
-    console.log(ingredients);
-    console.log(indexIngrObj);
-    console.log(ingrObj);
-
-    var ingrIndex;
-    for (var h = 0; h < ingredients.length; h++) {
-      var obj = ingredients[h];
-      if (
-        obj.amount === indexIngrObj.amount &&
-        obj.unit === indexIngrObj.unit &&
-        obj.item === indexIngrObj.item
-      ) {
-        ingrIndex = h;
-        updateState = true;
-      }
-    }
-
     if (!hasAmt && !hasUnit) {
       if (newAmt) {
         oldAmt = document.createElement("span");
         var amtNode = document.createTextNode(newAmt + " ");
-        ingrObj.amount = newAmt + "";
-        updateState = true;
+        ingrObj.amount = newAmt.trim() + "";
+        // updateState = true;
         oldAmt.className = "amt";
         oldAmt.appendChild(amtNode);
         e.target.parentElement.insertBefore(oldAmt, oldText);
@@ -653,8 +628,8 @@ class IngredientsList extends Component {
           oldUnit = document.createElement("span");
           var val = this.getUnit(newUnit);
           var unitNode = document.createTextNode(val + " ");
-          ingrObj.unit = val + "";
-          updateState = true;
+          ingrObj.unit = val.trim() + "";
+          // updateState = true;
           oldUnit.appendChild(unitNode);
           oldUnit.className = "unit";
           e.target.parentElement.insertBefore(oldUnit, oldText);
@@ -665,8 +640,8 @@ class IngredientsList extends Component {
       if (newAmt) {
         oldAmt = document.createElement("span");
         amtNode = document.createTextNode(newAmt + " ");
-        ingrObj.amount = newAmt + "";
-        updateState = true;
+        ingrObj.amount = newAmt.trim() + "";
+        // updateState = true;
         oldAmt.className = "amt";
         oldAmt.appendChild(amtNode);
         e.target.parentElement.insertBefore(oldAmt, oldUnit);
@@ -676,12 +651,24 @@ class IngredientsList extends Component {
         oldUnit = document.createElement("span");
         val = this.getUnit(newUnit);
         unitNode = document.createTextNode(val + " ");
-        ingrObj.unit = val + "";
-        updateState = true;
+        ingrObj.unit = val.trim() + "";
+        // updateState = true;
         oldUnit.appendChild(unitNode);
         oldUnit.className = "unit";
         e.target.parentElement.insertBefore(oldUnit, oldText);
         e.target.parentElement.setAttribute("value", newUnit);
+      }
+    }
+    var ingrIndex;
+    for (var h = 0; h < ingredients.length; h++) {
+      var obj = ingredients[h];
+      if (
+        obj.amount === indexIngrObj.amount &&
+        obj.unit === indexIngrObj.unit &&
+        obj.item === indexIngrObj.item
+      ) {
+        ingrIndex = h;
+        updateState = true;
       }
     }
     for (j = 0; j < elementsToDelete.length; j++) {
@@ -697,7 +684,8 @@ class IngredientsList extends Component {
         ingredients: ingredients
       });
       this.props.handler(e, {
-        recipeInformation: tempRec
+        recipeInformation: tempRec,
+        e: e
       });
     }
   }

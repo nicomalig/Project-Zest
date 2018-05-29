@@ -13,14 +13,16 @@ class AlterRecipeBar extends Component {
   removeIngredient(e) {
     e.preventDefault();
     this.props.handler(e, {
-      alterType: "remove"
+      alterType: "remove",
+      e: e
     });
   }
 
   modifyIngredient(e) {
     e.preventDefault();
     this.props.handler(e, {
-      alterType: "modify"
+      alterType: "modify",
+      e: e
     });
   }
 

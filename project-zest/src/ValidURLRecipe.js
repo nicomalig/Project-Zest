@@ -39,7 +39,8 @@ class ValidURLRecipe extends Component {
       conversion: 0,
       alterType: "",
       servingSizeChange: 1,
-      recipeInformation: {}
+      recipeInformation: {},
+      e: null
     };
     this.recipeHandler = this.recipeHandler.bind(this);
     this.getConversionRate = this.getConversionRate.bind(this);
@@ -128,6 +129,7 @@ class ValidURLRecipe extends Component {
                   recipeHandler={this.recipeHandler}
                   url={this.props.url}
                   recipeInformation={this.props.recipeInformation}
+                  e={this.state.e}
                 />
               </div>
 
@@ -136,7 +138,7 @@ class ValidURLRecipe extends Component {
                 <h2>Recipe</h2>
 
                 {/* component: AlterRecipeBar */}
-                <AlterRecipeBar handler={this.recipeHandler} />
+                <AlterRecipeBar handler={this.recipeHandler} e={this.state.e} />
 
                 {/* component: IngredientsList */}
                 <IngredientsList
@@ -147,6 +149,7 @@ class ValidURLRecipe extends Component {
                   handler={this.recipeHandler}
                   alterType={this.state.alterType}
                   recipeInformation={this.props.recipeInformation}
+                  e={this.state.e}
                 />
               </div>
             </div>
