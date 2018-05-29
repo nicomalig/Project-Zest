@@ -148,7 +148,6 @@ class RecipeDirections extends Component {
 
   cancelEditing(e) {
     e.preventDefault();
-    console.log("cancel");
     var parentDiv = e.target.parentElement;
     var elementsToDelete = [];
     var children = parentDiv.childNodes;
