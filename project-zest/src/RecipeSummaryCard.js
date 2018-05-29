@@ -184,6 +184,8 @@ class RecipeSummaryCard extends Component {
       var img = this.props.recipeInformation.data.img;
       if (img && img != "") {
         imgElement.setAttribute("src", img);
+      } else {
+        imgElement.setAttribute("src", require("./img/defaultImage.png"));
       }
       nameSpan.innerHTML = name;
     } else {
