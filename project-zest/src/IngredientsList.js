@@ -24,7 +24,7 @@ class IngredientsList extends Component {
     switch (unit) {
       case "cup":
         return "cup";
-      case "eigthcup":
+      case "eighthcup":
         return "1/8-cup";
       case "fourthcup":
         return "1/4-cup";
@@ -58,7 +58,7 @@ class IngredientsList extends Component {
       case "cup":
         return "cup";
       case "1/8-cup":
-        return "eigthcup";
+        return "eighthcup";
       case "1/4-cup":
         return "fourthcup";
       case "1/3-cup":
@@ -414,7 +414,7 @@ class IngredientsList extends Component {
       var values = [
         "none",
         "cup",
-        "eigthcup",
+        "eighthcup",
         "fourthcup",
         "thirdcup",
         "halfcup",
@@ -796,7 +796,7 @@ class IngredientsList extends Component {
           <select id="unit-select">
             <option value="none"> </option>
             <option value="cup">cup</option>
-            <option value="eigthcup"> 1/8 cup</option>
+            <option value="eighthcup"> 1/8 cup</option>
             <option value="fourthcup">1/4 cup</option>
             <option value="thirdcup">1/3 cup</option>
             <option value="halfcup">1/2 cup</option>

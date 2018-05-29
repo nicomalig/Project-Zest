@@ -24,11 +24,11 @@ const HttpCode = {
 
 // to ensure that we're getting the right measure
 const measures = [
-    "cup", "cups", 
-    "gallon", "gallons", "gal", "gals", 
+    "cup", "cups",
+    "gallon", "gallons", "gal", "gals",
     "quart", "quarts", "qt", "qts",
-    "pint", "pints", "pt", "pts", 
-    "ounce", "ounces", "oz", "ozs", 
+    "pint", "pints", "pt", "pts",
+    "ounce", "ounces", "oz", "ozs",
     "tablespoon", "tablespoons", "tbsp", "tbsps",
     "teaspoon", "teaspoons", "tsp", "tsps",
     "liter", "liters", "l",
@@ -88,94 +88,85 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
         }
 
         // ***** BEGIN EXTRACTING *****
-        // First, the title
-        // title section: recipe-lead
-        // title text: o-AssetTitle__a-HeadlineText
+        // ===== TITLE/NAME =====
         recipe.data.name = $(".o-AssetTitle__a-HeadlineText", ".recipe-lead").text()
 
-        // Pull the image URL 
+        // ===== IMAGE ===== 
         let sURL = $(".o-AssetMultiMedia__a-Image")
-        if (sURL) {
+        if (sURL && sURL.length != 0) {
             recipe.data.img = sURL.attr("src")
+        } else {
+            recipe.data.img = null
         }
 
-        // Next, the cooking times
-        // total: o-RecipeInfo__a-Description--Total
+        // ===== COOKING TIMES =====
         recipe.data.details.total =
             $(".o-RecipeInfo__a-Description--Total", "dl").first().text()
 
-        console.log($("dl", ".o-RecipeInfo o-Time").children());
-
-
         // Next, pull the prep, inactive, and cook times if they exist
-        $("dl", ".o-RecipeInfo o-Time").children().each((i, elem) => {
-            console.log($(this));
+        $("dl", ".o-RecipeInfo.o-Time").first()
+            .children().each((i, elem) => {
+                if ($(elem).text().toLowerCase().includes("prep:")) {
+                    recipe.data.details.prep =
+                        $(elem).next("dd").text().trim()
 
-            // let headline = $(this).text().toLowerCase()
+                } else if ($(elem).text().toLowerCase().includes("inactive:")) {
+                    recipe.data.details.inactive =
+                        $(elem).next("dd").text().trim()
 
-            if ($(this).text().toLowerCase().includes("prep")) {
-                recipe.data.details.prep = headline
-                    .next(".o-RecipeInfo__a-Description").text()
+                } else if ($(elem).text().toLowerCase().includes("cook:")) {
+                    recipe.data.details.cook =
+                        $(elem).next("dd").text().trim()
+                }
+            })
 
-            } else if ($(this).text().toLowerCase().includes("inactive")) {
-                recipe.data.details.inactive = headline
-                    .next(".o-RecipeInfo__a-Description").text()
-
-            } else if ($(this).text().toLowerCase().includes("cook")) {
-                recipe.data.details.cook = headline
-                    .next(".o-RecipeInfo__a-Description").text()
-            }
-        })
-
-        // Pull the level
-        let sLevel = $("o-RecipeInfo__a-Description", "o-RecipeInfo o-Level").text()
+        // ===== LEVEL ======
+        let sLevel = 
+            $(".o-RecipeInfo__a-Description", ".o-RecipeInfo.o-Level").first().text()
         if (sLevel) {
-            recipe.data.details.level = sLevel
+            recipe.data.details.level = sLevel.trim()
         }
 
-        // Pull the yield/servings
-        let yieldText = $(".o-RecipeInfo__a-Description", ".o-RecipeInfo o-Yield").text()
+        // ===== SERVING SIZE =====
+        let yieldText =
+            $(".o-RecipeInfo__a-Description", ".o-RecipeInfo.o-Yield")
+                .first().text().trim()
 
+        // Amount
         // ASSERTION: the amount is a number and is the first element in the string
-        let servingAmount = yieldText.match("([0-9]+)")
+        var servingAmount = yieldText.match("([0-9]+)")
         if (servingAmount) {
             recipe.data.details.servings.amount = servingAmount[0].trim()
         }
 
-        // captures the very last word in the string
-        let servingItem = yieldText.match("\s(\w+)$")
+        // Item
+        var servingItem = yieldText.split(servingAmount[0].trim())[1]
         if (servingItem) {
-            recipe.data.details.servings.item = servingItem[0].trim()
+            if (servingItem.trim().startsWith("dozen")) {
+                recipe.data.details.servings.amount = 
+                    "" + recipe.data.details.servings.amount * 12
+                recipe.data.details.servings.item = servingItem.split("dozen")[1].trim()
+            } else {
+                recipe.data.details.servings.item = servingItem.trim()
+            }
         }
-
-        // validate yield scraping
+        // push
         if (!servingAmount || !servingItem) {
             recipe.data.details.servings.item = yieldText // just duct tape whole thing
-        } else {
-            recipe.data.details.servings.amount = servingAmount
-            recipe.data.details.servings.item = servingItem
         }
 
-        // Next, all the ingredients
-        // ingredients section: o-Ingredients__m-Body
-        // ingredient: o-Ingredients__a-ListItemText
+        // ===== INGREDIENTS =====
         $(".o-Ingredients__a-ListItemText", ".o-Ingredients__m-Body").each((i, e) => {
             // pull the data
-            var whole = $(e).text()
-            // ===== REGEX =====
-            // qty:             ([0-9])[,/ ]
-            // qty (first)      (?:^|(?:[.!?]\s))(\w+)
-            // measure:         ([a-z]+) <-- use only first element
-            // item:            ([a-z].+)
-            // ===== REGEX =====[0-9])[,/ ]")
+            let whole = $(e).text()
             var qty, measure, item
 
-            qty = whole.match("(?:[1-9][0-9]*|0)(?:\/[1-9][0-9]*)?")
-
-            if (qty && (!isNaN(qty[0]) || qty[0].includes("/"))) {
-                qty = qty[0].trim()
+            qty = whole.match("^[\\d\\/\\s]*")[0]
+            
+            if (qty && (!isNaN(qty) || qty.includes("/"))) {
+                qty = qty.trim()
                 measure = whole.match("([a-z]+)")
-
+                
                 if (measure) {
                     // If measure is actually a measure, then pass it through.
                     // Otherwise, it looks like we can't reliably parse this:
@@ -195,6 +186,8 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
                     }
                 }
             } else { // not a number! just hand it off
+                qty = null
+                measure = null
                 item = whole
             }
 
@@ -206,9 +199,7 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
             })
         })
 
-        // Pull the directions
-        // directions section: o-Method__m-Body
-        // each direction is a <p> tag
+        // ===== DIRECTIONS =====
         $("p", ".o-Method__m-Body").each((i, e) => {
             let dir = $(e).text().trim()
             // don't push this direction (common in a lot of FN recipes)
