@@ -789,7 +789,6 @@ class IngredientsList extends Component {
           </div> */}
         </form>
         <div id="add-new-ingredient-div">
-          <button id="add-ingredient" onClick={this.addIngredient}>+</button>
           <input id="amount-input" type="number" placeholder="Quantity" />
           <select id="unit-select">
             <option value="none"> </option>
@@ -808,6 +807,9 @@ class IngredientsList extends Component {
             <option value="ml">milliliter</option>
           </select>
           <input id="desc-input" placeholder="Ingredient" />
+          <button id="add-ingredient" onClick={this.addIngredient}>
+            +
+          </button>
         </div>
       </div>
     );
