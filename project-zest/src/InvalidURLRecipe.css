@@ -7,6 +7,10 @@
    padding: 0;
 }
 
+.flex-container-content {
+    padding-bottom: 2%;
+}
+
 .mssb {
     /* position: fixed; */
 }
