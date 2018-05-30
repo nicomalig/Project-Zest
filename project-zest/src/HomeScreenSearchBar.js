@@ -12,6 +12,7 @@ class HomeScreenSearchBar extends Component {
       errorText: ""
     };
     this.handleChange = this.handleChange.bind(this);
+    this.isFoodNetworkUrl = this.isFoodNetworkUrl.bind(this);
   }
 
   handleChange(e, newValue) {
@@ -19,14 +20,31 @@ class HomeScreenSearchBar extends Component {
     this.setState({ url: newValue });
   }
 
+  isFoodNetworkUrl(url) {
+    if (IsUrl(url)) {
+      var regex = new RegExp(
+        `https:\/\/www\.foodnetwork\.com\/recipes\/[a-z\-\/\d]+`
+      );
+      if (regex.test(url)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return false;
+  }
+
   onSearchClick = e => {
     e.preventDefault();
     // Verify email address is formatted properly
-    if (IsUrl(this.state.url)) {
+    if (this.isFoodNetworkUrl(this.state.url)) {
       this.setState({ errorText: "" });
-      this.props.handler(e, { url: this.state.url, goToRecipePage: true });
+      this.props.handler(e, {
+        url: this.state.url,
+        goToRecipePage: true
+      });
     } else {
-      this.setState({ errorText: "Enter a valid URL" });
+      this.setState({ errorText: "Enter a valid FoodNetwork Recipe URL" });
     }
   };
 

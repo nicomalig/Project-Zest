@@ -40,6 +40,8 @@ class SavedRecipes extends Component {
     }
     var ref = firebase.database().ref("users/" + currentUser.uid);
     var saved = [];
+    var handler = this.props.handler;
+    var recipeHandler = this.props.recipeHandler;
     ref.on("value", function(snapshot) {
       snapshot.forEach(function(linkSnapshot) {
         var data = linkSnapshot.val();
@@ -49,6 +51,8 @@ class SavedRecipes extends Component {
             name={data.data.name}
             image={data.data.img}
             key={linkSnapshot.key}
+            handler={handler}
+            recipeHandler={recipeHandler}
           />
         );
         return;
@@ -68,6 +72,8 @@ class SavedRecipes extends Component {
   }
 
   render() {
+    console.log(this.state);
+    console.log(this.props);
     return (
       <div>
         {this.props.user && (

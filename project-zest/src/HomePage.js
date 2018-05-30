@@ -61,7 +61,7 @@ class HomePage extends Component {
                 Want to <i>save</i> your recipes?
               </h4>
               <div className="flex-item">
-                <LogInWithFacebookButton handler={this.handler} />
+                <LogInWithFacebookButton handler={this.props.handler} />
               </div>
             </div>
           </div>

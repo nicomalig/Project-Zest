@@ -47,6 +47,7 @@ class ValidURLRecipe extends Component {
     this.recipeHandler = this.recipeHandler.bind(this);
     this.getConversionRate = this.getConversionRate.bind(this);
     this.handleSavedClick = this.handleSavedClick.bind(this);
+    this.recipeHandler = this.recipeHandler.bind(this);
   }
 
   recipeHandler(e, newState) {
@@ -135,6 +136,7 @@ class ValidURLRecipe extends Component {
               <SavedRecipes
                 user={this.props.user}
                 handler={this.props.handler}
+                recipeHandler={this.recipeHandler}
               />
             </div>
           )}

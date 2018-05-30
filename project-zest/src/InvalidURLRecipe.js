@@ -42,6 +42,7 @@ class InvalidURLRecipe extends Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className="flex-container-m">
@@ -62,6 +63,7 @@ class InvalidURLRecipe extends Component {
               <SavedRecipes
                 user={this.props.user}
                 handler={this.props.handler}
+                recipeHandler={this.recipeHandler}
               />
             </div>
           )}
