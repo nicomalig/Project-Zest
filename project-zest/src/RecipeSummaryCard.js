@@ -223,35 +223,7 @@ class RecipeSummaryCard extends Component {
             alt="recipe"
           />
         </div>
-        <div id="recipe-information">
-          {/* <p>Total: 1 hr 50 min</p>
-          <p>Prep: 20 min</p>
-          <p>Inactive: 1 hr</p>
-          <p>Cook: 30 min</p>
-          <hr />
-          <p>Level: Easy</p>
-          <hr /> */}
-          {/* <div id="yield-div">
-            <span>
-              <text>Yield: </text>
-              <span id="inputSwitch">
-                <span id="yield-amount-span">24 </span>
-                <input id="yield-input" hidden="hidden" type="number" />
-              </span>
-              cookies
-            </span>
-            <button id="edit-button" onClick={this.editServingSize}>
-              Edit
-            </button>
-            <button
-              id="done-button"
-              onClick={this.doneEditingServingSize}
-              hidden="hidden"
-            >
-              Done
-            </button>
-          </div> */}
-        </div>
+        <div id="recipe-information" />
       </div>
     );
   }
