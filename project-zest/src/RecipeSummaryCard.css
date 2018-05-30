@@ -5,7 +5,7 @@
     height: auto;
     display: inline-block;
     white-space: normal;
-    margin-bottom: 0px;
+    margin-bottom: -4px;
 }
 
 #favorite-button {
@@ -51,7 +51,7 @@
 }
 
 .rs-card {
-    height: 100%;
+    height: auto;
     width: 30vw;
 }
 
