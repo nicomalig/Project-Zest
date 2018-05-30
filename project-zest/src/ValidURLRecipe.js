@@ -144,48 +144,50 @@ class ValidURLRecipe extends Component {
 
           {/* DISPLAY CURRENT RECIPE */}
           {!this.state.renderSaved && (
-            <div className="flex-container-content">
-              <div className="flex-container-c-left flex-item fcc-fi">
-                <div className="flex-item">
-                  <RecipeSummaryCard
-                    user={this.props.user}
-                    handler={this.props.handler}
-                    recipeHandler={this.recipeHandler}
-                    url={this.props.url}
-                    recipeInformation={this.props.recipeInformation}
-                    e={this.state.e}
-                  />
+            <div className="color-div">
+              <div className="flex-container-content">
+                <div className="flex-container-c-left flex-item fcc-fi">
+                  <div className="flex-item">
+                    <RecipeSummaryCard
+                      user={this.props.user}
+                      handler={this.props.handler}
+                      recipeHandler={this.recipeHandler}
+                      url={this.props.url}
+                      recipeInformation={this.props.recipeInformation}
+                      e={this.state.e}
+                    />
+                  </div>
+
+                  {/* component: RecipeIngredients */}
+                  <div id="ingredients-div" className="flex-item fcc-fi">
+                    <h2>Recipe</h2>
+
+                    {/* component: AlterRecipeBar */}
+                    <AlterRecipeBar
+                      handler={this.recipeHandler}
+                      e={this.state.e}
+                    />
+
+                    {/* component: IngredientsList */}
+                    <IngredientsList
+                      conversion={con}
+                      servingSizeChange={this.state.servingSizeChange}
+                      convertFrom={this.state.convertFrom}
+                      convertTo={this.state.convertTo}
+                      handler={this.recipeHandler}
+                      alterType={this.state.alterType}
+                      recipeInformation={this.props.recipeInformation}
+                      e={this.state.e}
+                    />
+                  </div>
                 </div>
 
-                {/* component: RecipeIngredients */}
-                <div id="ingredients-div" className="flex-item fcc-fi">
-                  <h2>Recipe</h2>
-
-                  {/* component: AlterRecipeBar */}
-                  <AlterRecipeBar
+                <div className="flex-container-c-right flex-item fcc-fi">
+                  <RecipeDirections
                     handler={this.recipeHandler}
-                    e={this.state.e}
-                  />
-
-                  {/* component: IngredientsList */}
-                  <IngredientsList
-                    conversion={con}
-                    servingSizeChange={this.state.servingSizeChange}
-                    convertFrom={this.state.convertFrom}
-                    convertTo={this.state.convertTo}
-                    handler={this.recipeHandler}
-                    alterType={this.state.alterType}
                     recipeInformation={this.props.recipeInformation}
-                    e={this.state.e}
                   />
                 </div>
-              </div>
-
-              <div className="flex-container-c-right flex-item fcc-fi">
-                <RecipeDirections
-                  handler={this.recipeHandler}
-                  recipeInformation={this.props.recipeInformation}
-                />
               </div>
             </div>
           )}

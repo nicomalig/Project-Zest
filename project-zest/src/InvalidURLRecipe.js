@@ -61,13 +61,13 @@ class InvalidURLRecipe extends Component {
                {/* DISPLAY GUIDANCE */}
                {!this.state.renderSaved &&
                   // <div className="flex-container-content"> 
-                  <div className="invalid-screen">
-                     <p className="guidance">
+                  <div className="flex-container-content invalid-screen">
+                     <p className="guidance flex-item">
                         Input a{" "}
                         <a target="blank" href="https://www.foodnetwork.com/">
-                           Food Network URL
+                           Food Network
                         </a>{" "}
-                        into the searchbar above to get started!
+                        URL into the search bar above to get started!
                      </p>
                   </div>
                   // </div>

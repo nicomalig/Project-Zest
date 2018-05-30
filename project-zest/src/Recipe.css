@@ -32,10 +32,13 @@ html {
    flex-grow: 0;
 }
 
-/* .flex-container-m {
-   width: 85%;
-   margin: auto;
-} */
+.flex-container-m {
+   /* background-color: rgba(238, 236, 231, 1.0); */
+}
+
+.color-div {
+   background-color: rgba(238, 236, 231, 1.0);
+}
 
 /* .flex-container-top {
    display: flex;
@@ -56,6 +59,8 @@ html {
    justify-content: left;
    align-items: flex-start;
    text-align: left;
+   
+   
 }
 
 .flex-container-c-left {
@@ -115,9 +120,9 @@ img {
 }
 
 #edit-direction-button {
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
+   justify-content: center;
+   align-items: center;
+   margin: 0 auto;
 }
 
 @media only screen and (max-width: 992px) {
