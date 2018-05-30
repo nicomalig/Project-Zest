@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import './SavedRecipeCard.css'
 
 class SavedRecipeCard extends Component {
   handleClick = e => {
@@ -7,10 +8,10 @@ class SavedRecipeCard extends Component {
 
   render() {
     return (
-      <div className="saved-recipe-card">
-        <h2>{this.props.name}</h2>
-        <img src={this.props.image} width="300px" />
-        <p>{this.props.link}</p>
+      <div className="saved-recipe-card flex-item">
+        <h2 className="sav-name">{this.props.name}</h2>
+        <img className="sav-img" src={this.props.image} />
+        {/* <p>{this.props.link}</p> */}
       </div>
     );
   }

@@ -4,43 +4,95 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import SignOutButton from "./SignOutButton";
 import SavedRecipes from "./SavedRecipes";
+import SavedRecipeCard from "./SavedRecipeCard";
 import RaisedButton from "material-ui/RaisedButton/RaisedButton";
 import LogInWithFacebookButton from "./LogInWithFacebookButton";
 import MainScreenSearchBar from "./MainScreenSearchBar";
+import FlatButton from "material-ui/FlatButton/FlatButton";
 
 const muiTheme = getMuiTheme({
-  palette: {
-    primary1Color: "#ffaa2d"
-  }
+   palette: {
+      primary1Color: "#ffaa2d"
+   }
 });
 
 class InvalidURLRecipe extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: null,
-      url: ""
-    };
-  }
-  handleClick = e => {
-    e.preventDefault();
-  };
+   constructor(props) {
+      super(props);
+      this.state = {
+         url: "",
+         renderSaved: false,
+         actuallyRender: false,
+         fluff: false,
+      };
+      this.recipeHandler = this.recipeHandler.bind(this)
+      this.handleSavedClick = this.handleSavedClick.bind(this)
+      this.actually = this.actually.bind(this)
+   }
 
-  render() {
-    return (
-      <MuiThemeProvider muiTheme={muiTheme}>
-        <div className="flex-container-m">
-          <div className="mssb">
-            <MainScreenSearchBar
-              handler={this.props.handler}
-              url={this.props.url}
-              user={this.props.user}
-            />
-          </div>
-        </div>
-      </MuiThemeProvider>
-    );
-  }
+   handleClick = e => {
+      e.preventDefault();
+   };
+
+   handleSavedClick = e => {
+      e.preventDefault()
+      this.setState({ renderSaved: !this.state.renderSaved })
+   }
+
+   recipeHandler(e, newState) {
+      e.preventDefault();
+      this.setState(newState);
+   }
+
+   actually() {
+      this.setState({
+         renderSaved: true,
+         actuallyRender: false,
+      })
+      setTimeout(() => {
+         this.setState({
+            actuallyRender: true,
+         })
+      }, 500);
+   }
+
+   render() {
+      return (
+         <MuiThemeProvider muiTheme={muiTheme}>
+            <div className="flex-container-m">
+               <div className="mssb">
+                  <MainScreenSearchBar
+                     handler={this.props.handler}
+                     url={this.props.url}
+                     user={this.props.user}
+                     renderSaved={this.state.renderSaved}
+                     handleSavedClick={this.handleSavedClick}
+                     recipeHandler={this.recipeHandler}
+
+                  />
+               </div>
+
+               {/* DISPLAY SAVED RECIPES */}
+               {this.state.renderSaved && this.state.actuallyRender &&
+                  <div className="flex-container-content">
+                     <SavedRecipes
+                        user={this.props.user}
+                        handler={this.props.handler}
+                     />
+                  </div>
+               }
+               {this.state.renderSaved && !this.state.actuallyRender &&
+                  <div className="flex-container-content">
+                     <RaisedButton
+                        label="Click here to display"
+                        onClick={this.actually}
+                     />
+                  </div>
+               }
+            </div>
+         </MuiThemeProvider>
+      );
+   }
 }
 
 export default InvalidURLRecipe;

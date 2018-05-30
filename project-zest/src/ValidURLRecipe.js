@@ -108,7 +108,7 @@ class ValidURLRecipe extends Component {
 
    handleSavedClick = e => {
       e.preventDefault()
-      this.setState({renderSaved: !this.state.renderSaved})
+      this.setState({ renderSaved: !this.state.renderSaved })
    }
 
    render() {
@@ -126,6 +126,7 @@ class ValidURLRecipe extends Component {
                      user={this.props.user}
                      handleSavedClick={this.handleSavedClick}
                      renderSaved={this.state.renderSaved}
+                     recipeHandler={this.recipeHandler}
                   />
                </div>
 
