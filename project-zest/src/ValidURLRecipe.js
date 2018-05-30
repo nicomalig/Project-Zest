@@ -25,13 +25,6 @@ class ValidURLRecipe extends Component {
     e.preventDefault();
   };
 
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({
-  //     url: nextProps.url,
-  //     user: nextProps.user
-  //   });
-  // }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -115,8 +108,6 @@ class ValidURLRecipe extends Component {
 
   render() {
     var con = this.getConversionRate();
-
-    console.log(this.state);
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className="flex-container-m">

@@ -38,6 +38,7 @@ html {
 
 .color-div {
    background-color: rgba(238, 236, 231, 1.0);
+   height: 100vh;
 }
 
 /* .flex-container-top {
@@ -126,6 +127,10 @@ img {
 }
 
 @media only screen and (max-width: 992px) {
+   .color-div {
+      height: 100%;
+   }
+
    .flex-container-content {
       flex-direction: row;
       flex-wrap: wrap;

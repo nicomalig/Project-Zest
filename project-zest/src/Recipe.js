@@ -54,8 +54,6 @@ class Recipe extends Component {
   }
 
   handleClose = e => {
-    console.log(e.target.id);
-
     this.setState({
       open: false,
       cDisplay: e.target.id
