@@ -61,7 +61,10 @@ class App extends Component {
       fetch(apiBase + url)
         .then(results => results.json())
         .then(json => {
-          this.setState({ recipeInformation: json, urlChange: false });
+          this.setState({
+            recipeInformation: json,
+            urlChange: false
+          });
         })
         .catch(err => {
           console.log(err);

@@ -3,6 +3,7 @@ import "./App.css";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import SignOutButton from "./SignOutButton";
+import { firebase, database } from "./FirebaseConfig";
 import SavedRecipes from "./SavedRecipes";
 import RaisedButton from "material-ui/RaisedButton/RaisedButton";
 import LogInWithFacebookButton from "./LogInWithFacebookButton";
@@ -112,7 +113,6 @@ class ValidURLRecipe extends Component {
   };
 
   render() {
-    console.log("valid recipe render");
     var con = this.getConversionRate();
 
     console.log(this.state);

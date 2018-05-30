@@ -13,6 +13,7 @@ class FavoriteButton extends Component {
     this.isInDatabase = this.isInDatabase.bind(this);
     this.deleteDataFromDatabase = this.deleteDataFromDatabase.bind(this);
     this.getIdOfLink = this.getIdOfLink.bind(this);
+    this.addToDatabase = this.addToDatabase.bind(this);
   }
 
   toggleFavorite(e) {
