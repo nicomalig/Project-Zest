@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import FontIcon from 'material-ui/FontIcon';
 import "./Recipe.css";
 
 class RecipeDirections extends Component {
@@ -55,6 +56,9 @@ class RecipeDirections extends Component {
     }
     var textArea = document.createElement("textarea");
     textArea.className = "temp-edit";
+    textArea.style.width = "100%"
+    textArea.style.height = "2.5rem"
+
     var doneBtn = document.createElement("button");
     doneBtn.innerHTML = "Done";
     doneBtn.className = "temp-edit";
@@ -179,7 +183,11 @@ class RecipeDirections extends Component {
 
         button.onclick = this.editDirections;
         button.className = "edit-direction-button";
-        button.innerHTML = "pencil";
+        // button.innerHTML = "pencil";
+        var pencilIcon = document.createElement("FontIcon")
+        pencilIcon.setAttribute("className", "fas pencil-alt")
+        button.appendChild(pencilIcon)
+        // button.appendChild(document.createElement("i").setAttribute("class", "fas pencil-alt"))
 
         p.className = "direction-paragraph";
         p.innerText = directions[i];
