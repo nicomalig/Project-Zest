@@ -9,6 +9,7 @@ import RaisedButton from "material-ui/RaisedButton/RaisedButton";
 import LogInWithFacebookButton from "./LogInWithFacebookButton";
 import MainScreenSearchBar from "./MainScreenSearchBar";
 import FlatButton from "material-ui/FlatButton/FlatButton";
+import "./InvalidURLRecipe.css";
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -45,7 +46,7 @@ class InvalidURLRecipe extends Component {
     console.log(this.state);
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div className="flex-container-m">
+        <div className="flex-container-m" id="main-screen">
           <div className="mssb">
             <MainScreenSearchBar
               handler={this.props.handler}
@@ -59,7 +60,9 @@ class InvalidURLRecipe extends Component {
 
           <div>
             <p>
-              Input a Food Network URL into the searchbar above to get started!
+              Input a{" "}
+              <a href="https://www.foodnetwork.com/"> Food Network URL </a> into
+              the searchbar above to get started!
             </p>
           </div>
 
