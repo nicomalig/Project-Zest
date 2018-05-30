@@ -124,12 +124,14 @@ class ValidURLRecipe extends Component {
 
           {/* DISPLAY SAVED RECIPES */}
           {this.state.renderSaved && (
-            <div className="flex-container-content">
-              <SavedRecipes
-                user={this.props.user}
-                handler={this.props.handler}
-                recipeHandler={this.recipeHandler}
-              />
+            <div className="color-div">
+              <div className="flex-container-content">
+                <SavedRecipes
+                  user={this.props.user}
+                  handler={this.props.handler}
+                  recipeHandler={this.recipeHandler}
+                />
+              </div>
             </div>
           )}
 

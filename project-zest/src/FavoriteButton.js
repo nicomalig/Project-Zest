@@ -25,6 +25,8 @@ class FavoriteButton extends Component {
       } else {
         this.addToDatabase(currentUser);
       }
+    } else {
+      alert("Please Log In to Save Your Recipe!");
     }
   }
 

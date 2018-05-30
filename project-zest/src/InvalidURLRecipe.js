@@ -59,27 +59,29 @@ class InvalidURLRecipe extends Component {
 
                {/* DISPLAY GUIDANCE */}
                {!this.state.renderSaved &&
-                  // <div className="flex-container-content"> 
-                  <div className="flex-container-content invalid-screen">
-                     <p className="guidance flex-item">
-                        Input a{" "}
-                        <a target="blank" href="https://www.foodnetwork.com/">
-                           Food Network
-                        </a>{" "}
-                        URL into the search bar above to get started!
-                     </p>
+                  <div className="color-div">
+                     <div className="flex-container-content invalid-screen">
+                        <p className="guidance flex-item">
+                           Input a{" "}
+                           <a target="blank" href="https://www.foodnetwork.com/">
+                              Food Network
+                           </a>{" "}
+                           URL into the search bar above to get started!
+                        </p>
+                     </div>
                   </div>
-                  // </div>
                }
 
                {/* DISPLAY SAVED RECIPES */}
                {this.state.renderSaved && (
-                  <div className="flex-container-content">
-                     <SavedRecipes
-                        user={this.props.user}
-                        handler={this.props.handler}
-                        recipeHandler={this.recipeHandler}
-                     />
+                  <div className="color-div">
+                     <div className="flex-container-content">
+                        <SavedRecipes
+                           user={this.props.user}
+                           handler={this.props.handler}
+                           recipeHandler={this.recipeHandler}
+                        />
+                     </div>
                   </div>
                )}
             </div>
