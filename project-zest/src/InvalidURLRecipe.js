@@ -25,7 +25,6 @@ class InvalidURLRecipe extends Component {
     };
     this.recipeHandler = this.recipeHandler.bind(this);
     this.handleSavedClick = this.handleSavedClick.bind(this);
-    this.actually = this.actually.bind(this);
   }
 
   handleClick = e => {
