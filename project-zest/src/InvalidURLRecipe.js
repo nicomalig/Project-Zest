@@ -59,10 +59,12 @@ class InvalidURLRecipe extends Component {
           </div>
 
           <div>
-            <p>
-              Input a{" "}
-              <a href="https://www.foodnetwork.com/"> Food Network URL </a> into
-              the searchbar above to get started!
+            <p className="guidance">
+              Input a
+              <a target="blank" href="https://www.foodnetwork.com/">
+                Food Network URL
+              </a>
+              into the searchbar above to get started!
             </p>
           </div>
 
