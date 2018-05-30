@@ -42,6 +42,7 @@ class HomeScreenSearchBar extends Component {
       this.props.handler(e, {
         url: this.state.url,
         goToRecipePage: true,
+        userWantsToSeeHomePage: false,
         urlChange: true
       });
     } else {

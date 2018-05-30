@@ -5,6 +5,7 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 import LogInWithFacebookButton from "./LogInWithFacebookButton";
 import HomeScreenSearchBar from "./HomeScreenSearchBar";
 import logo from "./img/zest.png";
+import { RaisedButton } from "material-ui";
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -18,11 +19,20 @@ class HomePage extends Component {
     this.state = {
       user: null
     };
+    this.goToRecipePage = this.goToRecipePage.bind(this);
   }
 
   handleClick = e => {
     e.preventDefault();
   };
+
+  goToRecipePage(e) {
+    e.preventDefault();
+    this.props.handler(e, {
+      goToRecipePage: true,
+      userWantsToSeeHomePage: false
+    });
+  }
 
   render() {
     return (
@@ -51,20 +61,38 @@ class HomePage extends Component {
               <HomeScreenSearchBar handler={this.props.handler} />
             </div>
           </div>
-
           <div id="vertical-line" />
-
-          <div className="flex-container-right">
-            <div id="login-div">
-              <h2>LOGIN</h2>
-              <h4>
-                Want to <i>save</i> your recipes?
-              </h4>
-              <div className="flex-item">
-                <LogInWithFacebookButton handler={this.props.handler} />
+          {!this.props.user && (
+            <div className="flex-container-right">
+              <div id="login-div">
+                <h2>LOGIN</h2>
+                <h4>
+                  Want to <i>save</i> your recipes?
+                </h4>
+                <div className="flex-item">
+                  <LogInWithFacebookButton handler={this.props.handler} />
+                </div>
               </div>
             </div>
-          </div>
+          )}
+          {this.props.user && (
+            <div className="flex-container-right">
+              <div id="login-div">
+                <h2>You're Already Logged In!</h2>
+                <div className="flex-item">
+                  <RaisedButton
+                    label="Continue"
+                    onClick={this.goToRecipePage}
+                    backgroundColor="#ffaa2d"
+                    labelColor="white"
+                    rippleStyle={{
+                      color: "white"
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </MuiThemeProvider>
     );

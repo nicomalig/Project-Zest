@@ -8,7 +8,8 @@ class LogInWithFacebookButton extends Component {
     this.login = this.login.bind(this);
   }
 
-  login() {
+  login(e) {
+    e.preventDefault();
     firebase
       .auth()
       .signInWithPopup(provider)
@@ -17,9 +18,10 @@ class LogInWithFacebookButton extends Component {
         // var token = result.credential.accessToken;
         // The signed-in user info.
         var currentUser = result.user;
-        this.props.handler({
+        this.props.handler(e, {
           user: currentUser,
-          goToRecipePage: true
+          goToRecipePage: true,
+          userWantsToSeeHomePage: false
         });
         // ...
       })
