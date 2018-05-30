@@ -54,7 +54,7 @@ class IngredientsList extends Component {
   }
 
   getUnitValue(unit) {
-    switch (unit) {
+    switch (unit.toLowerCase()) {
       case "cup":
         return "cup";
       case "1/8-cup":
@@ -73,7 +73,7 @@ class IngredientsList extends Component {
         return "qt";
       case "ounce":
         return "fl-oz";
-      case "Tablespoon":
+      case "tablespoon":
         return "Tbs";
       case "teaspoon":
         return "tsp";
