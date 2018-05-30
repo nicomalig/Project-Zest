@@ -56,9 +56,10 @@ class InvalidURLRecipe extends Component {
               recipeHandler={this.recipeHandler}
             />
           </div>
+
           <div>
             <p>
-              Input a FoodNetwork URL into the searchbar above to get started!
+              Input a Food Network URL into the searchbar above to get started!
             </p>
           </div>
 

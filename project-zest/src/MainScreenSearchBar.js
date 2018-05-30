@@ -67,7 +67,7 @@ class MainScreenSearchBar extends Component {
       this.props.handler(e, { url: this.state.url, urlChange: true });
       this.setState({ errorText: "", url: this.state.url });
     } else {
-      this.setState({ errorText: "Enter a valid FoodNetwork Recipe URL" });
+      this.setState({ errorText: "Enter a valid Food Network Recipe URL" });
     }
   };
 

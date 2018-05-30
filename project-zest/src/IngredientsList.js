@@ -41,7 +41,7 @@ class IngredientsList extends Component {
       case "fl-oz":
         return "ounce";
       case "Tbs":
-        return "Tablespoon";
+        return "tablespoon";
       case "tsp":
         return "teaspoon";
       case "l":
@@ -437,7 +437,7 @@ class IngredientsList extends Component {
         "quart",
         "pint",
         "ounce",
-        "Tablespoon",
+        "tablespoon",
         "teaspoon",
         "liter",
         "milliliter"
@@ -801,7 +801,7 @@ class IngredientsList extends Component {
             <option value="qt">quart</option>
             <option value="pnt">pint</option>
             <option value="fl-oz">ounce</option>
-            <option value="Tbs">Tablespoon</option>
+            <option value="Tbs">tablespoon</option>
             <option value="tsp">teaspoon</option>
             <option value="l">liter</option>
             <option value="ml">milliliter</option>

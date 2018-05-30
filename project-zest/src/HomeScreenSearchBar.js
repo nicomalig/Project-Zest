@@ -45,7 +45,7 @@ class HomeScreenSearchBar extends Component {
         urlChange: true
       });
     } else {
-      this.setState({ errorText: "Enter a valid FoodNetwork Recipe URL" });
+      this.setState({ errorText: "Enter a valid Food Network Recipe URL" });
     }
   };
 
