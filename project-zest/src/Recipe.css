@@ -52,8 +52,9 @@ html {
    margin-top: 10px;
    flex-direction: row;
    padding-top: 1%;
-   justify-content: center;
+   justify-content: left;
    align-items: flex-start;
+   text-align: left;
 }
 
 .flex-container-c-left {
@@ -110,6 +111,12 @@ img {
 
 .conversion-bar {
    margin-bottom: 2%;
+}
+
+#edit-direction-button {
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
 }
 
 @media only screen and (max-width: 992px) {

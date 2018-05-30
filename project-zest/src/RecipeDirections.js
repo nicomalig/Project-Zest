@@ -159,7 +159,7 @@ class RecipeDirections extends Component {
       if (children[i].classList.contains("temp-edit")) {
         elementsToDelete.push(children[i]);
       } else if (children[i].classList.contains("edit-direction-button")) {
-        children[i].style.display = "block";
+        // children[i].style.display = "block";
       } else if (children[i].classList.contains("direction-paragraph")) {
         children[i].style.display = "block";
       }
@@ -184,9 +184,6 @@ class RecipeDirections extends Component {
         button.onclick = this.editDirections;
         button.className = "edit-direction-button";
         button.innerHTML = "edit";
-        // var pencilIcon = document.createElement("i")
-        // pencilIcon.setAttribute("class", "fas pencil-alt")
-        // button.appendChild(pencilIcon)
 
         p.className = "direction-paragraph";
         p.innerText = directions[i];
