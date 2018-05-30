@@ -205,7 +205,7 @@ class RecipeSummaryCard extends Component {
     return (
       <div className="rs-card" /* id="recipe-summary-div" */>
         <div id="recipe-name-bar">
-          <span id="recipe-name">Cookies</span>
+          <span id="recipe-name" />
           <FavoriteButton
             url={this.props.url}
             user={this.props.user}
