@@ -126,6 +126,7 @@ class ValidURLRecipe extends Component {
               user={this.props.user}
               handleSavedClick={this.handleSavedClick}
               renderSaved={this.state.renderSaved}
+              recipeHandler={this.recipeHandler}
             />
           </div>
 

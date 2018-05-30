@@ -132,8 +132,8 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
             $(".o-RecipeInfo__a-Description", ".o-RecipeInfo.o-Yield")
                 .first().text().trim()
 
+        // looks like this recipe has no yield, just duct tape this
         if (!yieldText || yieldText === "") {
-            // looks like this recipe has no yield, just duct tape this
             recipe.data.details.servings.amount = "1"
             recipe.data.details.servings.item = "serving"
         } else {
@@ -162,7 +162,6 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
             if (!servingAmount || !servingItem) {
                 recipe.data.details.servings.item = yieldText
             }
-
         }
 
         // ===== INGREDIENTS =====
