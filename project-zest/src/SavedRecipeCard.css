@@ -1,8 +1,6 @@
-<<<<<<< HEAD
 #Card {
     display: 'flex'
 };
-=======
 .saved-card-container {
     display: flex;
     flex-wrap: wrap;
@@ -30,4 +28,3 @@
         width: 350px;
     }
 }
->>>>>>> b743e12a62883e40bffe995db8a74ff57167a9f5
