@@ -159,7 +159,7 @@ class RecipeDirections extends Component {
       if (children[i].classList.contains("temp-edit")) {
         elementsToDelete.push(children[i]);
       } else if (children[i].classList.contains("edit-direction-button")) {
-        // children[i].style.display = "block";
+        children[i].style.display = "block";
       } else if (children[i].classList.contains("direction-paragraph")) {
         children[i].style.display = "block";
       }
