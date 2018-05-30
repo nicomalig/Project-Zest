@@ -52,6 +52,7 @@ html {
    margin-top: 10px;
    flex-direction: row;
    padding-top: 1%;
+   justify-content: center;
 }
 
 .flex-container-c-left {
