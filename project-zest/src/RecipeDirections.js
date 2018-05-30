@@ -183,11 +183,10 @@ class RecipeDirections extends Component {
 
         button.onclick = this.editDirections;
         button.className = "edit-direction-button";
-        // button.innerHTML = "pencil";
-        var pencilIcon = document.createElement("FontIcon")
-        pencilIcon.setAttribute("className", "fas pencil-alt")
-        button.appendChild(pencilIcon)
-        // button.appendChild(document.createElement("i").setAttribute("class", "fas pencil-alt"))
+        button.innerHTML = "edit";
+        // var pencilIcon = document.createElement("i")
+        // pencilIcon.setAttribute("class", "fas pencil-alt")
+        // button.appendChild(pencilIcon)
 
         p.className = "direction-paragraph";
         p.innerText = directions[i];
