@@ -43,7 +43,6 @@ class InvalidURLRecipe extends Component {
    }
 
    render() {
-      console.log(this.state);
       return (
          <MuiThemeProvider muiTheme={muiTheme}>
             <div className="flex-container-m">

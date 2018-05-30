@@ -41,7 +41,6 @@ class App extends Component {
   }
 
   getScrapedData(url) {
-    console.log("get scraped data");
     var apiBase =
       "http://api.project-zest.nicomalig.com/v1/scrape/foodnetwork?url=";
     fetch(apiBase + url)
@@ -74,9 +73,7 @@ class App extends Component {
         .catch(err => {
           console.log(err);
         });
-      // this.setState({ urlChange: false });
     }
-    console.log(this.state);
     return (
       <Router>
         <div id="main-screen-body">
@@ -97,23 +94,6 @@ class App extends Component {
                 recipeInformation={this.state.recipeInformation}
               />
             )}
-          {/* User is signed in
-          {this.state.user &&
-            this.state.goToRecipePage && (
-              <Recipe
-                user={this.state.user}
-                handler={this.handler}
-                url={this.state.url}
-              />
-            )} */}
-          {/* User is signed in */}
-          {/* {this.state.user && (
-            <Recipe
-              user={this.state.user}
-              handler={this.handler}
-              url={this.state.url}
-            />
-          )} */}
         </div>
       </Router>
     );

@@ -72,7 +72,6 @@ class MainScreenSearchBar extends Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <div className="form flex-container-sb">
         <div className="rec-logo-container flex-item fi-sb">
