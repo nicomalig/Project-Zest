@@ -1,3 +1,33 @@
+<<<<<<< HEAD
 #Card {
     display: 'flex'
 };
+=======
+.saved-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    align-content: center;
+}
+
+.saved-recipe-card {
+    background-color: rgba(255, 170, 45, 0.75);
+    color: rgba(0, 0, 0, .5);
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    height: auto;
+}
+
+.sav-img {
+    width: 400px;
+    height: auto;
+    padding: 10px;
+}
+
+@media only screen and (max-width: 992px) {
+    .sav-img {
+        width: 350px;
+    }
+}
+>>>>>>> b743e12a62883e40bffe995db8a74ff57167a9f5
