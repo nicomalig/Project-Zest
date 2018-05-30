@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./SavedRecipeCard.css";
 import {Card, CardMedia, CardActions, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class SavedRecipeCard extends Component {
    handleClick = e => {
@@ -17,7 +17,7 @@ class SavedRecipeCard extends Component {
                </CardMedia>
                <CardTitle title={this.props.name}/>
                <CardActions>
-                  <FlatButton label="View Now" />
+                  <RaisedButton primary={true} backgroundColor="#FFAA2E" hoverColor="#f2940c" color = "#FFFFFF" label="View Now" />
                </CardActions>
             </Card>
          </div>
