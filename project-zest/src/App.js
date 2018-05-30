@@ -78,9 +78,9 @@ class App extends Component {
       return (
          <Router>
             <div id="main-screen-body">
-               {/* No user is signed in and no url inputted*/}
-               {!this.state.user &&
-                  !this.state.goToRecipePage && <HomePage handler={this.handler} />}
+               {/* we force the user home, OR No user is signed in and no url inputted*/}
+               {(this.state.forceHome || (!this.state.user && !this.state.goToRecipePage)) 
+                  && <HomePage handler={this.handler} />}
 
                {/* No user is signed in but url inputted*/}
                {((!this.state.user && this.state.goToRecipePage) ||
