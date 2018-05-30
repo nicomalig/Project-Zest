@@ -84,122 +84,127 @@ class RecipeSummaryCard extends Component {
     var cookP;
     var levelP;
 
-    var name = this.props.recipeInformation.data.name;
-    var details = this.props.recipeInformation.data.details;
-    if (details != null) {
-      var total = details.total;
-      if (total) {
-        totalP = document.createElement("p");
-        totalP.innerText = "Total: " + total;
-        detailsDiv.appendChild(totalP);
-        firstPart = true;
-      }
-      var prep = details.prep;
-      if (prep) {
-        prepP = document.createElement("p");
-        prepP.innerText = "Prep: " + prep;
-        detailsDiv.appendChild(prepP);
-        firstPart = true;
-      }
-      var inactive = details.inactive;
-      if (inactive) {
-        inactiveP = document.createElement("p");
-        inactiveP.innerText = "Inactive: " + inactive;
-        detailsDiv.appendChild(inactiveP);
-        firstPart = true;
-      }
-      var cookTime = details.cook;
-      if (cookTime) {
-        cookP = document.createElement("p");
-        cookP.innerText = "Cook: " + cookTime;
-        detailsDiv.appendChild(cookP);
-        firstPart = true;
-      }
-      if (firstPart) {
-        var hr = document.createElement("hr");
-        detailsDiv.appendChild(hr);
-      }
-      var level = details.level;
-      if (level) {
-        levelP = document.createElement("p");
-        levelP.innerText = level;
-        detailsDiv.appendChild(levelP);
-        secondPart = true;
-      }
-      if (secondPart) {
-        var hr = document.createElement("hr");
-        detailsDiv.appendChild(hr);
-      }
-      var servings = details.servings;
-      if (servings) {
-        var servingDiv = document.createElement("div");
-        servingDiv.id = "yield-div";
-        var servingP = document.createElement("span");
-        if (!servings.amount) {
-          servings.amount = 1;
+    if (this.props.recipeInformation && this.props.recipeInformation.data) {
+      var name = this.props.recipeInformation.data.name;
+      var details = this.props.recipeInformation.data.details;
+      if (details != null) {
+        var total = details.total;
+        if (total) {
+          totalP = document.createElement("p");
+          totalP.innerText = "Total: " + total;
+          detailsDiv.appendChild(totalP);
+          firstPart = true;
         }
-        if (!servings.item) {
-          servings.item = "servings";
+        var prep = details.prep;
+        if (prep) {
+          prepP = document.createElement("p");
+          prepP.innerText = "Prep: " + prep;
+          detailsDiv.appendChild(prepP);
+          firstPart = true;
         }
-        var servingText = document.createElement("text");
-        var servingTextNode = document.createTextNode("Yield: ");
-        servingText.appendChild(servingTextNode);
+        var inactive = details.inactive;
+        if (inactive) {
+          inactiveP = document.createElement("p");
+          inactiveP.innerText = "Inactive: " + inactive;
+          detailsDiv.appendChild(inactiveP);
+          firstPart = true;
+        }
+        var cookTime = details.cook;
+        if (cookTime) {
+          cookP = document.createElement("p");
+          cookP.innerText = "Cook: " + cookTime;
+          detailsDiv.appendChild(cookP);
+          firstPart = true;
+        }
+        if (firstPart) {
+          var hr = document.createElement("hr");
+          detailsDiv.appendChild(hr);
+        }
+        var level = details.level;
+        if (level) {
+          levelP = document.createElement("p");
+          levelP.innerText = level;
+          detailsDiv.appendChild(levelP);
+          secondPart = true;
+        }
+        if (secondPart) {
+          var hr = document.createElement("hr");
+          detailsDiv.appendChild(hr);
+        }
+        var servings = details.servings;
+        if (servings) {
+          var servingDiv = document.createElement("div");
+          servingDiv.id = "yield-div";
+          var servingP = document.createElement("span");
+          if (!servings.amount) {
+            servings.amount = 1;
+          }
+          if (!servings.item) {
+            servings.item = "servings";
+          }
+          var servingText = document.createElement("text");
+          var servingTextNode = document.createTextNode("Yield: ");
+          servingText.appendChild(servingTextNode);
 
-        var servingInputSwitch = document.createElement("span");
+          var servingInputSwitch = document.createElement("span");
 
-        var yieldAmountSpan = document.createElement("span");
-        yieldAmountSpan.innerHTML = servings.amount + " ";
-        yieldAmountSpan.id = "yield-amount-span";
-        var yieldInput = document.createElement("input");
-        yieldInput.hidden = "hidden";
-        yieldInput.type = "number";
-        yieldInput.id = "yield-input";
-        servingInputSwitch.appendChild(yieldAmountSpan);
-        servingInputSwitch.appendChild(yieldInput);
-        servingInputSwitch.id = "inputSwitch";
-        servingP.appendChild(servingText);
-        servingP.appendChild(servingInputSwitch);
-        var servingPTextNode = document.createTextNode(
-          " " + servings.item + " "
-        );
-        servingP.appendChild(servingPTextNode);
-        servingDiv.appendChild(servingP);
+          var yieldAmountSpan = document.createElement("span");
+          yieldAmountSpan.innerHTML = servings.amount + " ";
+          yieldAmountSpan.id = "yield-amount-span";
+          var yieldInput = document.createElement("input");
+          yieldInput.hidden = "hidden";
+          yieldInput.type = "number";
+          yieldInput.id = "yield-input";
+          servingInputSwitch.appendChild(yieldAmountSpan);
+          servingInputSwitch.appendChild(yieldInput);
+          servingInputSwitch.id = "inputSwitch";
+          servingP.appendChild(servingText);
+          servingP.appendChild(servingInputSwitch);
+          var servingPTextNode = document.createTextNode(
+            " " + servings.item + " "
+          );
+          servingP.appendChild(servingPTextNode);
+          servingDiv.appendChild(servingP);
 
-        var editBtn = document.createElement("button");
-        editBtn.onclick = this.editServingSize;
-        editBtn.innerText = "Edit";
-        editBtn.id = "edit-button";
-        servingDiv.appendChild(editBtn);
+          var editBtn = document.createElement("button");
+          editBtn.onclick = this.editServingSize;
+          editBtn.innerText = "Edit";
+          editBtn.id = "edit-button";
+          servingDiv.appendChild(editBtn);
 
-        var doneBtn = document.createElement("button");
-        doneBtn.onclick = this.doneEditingServingSize;
-        doneBtn.innerText = "Done";
-        doneBtn.id = "done-button";
-        doneBtn.hidden = "hidden";
-        servingDiv.appendChild(doneBtn);
-        detailsDiv.appendChild(servingDiv);
-      }
+          var doneBtn = document.createElement("button");
+          doneBtn.onclick = this.doneEditingServingSize;
+          doneBtn.innerText = "Done";
+          doneBtn.id = "done-button";
+          doneBtn.hidden = "hidden";
+          servingDiv.appendChild(doneBtn);
+          detailsDiv.appendChild(servingDiv);
+        }
 
-      var imgElement = document.getElementById("recipe-img-element");
-      var img = this.props.recipeInformation.data.img;
-      if (img && img != "") {
-        imgElement.setAttribute("src", img);
+        var imgElement = document.getElementById("recipe-img-element");
+        var img = this.props.recipeInformation.data.img;
+        if (img && img != "") {
+          imgElement.setAttribute("src", img);
+        } else {
+          imgElement.setAttribute("src", require("./img/defaultImage.png"));
+        }
+        nameSpan.innerHTML = name;
       } else {
-        imgElement.setAttribute("src", require("./img/defaultImage.png"));
+        var div = document.createElement("div");
+        var p = document.createElement("p");
+        p.innerText = "Could not find directions for this recipe";
+        div.appendChild(p);
+        // details.appendChild(div);
       }
-      nameSpan.innerHTML = name;
-    } else {
-      var div = document.createElement("div");
-      var p = document.createElement("p");
-      p.innerText = "Could not find directions for this recipe";
-      div.appendChild(p);
-      // details.appendChild(div);
+      this.setState({ recipeInformation: this.props.recipeInformation });
     }
-    this.setState({ recipeInformation: this.props.recipeInformation });
   }
 
   render() {
-    if (this.props.recipeInformation != this.state.recipeInformation) {
+    if (
+      this.props.recipeInformation != {} &&
+      this.props.recipeInformation != this.state.recipeInformation
+    ) {
       this.updateSummary();
     }
     return (

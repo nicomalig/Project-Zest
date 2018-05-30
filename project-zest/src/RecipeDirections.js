@@ -170,40 +170,45 @@ class RecipeDirections extends Component {
     while (directionDiv.firstChild) {
       directionDiv.removeChild(directionDiv.firstChild);
     }
-    var directions = this.props.recipeInformation.data.directions;
-    if (directions != null) {
-      for (var i = 0; i < directions.length; i++) {
+    if (this.props.recipeInformation && this.props.recipeInformation.data) {
+      var directions = this.props.recipeInformation.data.directions;
+      if (directions != null || directions != []) {
+        for (var i = 0; i < directions.length; i++) {
+          var div = document.createElement("div");
+          var button = document.createElement("button");
+          var p = document.createElement("p");
+
+          button.onclick = this.editDirections;
+          button.className = "edit-direction-button";
+          button.innerHTML = "pencil";
+
+          p.className = "direction-paragraph";
+          p.innerText = directions[i];
+
+          div.appendChild(button);
+          div.appendChild(p);
+
+          directionDiv.appendChild(div);
+        }
+      } else {
         var div = document.createElement("div");
-        var button = document.createElement("button");
         var p = document.createElement("p");
-
-        button.onclick = this.editDirections;
-        button.className = "edit-direction-button";
-        button.innerHTML = "pencil";
-
-        p.className = "direction-paragraph";
-        p.innerText = directions[i];
-
-        div.appendChild(button);
+        p.innerText = "Could not find directions for this recipe";
         div.appendChild(p);
-
         directionDiv.appendChild(div);
       }
-    } else {
-      var div = document.createElement("div");
-      var p = document.createElement("p");
-      p.innerText = "Could not find directions for this recipe";
-      div.appendChild(p);
-      directionDiv.appendChild(div);
+      this.setState({
+        recipeInformation: this.props.recipeInformation,
+        directions: directions
+      });
     }
-    this.setState({
-      recipeInformation: this.props.recipeInformation,
-      directions: directions
-    });
   }
 
   render() {
-    if (this.props.recipeInformation != this.state.recipeInformation) {
+    if (
+      this.props.recipeInformation != {} &&
+      this.props.recipeInformation != this.state.recipeInformation
+    ) {
       this.updateDirections();
     }
     return (

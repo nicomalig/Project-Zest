@@ -696,67 +696,72 @@ class IngredientsList extends Component {
     while (ingrForm.firstChild) {
       ingrForm.removeChild(ingrForm.firstChild);
     }
-    var ingredients = this.props.recipeInformation.data.ingredients;
-    if (ingredients != null) {
-      for (var i = 0; i < ingredients.length; i++) {
-        var ingr = ingredients[i];
+    if (this.props.recipeInformation && this.props.recipeInformation.data) {
+      var ingredients = this.props.recipeInformation.data.ingredients;
+      if (ingredients != null) {
+        for (var i = 0; i < ingredients.length; i++) {
+          var ingr = ingredients[i];
+          var div = document.createElement("div");
+          var input = document.createElement("input");
+          var amtSpan = document.createElement("span");
+          var unitSpan = document.createElement("span");
+          var text = document.createElement("text");
+          var hr = document.createElement("hr");
+
+          input.type = "checkbox";
+          input.name = "ingredient";
+          div.appendChild(input);
+
+          if (ingr.amount) {
+            amtSpan.className = "amt";
+            amtSpan.innerHTML = ingr.amount + " ";
+            div.appendChild(amtSpan);
+          }
+
+          if (ingr.unit) {
+            unitSpan.className = "unit";
+            var unit = ingr.unit.trim();
+            if (unit != "none") {
+              unitSpan.innerHTML = unit + " ";
+            }
+            if (unit.endsWith("s")) {
+              unit = unit.substring(0, unit.length - 1);
+            }
+            div.setAttribute("value", this.getUnitValue(unit));
+            div.appendChild(unitSpan);
+          }
+
+          if (ingr.item) {
+            text.className = "text";
+            text.innerHTML = ingr.item;
+            div.appendChild(text);
+          }
+          div.appendChild(hr);
+
+          ingrForm.appendChild(div);
+        }
+      } else {
         var div = document.createElement("div");
-        var input = document.createElement("input");
-        var amtSpan = document.createElement("span");
-        var unitSpan = document.createElement("span");
-        var text = document.createElement("text");
-        var hr = document.createElement("hr");
-
-        input.type = "checkbox";
-        input.name = "ingredient";
-        div.appendChild(input);
-
-        if (ingr.amount) {
-          amtSpan.className = "amt";
-          amtSpan.innerHTML = ingr.amount + " ";
-          div.appendChild(amtSpan);
-        }
-
-        if (ingr.unit) {
-          unitSpan.className = "unit";
-          var unit = ingr.unit.trim();
-          if (unit != "none") {
-            unitSpan.innerHTML = unit + " ";
-          }
-          if (unit.endsWith("s")) {
-            unit = unit.substring(0, unit.length - 1);
-          }
-          div.setAttribute("value", this.getUnitValue(unit));
-          div.appendChild(unitSpan);
-        }
-
-        if (ingr.item) {
-          text.className = "text";
-          text.innerHTML = ingr.item;
-          div.appendChild(text);
-        }
-        div.appendChild(hr);
-
+        var p = document.createElement("p");
+        p.innerText = "Could not find ingredients for this recipe";
+        div.appendChild(p);
         ingrForm.appendChild(div);
       }
-    } else {
-      var div = document.createElement("div");
-      var p = document.createElement("p");
-      p.innerText = "Could not find ingredients for this recipe";
-      div.appendChild(p);
-      ingrForm.appendChild(div);
+      this.setState({
+        recipeInformation: this.props.recipeInformation,
+        ingredients: ingredients
+      });
     }
-    this.setState({
-      recipeInformation: this.props.recipeInformation,
-      ingredients: ingredients
-    });
   }
 
   render() {
     if (this.state.servingSizeChange !== this.props.servingSizeChange) {
       this.changeServingSize();
     }
-    if (this.props.recipeInformation != this.state.recipeInformation) {
+    if (
+      this.props.recipeInformation != {} &&
+      this.props.recipeInformation != this.state.recipeInformation
+    ) {
       this.updateIngredients();
     }
     return (
