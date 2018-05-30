@@ -1,8 +1,14 @@
+.flex-container-content {
+    text-align: center;
+}
+
 .saved-card-container {
     display: flex;
     flex-wrap: wrap;
     text-align: center;
     align-content: center;
+    justify-content: space-between;
+    /* justify-content: space-around; */
 }
 
 .saved-recipe-card {
@@ -10,7 +16,7 @@
     color: rgba(0, 0, 0, .5);
     margin-left: 10px;
     margin-right: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     width: 250px;
     height: auto;
     display: flex;

@@ -57,7 +57,8 @@ class MainScreenSearchBar extends Component {
   onSearchClick = e => {
     e.preventDefault();
 
-    // if we're displaying the render, refresh the page
+    // if we're displaying the saved paged, tell parent
+    // component to rerender active recipe page
     if (this.props.renderSaved) {
       this.props.recipeHandler(e, { renderSaved: false });
     }
@@ -71,10 +72,13 @@ class MainScreenSearchBar extends Component {
   };
 
   render() {
+    console.log(this.state);
     return (
       <div className="form flex-container-sb">
         <div className="rec-logo-container flex-item fi-sb">
-          <img src={logo} alt="logo" />
+          <a href="/">
+            <img src={logo} alt="logo" />
+          </a>
         </div>
 
         <div className="flex-item">

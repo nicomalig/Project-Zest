@@ -136,6 +136,7 @@ class RecipeSummaryCard extends Component {
           var servingDiv = document.createElement("div");
           servingDiv.id = "yield-div";
           var servingP = document.createElement("span");
+          servingP.style.lineHeight = "100%"; //yee
           if (!servings.amount) {
             servings.amount = 1;
           }

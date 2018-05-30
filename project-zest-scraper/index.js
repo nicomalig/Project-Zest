@@ -121,7 +121,7 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
             })
 
         // ===== LEVEL ======
-        let sLevel = 
+        let sLevel =
             $(".o-RecipeInfo__a-Description", ".o-RecipeInfo.o-Level").first().text()
         if (sLevel) {
             recipe.data.details.level = sLevel.trim()
@@ -132,27 +132,36 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
             $(".o-RecipeInfo__a-Description", ".o-RecipeInfo.o-Yield")
                 .first().text().trim()
 
-        // Amount
-        // ASSERTION: the amount is a number and is the first element in the string
-        var servingAmount = yieldText.match("([0-9]+)")
-        if (servingAmount) {
-            recipe.data.details.servings.amount = servingAmount[0].trim()
-        }
+        // looks like this recipe has no yield, just duct tape this
+        if (!yieldText || yieldText === "") {
+            recipe.data.details.servings.amount = "1"
+            recipe.data.details.servings.item = "serving"
+        } else {
+            // Amount
+            // ASSERTION: the amount is a number and is the first element in the string
+            var servingAmount = yieldText.match("([0-9]+)")
 
-        // Item
-        var servingItem = yieldText.split(servingAmount[0].trim())[1]
-        if (servingItem) {
-            if (servingItem.trim().startsWith("dozen")) {
-                recipe.data.details.servings.amount = 
-                    "" + recipe.data.details.servings.amount * 12
-                recipe.data.details.servings.item = servingItem.split("dozen")[1].trim()
-            } else {
-                recipe.data.details.servings.item = servingItem.trim()
+            if (servingAmount) {
+                recipe.data.details.servings.amount = servingAmount[0].trim()
+
+                // Item
+                var servingItem = yieldText.split(servingAmount[0].trim())[1]
+
+                if (servingItem) {
+                    if (servingItem.trim().startsWith("dozen")) {
+                        recipe.data.details.servings.amount =
+                            "" + recipe.data.details.servings.amount * 12
+                        recipe.data.details.servings.item = servingItem.split("dozen")[1].trim()
+                    } else {
+                        recipe.data.details.servings.item = servingItem.trim()
+                    }
+                }
             }
-        }
-        // push
-        if (!servingAmount || !servingItem) {
-            recipe.data.details.servings.item = yieldText // just duct tape whole thing
+
+            // duct tape as necessary
+            if (!servingAmount || !servingItem) {
+                recipe.data.details.servings.item = yieldText
+            }
         }
 
         // ===== INGREDIENTS =====
@@ -162,11 +171,11 @@ app.get("/v1/scrape/foodnetwork", (req, res, next) => {
             var qty, measure, item
 
             qty = whole.match("^[\\d\\/\\s]*")[0]
-            
+
             if (qty && (!isNaN(qty) || qty.includes("/"))) {
                 qty = qty.trim()
                 measure = whole.match("([a-z]+)")
-                
+
                 if (measure) {
                     // If measure is actually a measure, then pass it through.
                     // Otherwise, it looks like we can't reliably parse this:

@@ -11,6 +11,14 @@ import {
 } from "material-ui/Card";
 import RaisedButton from "material-ui/RaisedButton";
 
+const cardStyle = {
+  // nothing here yet
+};
+
+const actionStyle = {
+  // nothing here yet
+};
+
 class SavedRecipeCard extends Component {
   constructor(props) {
     super(props);
@@ -95,12 +103,12 @@ class SavedRecipeCard extends Component {
     }
     return (
       <div className="saved-recipe-card">
-        <Card>
+        <Card style={cardStyle}>
           <CardMedia>
-            <img src={image} width="200px" height="200px" />
+            <img src={image} />
           </CardMedia>
           <CardTitle title={this.props.name} />
-          <CardActions>
+          <CardActions style={actionStyle}>
             <RaisedButton
               primary={true}
               backgroundColor="#FFAA2E"
