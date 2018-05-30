@@ -67,6 +67,12 @@ class RecipeSummaryCard extends Component {
     input.style.display = "none";
     span.innerHTML = input.value + " ";
     done.style.display = "none";
+
+    var tempRec = this.state.recipeInformation;
+    tempRec.data.details.servings.amount = after;
+    this.props.recipeHandler(e, {
+      recipeInformation: tempRec
+    });
   }
 
   updateSummary() {
