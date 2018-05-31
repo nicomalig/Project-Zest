@@ -60,6 +60,10 @@
     height: 1.5rem;
 }
 
+#yield-div {
+    padding-top: 15px;
+}
+
 @media only screen and (max-width: 992px) {
     #recipe-name {
         font-size: 18px;
