@@ -137,7 +137,7 @@ class ValidURLRecipe extends Component {
 
           {/* DISPLAY CURRENT RECIPE */}
           {!this.state.renderSaved && (
-            <div className="color-div">
+            // <div className="color-div">
               <div className="flex-container-content">
                 <div className="flex-container-c-left flex-item fcc-fi">
                   <div className="flex-item">
@@ -182,7 +182,7 @@ class ValidURLRecipe extends Component {
                   />
                 </div>
               </div>
-            </div>
+            // </div>
           )}
         </div>
       </MuiThemeProvider>
