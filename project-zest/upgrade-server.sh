@@ -3,7 +3,7 @@ echo ""
 echo "**********************************"
 echo "** Terminating previous instance *"
 echo "**********************************"
-docker rm -f project-zest-client-b1.0
+docker rm -f zest-client
 
 echo ""
 echo "**********************************"
@@ -17,7 +17,7 @@ echo "*** Relaunching new instance *****"
 echo "**********************************"
 
 docker run -d \
--p 80 \
+-p 80:80 \
 --name zest-client \
 nicomalig/project-zest-client-b1.0
 
