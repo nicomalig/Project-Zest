@@ -1,0 +1,181 @@
+html {
+   color: rgba(0, 0, 0, .80);
+   margin-bottom: 10px;
+}
+
+.flex-container, .flex-container-sb {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: left;
+}
+
+.flex-container-sb {
+   margin: 1%;
+   justify-content: center;
+}
+
+.fi-sb {
+   margin-left: 5px;
+   margin-right: 10px;
+}
+
+.mssb {
+   background-color: rgba(200, 200, 200, .15);
+   padding: 1px;
+   
+   width: 100%; /* change this for grey width */
+   margin: auto;
+}
+
+.mssb-filler {
+   flex-grow: 0;
+}
+
+.flex-container-m {
+   /* background-color: rgba(238, 236, 231, 1.0); */
+}
+
+.color-div {
+   background-color: rgba(238, 236, 231, 1.0);
+   height: 100%;
+}
+
+/* .flex-container-top {
+   display: flex;
+   flex-direction: row;
+   align-items: flex-start;
+   margin: auto;
+   margin-top: 1%;
+} */
+
+.flex-container-content {
+   display: flex;
+   width: 80%;
+   margin: auto;
+   /* margin-top: 10px; */
+   flex-direction: row;
+   padding-top: 1%;
+   padding-bottom: 2%;
+   justify-content: left;
+   align-items: flex-start;
+   text-align: left;
+   
+   
+}
+
+.flex-container-c-left {
+   display: flex;
+   flex-grow: 2;
+   padding-right: 1%;
+   align-self: flex-start;
+}
+
+.flex-container-c-right {
+   padding-left: 1%;
+   align-self: flex-start;
+}
+
+.fcc-fi {
+   
+}
+
+body {
+   margin: 0px;
+}
+
+/* .top-l {
+   margin-right: 1%;
+   flex-basis: 100%;
+}
+
+.top-r {
+   flex-basis: auto;
+} */
+
+.rec-search {
+   width: 40vw !important;
+   padding-left: 5px;
+   /* margin-right: 15px; */
+}
+
+.rec-submit {
+   margin-left: 10px;
+}
+
+.rec-logo-container {
+   width: 65px;
+}
+
+img {
+   width: 100%;
+   height: auto;
+}
+
+.directions {
+   line-height: 1.5em;
+}
+
+.conversion-bar {
+   margin-bottom: 2%;
+}
+
+#edit-direction-button {
+   justify-content: center;
+   align-items: center;
+   margin: 0 auto;
+}
+
+@media only screen and (max-width: 992px) {
+   .color-div {
+      height: 100%;
+   }
+
+   .flex-container-content {
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 90%;
+   }
+   
+   .flex-container-c-left {
+      flex-direction: column;
+   }
+   
+   .flex-container-sb {
+      flex-wrap: wrap;
+      justify-content: center;
+      flex-direction: column;
+   }
+   
+   .rec-search {
+      width: 85vw !important;
+      margin: 0px;
+      padding: 0px;
+   }
+   
+   .rec-submit {
+      margin: 0px;
+      width: 75vw !important;
+   }
+   
+   .fi-sb {
+      margin-top: 5px;
+      margin-bottom: 5px;
+   }
+   
+   .mssb-filler {
+      display: none;
+   }
+   
+   .saved-rec-btn {
+      width: 75vw !important;
+   }
+   
+   .signout-button {
+      width: 75vw !important;
+   }
+   
+   .rec-logo-container {
+      width: 65px;
+   }
+}

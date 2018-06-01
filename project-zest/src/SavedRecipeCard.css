@@ -1,0 +1,38 @@
+.flex-container-content {
+    text-align: center;
+}
+
+.saved-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+    /* justify-content: space-around; */
+}
+
+.saved-recipe-card {
+    /*background-color: rgba(255, 170, 45, 0.75); */
+    color: rgba(0, 0, 0, .5);
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 30px;
+    width: 250px;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    align-content: center;
+}
+
+.sav-img {
+    width: 400px;
+    height: auto;
+    padding: 10px;
+}
+
+@media only screen and (max-width: 992px) {
+    .sav-img {
+        width: 350px;
+    }
+}
