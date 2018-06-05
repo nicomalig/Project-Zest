@@ -29,6 +29,7 @@ class App extends Component {
           user: user
         });
       }
+      console.log("WELCOME TO ZEST! Deployment revision rc1.0");
     });
   }
 

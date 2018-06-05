@@ -7,10 +7,6 @@ var request = require("request")
 // spin up our app
 const app = express()
 
-// capture our API server address and port using destructuring, default to port 80
-const addr = process.env.ADDR || ":80"
-const [host, port] = addr.split(":")
-
 const HttpCode = {
     ok: 200,
     created: 201,
@@ -231,6 +227,7 @@ app.use((err, req, res, next) => {
     res.status(500).send("Looks like we encountered an irreparable error. Sorry!!")
 })
 
-app.listen(port, "", () => {
-    console.log(`server is listening at http://${host}:${port}`)
+// shush and listen
+app.listen(3210, "", () => {
+    console.log(`server is listening internally on port 3210`)
 })

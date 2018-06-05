@@ -3,7 +3,7 @@ echo ""
 echo "**********************************"
 echo "**Builidng Docker container image*"
 echo "**********************************"
-docker build -f Dockerfile.n -t nicomalig/project-zest-scraper .
+docker build -f Dockerfile.ng -t nicomalig/pzs-nginx .
 
 echo ""
 echo "**********************************"
