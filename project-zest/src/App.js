@@ -43,7 +43,7 @@ class App extends Component {
 
   getScrapedData(url) {
     var apiBase =
-      "http://api.project-zest.nicomalig.com/v1/scrape/foodnetwork?url=";
+      "https://api.project-zest.nicomalig.com/v1/scrape/foodnetwork?url=";
     fetch(apiBase + url)
       .then(results => results.json())
       .then(json => {
@@ -54,7 +54,7 @@ class App extends Component {
       });
   }
 
-  render() {
+  render() {    
     // this is nasty. changing state in render() will force a rerender
     // and is a hacky way of ensuring that async calls complete before rendering occurs.
     // this can cause issues down the road when we need to rely on other stateful components...
@@ -62,7 +62,7 @@ class App extends Component {
     if (this.state.urlChange) {
       var url = this.state.url;
       var apiBase =
-        "http://api.project-zest.nicomalig.com/v1/scrape/foodnetwork?url=";
+        "https://api.project-zest.nicomalig.com/v1/scrape/foodnetwork?url=";
       fetch(apiBase + url)
         .then(results => results.json())
         .then(json => {
