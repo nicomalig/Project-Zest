@@ -4,6 +4,7 @@ import { firebase } from "./FirebaseConfig";
 import Recipe from "./Recipe";
 import HomePage from "./HomePage";
 import { BrowserRouter as Router } from "react-router-dom";
+import Goodbye from "./Goodbye";
 
 class App extends Component {
   constructor(props) {
@@ -78,14 +79,15 @@ class App extends Component {
     return (
       <Router>
         <div id="main-screen-body">
+          <Goodbye />
           {/* we force the user home, OR No user is signed in and no url inputted*/}
-          {(this.state.userWantsToSeeHomePage ||
+          {/*(this.state.userWantsToSeeHomePage ||
             (!this.state.user && !this.state.goToRecipePage)) && (
             <HomePage handler={this.handler} user={this.state.user} />
-          )}
+          )*/}
 
           {/* No user is signed in but url inputted*/}
-          {!this.state.userWantsToSeeHomePage &&
+          {/*!this.state.userWantsToSeeHomePage &&
             ((!this.state.user && this.state.goToRecipePage) ||
               this.state.user) && (
               <Recipe
@@ -94,7 +96,7 @@ class App extends Component {
                 url={this.state.url}
                 recipeInformation={this.state.recipeInformation}
               />
-            )}
+            )*/}
         </div>
       </Router>
     );
