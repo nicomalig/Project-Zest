@@ -2,7 +2,7 @@
   "name": "project-zest",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://zest-de7b0.firebaseapp.com",
+  "homepage": "https://projectze.st",
   "dependencies": {
     "convert-units": "^2.3.4",
     "firebase": "^4.13.1",
