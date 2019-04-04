@@ -1,9 +1,13 @@
-## A Comprehensive Recipe Manager
+## A Comprehensive Food Network Recipe Manager
 
-<a href="https://projectze.st"> <img src="https://projectze.st/static/media/zest.c2cebea3.png" align="center" height="427" width="387"> </a>
+### Project Zest is retired!
+Team Zest thanks you very much for your support. Project Zest has exceeded our expectations (and operating budget!) and is now retired.
 
+******************************************************************************************************************************
+******************************************************************************************************************************
+******************************************************************************************************************************
 
-Thanks for visiting our GitHub Page. Team Happy Cappy is excited to deliver Project Zest, a web-based recipe management tool. To be notified of our progress on the development of this time-saving tool, [visit our website](https://projectze.st)!
+Thanks for visiting our GitHub Page. Team Happy Cappy is excited to deliver Project Zest, a web-based recipe management tool.
 
 ### Problem Space
 There are many individual services that exist that help make cooking easier, but no single tool incorporates them all. Zest is positioned to do this effectively and with an innovative user experience. Our service incorporates novel features such as adjusting serving sizes, converting unit measurements, and saving recipes all in one spot.
